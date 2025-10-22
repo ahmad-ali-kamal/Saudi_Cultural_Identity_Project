@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.saudiculture</groupId>
-	<artifactId>saudiculture</artifactId>
+	<artifactId>saudiculture-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>saudiculture</name>
-	<description>Backend for Saudi culture project</description>
+	<name>demo</name>
+	<description>Backend for Saudi Culture project</description>
 	<url/>
 	<licenses>
 		<license/>
