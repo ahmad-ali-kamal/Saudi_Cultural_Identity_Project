@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Question {
 
   @Id
-  private Long id;
+  private String id;
 
   private String term;
 
