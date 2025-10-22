@@ -1,10 +1,10 @@
-package com.saudiculture.saudiculture;
+package com.saudiculture;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SaudicultureApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

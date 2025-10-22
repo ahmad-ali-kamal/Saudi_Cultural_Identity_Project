@@ -1,13 +1,13 @@
-package com.saudiculture.saudiculture;
+package com.saudiculture;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SaudicultureApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SaudicultureApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
