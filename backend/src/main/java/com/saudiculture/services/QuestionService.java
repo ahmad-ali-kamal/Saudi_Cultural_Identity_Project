@@ -24,8 +24,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionService {
 
-    private QuestionRepository questionRepository;
-    private MongoTemplate mongoTemplate;
+    private final QuestionRepository questionRepository;
+    private final MongoTemplate mongoTemplate;
 
     public Page<InfoQuestionDTO> getInfo(String category, String region, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -43,7 +43,7 @@ public class QuestionService {
 
         List<InfoQuestionDTO> dtoList = questionsPage.getContent().stream()
                 .map(this::convertToInfoDTO)
-                .toList(); // Using .toList() for Java 16+
+                .toList();
 
         return new PageImpl<>(dtoList, pageable, questionsPage.getTotalElements());
     }
@@ -70,7 +70,7 @@ public class QuestionService {
         if (matchOperation != null) {
             aggregationOperations.add(matchOperation);
         }
-        aggregationOperations.add(Aggregation.sample(size)); // Using Aggregation.sample
+        aggregationOperations.add(Aggregation.sample(size));
 
         Aggregation aggregation = Aggregation.newAggregation(aggregationOperations);
 
@@ -81,7 +81,7 @@ public class QuestionService {
 
         return randomQuestions.stream()
             .map(this::convertToQuizDTO)
-            .toList(); // Using .toList() for Java 16+
+            .toList();
     }
 
     private InfoQuestionDTO convertToInfoDTO(Question question) {
