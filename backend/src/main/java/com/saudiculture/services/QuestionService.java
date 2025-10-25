@@ -5,6 +5,7 @@ import com.saudiculture.dto.QuizQuestionDTO;
 import com.saudiculture.models.Question;
 import com.saudiculture.repositories.QuestionRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -22,12 +23,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
     private final MongoTemplate mongoTemplate;
 
     public Page<InfoQuestionDTO> getInfo(String category, String region, int page, int size) {
+        log.info("Fetching info questions - category: {}, region: {}, page: {}, size: {}", category, region, page, size);
         Pageable pageable = PageRequest.of(page, size);
         Page<Question> questionsPage;
 
@@ -45,10 +48,12 @@ public class QuestionService {
                 .map(this::convertToInfoDTO)
                 .toList();
 
+        log.info("Retrieved {} info questions", dtoList.size());
         return new PageImpl<>(dtoList, pageable, questionsPage.getTotalElements());
     }
 
     public List<QuizQuestionDTO> getQuizzes(String category, String region, String type, int size) {
+        log.info("Fetching quiz questions - category: {}, region: {}, type: {}, size: {}", category, region, type, size);
 
         List<Criteria> criteriaList = new ArrayList<>();
         if (category != null) {
@@ -77,7 +82,7 @@ public class QuestionService {
         AggregationResults<Question> results = mongoTemplate.aggregate(aggregation, "questions", Question.class);
         List<Question> randomQuestions = results.getMappedResults();
 
-
+        log.info("Retrieved {} random quiz questions", randomQuestions.size());
 
         return randomQuestions.stream()
             .map(this::convertToQuizDTO)
