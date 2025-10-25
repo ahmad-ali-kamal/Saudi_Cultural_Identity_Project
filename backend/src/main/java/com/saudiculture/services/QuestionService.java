@@ -88,6 +88,7 @@ public class QuestionService {
         InfoQuestionDTO dto = new InfoQuestionDTO();
         dto.setQuestionText(question.getQuestionText());
         dto.setAnswer(question.getAnswer());
+        dto.setCategory(question.getCategory());
         dto.setLanguage(question.getLanguage());
         dto.setRegion(question.getRegion());
         return dto;
