@@ -36,5 +36,8 @@ public class Question {
   @NotBlank(message = "Language cannot be blank")
   private String language;
 
+  @NotBlank(message = "Region cannot be blank")
+  private String region;
+
 
 }
