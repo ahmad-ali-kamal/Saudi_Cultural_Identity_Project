@@ -10,4 +10,5 @@ public class QuizQuestionDTO {
     private String language;
     private String region;
     private String type;
+    private String category;
 }

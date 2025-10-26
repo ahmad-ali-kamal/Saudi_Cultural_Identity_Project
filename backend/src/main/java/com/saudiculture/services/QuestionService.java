@@ -107,6 +107,7 @@ public class QuestionService {
         dto.setLanguage(question.getLanguage());
         dto.setRegion(question.getRegion());
         dto.setType(question.getType());
+        dto.setCategory(question.getCategory());
         return dto;
     }
 }
