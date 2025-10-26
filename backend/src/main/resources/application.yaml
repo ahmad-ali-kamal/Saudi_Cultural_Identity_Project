@@ -55,8 +55,6 @@ logging:
     com.saudiculture: INFO
     org.springframework.web: INFO
     org.springframework.data.mongodb: INFO
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 
 ---
 # Development Profile

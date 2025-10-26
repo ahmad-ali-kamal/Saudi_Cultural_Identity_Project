@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <!-- Import Spring Boot's default configuration -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
-    <!-- Console Appender - Text Format (Default, Dev, Test) -->
+    <!-- Console Appender - Default Spring Boot Format (Default, Dev, Test) -->
     <springProfile name="!prod">
-        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder>
-                <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
-            </encoder>
-        </appender>
+        <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
         <root level="INFO">
             <appender-ref ref="CONSOLE" />
