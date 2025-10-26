@@ -74,6 +74,13 @@
 			<artifactId>opencsv</artifactId>
 			<version>5.12.0</version>
 		</dependency>
+
+		<!-- Structured JSON Logging -->
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>8.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
