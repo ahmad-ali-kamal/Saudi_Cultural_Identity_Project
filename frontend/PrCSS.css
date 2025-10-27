@@ -1,599 +1,234 @@
-<<<<<<< HEAD
-
-.PrHomePage { 
- /* this code for background image and thir properties */
- background-image: url("hawk.png"), url("font.png"), url("WhiteHorse.png") , url("Ribbon.png") , url("Ribbon.png"), url("BgHomePage.jpg");
- background-size: 300px, 1000px, 635px, 230px, 230px , cover, cover;
- background-repeat: no-repeat, no-repeat , no-repeat, no-repeat, no-repeat , no-repeat;
- background-position: 9% 110% , 0% 105% , 0% 93%, -1% 90%  ,100% 90% ,center center;
- background-attachment: fixed;
+@font-face {
+    font-family: 'DARK';
+    src: url('Fonts/DARK.otf');
+}
+@font-face {
+  font-family: 'Tasees';
+  src: url('Fonts/Tasees-Bold.ttf');
 }
 
-
-
-.warpper{
- position: relative;
- top: 350px;
- left:1000px;
- background-color: transparent;
- background: 2px solid raga(255, 255 ,255, 0.5);
- backdrop-filter: blur(20px);
- box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
- border-radius: 20px;
- width: 600px;
- height: 600px;
- display: flex;
- justify-content: center;
- align-items: center;
- transition: height .2s ease;
- overflow: hidden;
+@font-face {
+  font-family: 'AA-GALAXY';
+  src: url('Fonts/AA-GALAXY.otf');
 }
 
-.warpper.active{
-    height: 520px;
+/* --- FIX FOR .backGround --- */
+.backGround {
+    background-color: #FCEBB6;
+    /* We REMOVED HomePage.jpg. This is now ONLY for the repeating pattern. */
+    background-image: url("Images/backGround.jpg");
+    background-size: auto;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: repeat;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
 }
 
-.warpper .Register-Box{
+/* --- ADD THESE NEW STYLES --- */
+
+/* This container holds the image and text */
+.hero-container {
+  position: relative; /* This is the "anchor" for your text */
+  width: 60%; /* This is your image size */
+  margin: 0 auto; /* This centers the container horizontally */
+}
+
+/* This is the <img> tag */
+.hero-image {
+  width: 100%; /* Makes the image fill the container */
+  height: auto; /* Keeps the image's aspect ratio */
+  display: block; /* Fixes extra space under the image */
+}
+
+/* This is the magic part that centers your text */
+.text-overlay {
   position: absolute;
-  transition: none;
-  transform: translateX(570px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
 }
 
-.warpper.active .Register-Box{
- transition: transform .18s ease;
- transform: translateX(0);
+/* --- END OF NEW STYLES --- */
+
+
+
+/* Button Styling */
+.buttonHomePage {
+    display: inline-block;
+    padding: 13px 10px 27px 10px;
+    font-size: clamp(2px, 75px, 100px);
+    background-color: #016514;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Dark', sans-serif;
+    transition: background-color 0.3s ease;
+    position: relative;
+    margin: 20px;
+    text-align: center;
+    
 }
 
-.warpper .Login-Box{
- transition: transform .18s ease;
- transform: translateX(0);
- width: 100%;
- padding: 40px;
+.buttonHomePage:hover {
+    background-color: rgb(5, 162, 34);
 }
 
-.warpper.active .Login-Box{
- transition: none;
- transform:translateX(-570px);
+.buttonChoices {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 400%;
+    background-color: #016514;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'AA-GALAXY', sans-serif;
+    transition: background-color 0.3s ease;
+    position: relative;
+    margin: 20px;
+    text-align: center;
+    left: 20%;
+    bottom: -30%;
+    width: 30%;
+    height: 20%;
 }
 
-.warpper .icon-close{
- position: absolute;
- top:0;
- right: 0;
- width: 45px;
- height: 45px;
- background: #424242;
- font-size: 2.6em;
- color: #ffffff;
- justify-content: center;
- align-items: center;
- border-bottom-left-radius: 20px;
- cursor: pointer;
- z-index: 1;
+.buttonChoices:hover {
+    background-color: rgb(5, 162, 34);
 }
 
-.Login-Box h2{
- font-size: 3em;
- color: rgb(59, 59, 59);
- margin-bottom: 50px;
- text-align: center;
- font-family:"Rakkas", serif; 
- border-radius: 20px;
- background-color: rgba(165, 165, 165, 0.644); 
+/* --- FIX FOR .fontHeader --- */
+.fontHeader {
+    font-family: 'DARK', sans-serif;
+    color: white;
+    text-align: center;
+    text-shadow: 7px 10px 12px #000000 ;
+    font-size: clamp(25px, 5.5vw, 150px);
+    
+    /* REMOVE ALL PADDING AND MARGINS */
+    padding: 0;
+    margin: 0; 
+    margin-bottom: 10px; /* Adds a little space *below* it */
 }
 
-.Register-Box h2{
-  font-size: 3em;
- color: rgb(59, 59, 59);
- margin-bottom: 50px;
- text-align: center;
- font-family:"Rakkas", serif; 
- border-radius: 20px;
- background-color: rgba(165, 165, 165, 0.644);    
-}
-
-.Input-box{
- position: relative;
- width: 100%;
- height: 50px;
- border-bottom: 2px solid #4e4e4e;
- margin: 30px 0 ;
-}
-
-.Input-box label{
- position: relative;
- bottom: 100%;
- left: 5px;
- font-size: 1.7em;
- transform: translateY(-50%);
- color: #424242;
- font-family: "Rakkas", serif;
- font-weight: 500;
- pointer-events: none;
- transition: .5s;
-}
-
-.Input-box input:focus~label,
-.Input-box input:valid~label{
-  bottom: 80px;
-}
-
-.Input-box input{
- width: 100%;
- height: 100%;
- background: transparent;
- border: none;
- outline: none;
- font-size: 1.5em;
- font-weight: 500;
- color: #424242;
- font-family: "Rakkas", serif;
- padding: 0 35px 0 5px;
-}
-
-.Input-box .icon{
-  position:absolute;
-  right: 8px;
-  font-size: 2.2em;
-  color: #424242;
-  line-height: 57px;
-}
-
-.remember-forgot{
- font-size: 1.5em;
- color: #424242;
- font-weight: 500;
- margin: -15px 0 15px;
- font-family: "Rakkas", serif;
- display: flex;
- justify-content: space-between;
-}
-
-.remember-forgot label input{
- accent-color: #424242;
- margin-right: 3px;
-}
-
-.remember-forgot a {
- color: #424242;
- text-decoration: none;
-
-}
-
-.remember-forgot a:hover{
-    text-decoration: underline;
-}
-
-.btn{
- width: 100%;
- height: 45px;
- background: #424242;
- border: none;
- outline: none;
- border-radius: 20px;
- font-size: 2em;
- color: #ffffff;
- font-weight: 500;
- font-family: "Rakkas", serif;
-}
-
-.Login-register{
- font-size: 1.8em;
- color: #424242;
- text-align: center;
- font-weight: 500;
- margin: 25px 0 10px;
- font-family: "Rakkas", serif;
-}
-
-.Login-register p a{
- color: #424242;
- text-decoration: none;
- font-weight: 500;
-}
-
-.Login-register p a:hover{
- text-decoration: underline;
-}
-
-header{
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- padding: 20px;
- background-color: transparent;
- background: 2px solid raga(255, 255 ,255, 0.5);
- backdrop-filter: blur(10px);
- display: flex;
- justify-content:space-around;
- align-items: center;
- z-index: 100px;
-}
-
-.Nav a{
- position: relative;
- font-size: 2em;
- color: rgb(59, 59, 59);
- text-decoration: none;
- font-weight: 500;
- margin-left: 300px;
- border-radius: 10px;
- font-family:"Rakkas", serif; 
-}
-
-.Nav a::after{
- content: '';
- position: absolute;
- left:0;
- bottom: -6px;
- width: 100%;
- height: 3px;
- background: rgb(59, 59, 59);
- border-radius: 5px;
- transform: scaleX(0);
- transition: transform .5s;
-}
-
-.Nav a:hover::after{
- transform: scaleX(1);
-}
-
-.Log-In-Page{
-background-image:url("PlamTree2.png") , url("PlamTree1.png") , url("Decor1.png"), url("Decor2.png") , url("Ribbon.png"), url("Ribbon.png"),url(BgHomePage.jpg);
-background-size: 500px,500px,750px,750px ,230px, 230px, cover;
-background-repeat: no-repeat,no-repeat , no-repeat,  no-repeat,no-repeat, no-repeat,no-repeat;
-background-position:95% 125%,105% 105%, 105% -18%,-5% 125%,-1% 90%  ,100% 90%, center center;
-background-attachment: fixed;
-
-
-
-}
-
-.log-in:hover{
- text-decoration: none;
- color: rgb(1, 83, 15);
-}
-
-.Merged-box{
- background-color:transparent;
- background: 2px solid rgba(255, 255, 255, 0.5);
- backdrop-filter: blur(10px);
- width: 40%;
- padding: 130px;
- border-radius: 20px;
- margin: 300px 50px 0 auto;
- text-align: right;
- direction: ltr;
- color: rgb(223, 223, 223);
- box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-}
-
-.box-h1{
- margin-top: 0;
- margin-bottom: 20px;
- font-size: 60px;
- font-family: "Rakkas", serif;
- padding-bottom: 10px;
-}
-
-.box-text{
- margin: 0;
- font-size: 38px;
- font-family: "Rakkas", serif; /* this is arabic font  */
- line-height: 1.6;
-}
-
-.InfoPage{
- text-decoration: none;
- color: rgb(255, 255, 255);
- font-family: "Rakkas" , serif;  
-}
-
-.InfoPage:hover{
-text-decoration: none;
-color: rgb(1, 83, 15);
+/* --- FIX FOR .fontHeader2 --- */
+.fontHeader2 {
+    font-family: 'Tasees', sans-serif;
+    color: white;
+    text-align: center;
+    text-shadow: 7px 5px 15px #000000;
+    font-size: clamp(10px, 3.5vw, 75px);
+    
+    /* REMOVE ALL PADDING AND MARGINS */
+    padding: 0;
+    margin: 0;
 }
 
 
-
-=======
-
-.PrHomePage { 
- /* this code for background image and thir properties */
- background-image: url("hawk.png"), url("font.png"), url("WhiteHorse.png") , url("Ribbon.png") , url("Ribbon.png"), url("BgHomePage.jpg");
- background-size: 300px, 1000px, 635px, 230px, 230px , cover, cover;
- background-repeat: no-repeat, no-repeat , no-repeat, no-repeat, no-repeat , no-repeat;
- background-position: 9% 110% , 0% 105% , 0% 93%, -1% 90%  ,100% 90% ,center center;
- background-attachment: fixed;
+.fontHeader3 {
+    font-family: 'AA-GALAXY', sans-serif;
+    color: white;  /* Makes the inside of text transparent */
+    text-align: right;
+    font-size: 100px;
+    /* Text stroke effect - outline only */
+    /* REMOVE ALL PADDING AND MARGINS */
+    padding: 0;
+    margin: 0;
+    -webkit-text-stroke: 5px black;
+    paint-order: stroke fill;
 }
 
-
-
-.warpper{
- position: relative;
- top: 350px;
- left:1000px;
- background-color: transparent;
- background: 2px solid raga(255, 255 ,255, 0.5);
- backdrop-filter: blur(20px);
- box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
- border-radius: 20px;
- width: 600px;
- height: 600px;
- display: flex;
- justify-content: center;
- align-items: center;
- transition: height .2s ease;
- overflow: hidden;
+/* --- Nav styles are fine --- */
+.nav {
+    overflow: hidden;
+    background-color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+}
+.nav a {
+  float: right; 
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+.nav a:hover {
+  background-color: #ddd;
+  color: black;
 }
 
-.warpper.active{
-    height: 520px;
+.hero-containerBase {
+    /* match the main hero container's width and centering */
+    width: 60%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position: relative; /* Add this to contain the absolute positioned rectangle */
+
+    /* background layers: first is the large background, second is an overlay */
+    background-image: url(Images/sejadabg2.jpg), url(Images/sejada1.png);
+    /* scale both backgrounds to the container's width while preserving aspect ratio */
+    background-size: 100% auto, 100% auto;
+    background-repeat: repeat, repeat;
+    background-attachment: scroll, scroll;
+    background-position: center, center;
+}/* Brown rounded rectangle */
+.rounded-rectangle {
+    position: absolute;
+    width: 80%;
+    max-width: 1200px;
+    height: 600px;
+    background-color: rgba(139, 69, 19, 0.9);
+    border-radius: 30px;
+    top: 50px; /* Position from top of hero-containerBase */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* ensure child image is cropped to rounded corners */
+    box-shadow: #000000 10px 10px 20px; /* add shadow for depth */
 }
 
-.warpper .Register-Box{
+/* Ensure the .fontHeader3 inside a rounded-rectangle is placed top-right */
+.rounded-rectangle .fontHeader3 {
   position: absolute;
-  transition: none;
-  transform: translateX(570px);
+  top: 70px;
+  right: 45px;
+  margin: 0;
+  text-align: right; /* keep Arabic text aligned to the right */
+  z-index: 5;
+  text-shadow: #000000 6px 6px 12px; /* add shadow for better contrast */
+  color: white; /* ensure visible */
+  -webkit-text-stroke: 3px black; /* outline */
 }
 
-.warpper.active .Register-Box{
- transition: transform .18s ease;
- transform: translateX(0);
+/* Secondary rounded rectangle placement (second box) */
+.rounded-rectangle.secondary {
+  top: 220px; /* adjust this value to move the second rectangle up/down */
+  max-width: 1000px; /* allow it to be wider if desired */
 }
 
-.warpper .Login-Box{
- transition: transform .18s ease;
- transform: translateX(0);
- width: 100%;
- padding: 40px;
-}
-
-.warpper.active .Login-Box{
- transition: none;
- transform:translateX(-570px);
-}
-
-.warpper .icon-close{
- position: absolute;
- top:0;
- right: 0;
- width: 45px;
- height: 45px;
- background: #424242;
- font-size: 2.6em;
- color: #ffffff;
- justify-content: center;
- align-items: center;
- border-bottom-left-radius: 20px;
- cursor: pointer;
- z-index: 1;
-}
-
-.Login-Box h2{
- font-size: 3em;
- color: rgb(59, 59, 59);
- margin-bottom: 50px;
- text-align: center;
- font-family:"Rakkas", serif; 
- border-radius: 20px;
- background-color: rgba(165, 165, 165, 0.644); 
-}
-
-.Register-Box h2{
-  font-size: 3em;
- color: rgb(59, 59, 59);
- margin-bottom: 50px;
- text-align: center;
- font-family:"Rakkas", serif; 
- border-radius: 20px;
- background-color: rgba(165, 165, 165, 0.644);    
-}
-
-.Input-box{
- position: relative;
- width: 100%;
- height: 50px;
- border-bottom: 2px solid #4e4e4e;
- margin: 30px 0 ;
-}
-
-.Input-box label{
- position: relative;
- bottom: 100%;
- left: 5px;
- font-size: 1.7em;
- transform: translateY(-50%);
- color: #424242;
- font-family: "Rakkas", serif;
- font-weight: 500;
- pointer-events: none;
- transition: .5s;
-}
-
-.Input-box input:focus~label,
-.Input-box input:valid~label{
-  bottom: 80px;
-}
-
-.Input-box input{
- width: 100%;
- height: 100%;
- background: transparent;
- border: none;
- outline: none;
- font-size: 1.5em;
- font-weight: 500;
- color: #424242;
- font-family: "Rakkas", serif;
- padding: 0 35px 0 5px;
-}
-
-.Input-box .icon{
-  position:absolute;
-  right: 8px;
-  font-size: 2.2em;
-  color: #424242;
-  line-height: 57px;
-}
-
-.remember-forgot{
- font-size: 1.5em;
- color: #424242;
- font-weight: 500;
- margin: -15px 0 15px;
- font-family: "Rakkas", serif;
- display: flex;
- justify-content: space-between;
-}
-
-.remember-forgot label input{
- accent-color: #424242;
- margin-right: 3px;
-}
-
-.remember-forgot a {
- color: #424242;
- text-decoration: none;
-
-}
-
-.remember-forgot a:hover{
-    text-decoration: underline;
-}
-
-.btn{
- width: 100%;
- height: 45px;
- background: #424242;
- border: none;
- outline: none;
- border-radius: 20px;
- font-size: 2em;
- color: #ffffff;
- font-weight: 500;
- font-family: "Rakkas", serif;
-}
-
-.Login-register{
- font-size: 1.8em;
- color: #424242;
- text-align: center;
- font-weight: 500;
- margin: 25px 0 10px;
- font-family: "Rakkas", serif;
-}
-
-.Login-register p a{
- color: #424242;
- text-decoration: none;
- font-weight: 500;
-}
-
-.Login-register p a:hover{
- text-decoration: underline;
-}
-
-header{
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- padding: 20px;
- background-color: transparent;
- background: 2px solid raga(255, 255 ,255, 0.5);
- backdrop-filter: blur(10px);
- display: flex;
- justify-content:space-around;
- align-items: center;
- z-index: 100px;
-}
-
-.Nav a{
- position: relative;
- font-size: 2em;
- color: rgb(59, 59, 59);
- text-decoration: none;
- font-weight: 500;
- margin-left: 300px;
- border-radius: 10px;
- font-family:"Rakkas", serif; 
-}
-
-.Nav a::after{
- content: '';
- position: absolute;
- left:0;
- bottom: -6px;
- width: 100%;
- height: 3px;
- background: rgb(59, 59, 59);
- border-radius: 5px;
- transform: scaleX(0);
- transition: transform .5s;
-}
-
-.Nav a:hover::after{
- transform: scaleX(1);
-}
-
-.Log-In-Page{
-background-image:url("PlamTree2.png") , url("PlamTree1.png") , url("Decor1.png"), url("Decor2.png") , url("Ribbon.png"), url("Ribbon.png"),url(BgHomePage.jpg);
-background-size: 500px,500px,750px,750px ,230px, 230px, cover;
-background-repeat: no-repeat,no-repeat , no-repeat,  no-repeat,no-repeat, no-repeat,no-repeat;
-background-position:95% 125%,105% 105%, 105% -18%,-5% 125%,-1% 90%  ,100% 90%, center center;
-background-attachment: fixed;
-
-
-
-}
-
-.log-in:hover{
- text-decoration: none;
- color: rgb(1, 83, 15);
-}
-
-.Merged-box{
- background-color:transparent;
- background: 2px solid rgba(255, 255, 255, 0.5);
- backdrop-filter: blur(10px);
- width: 40%;
- padding: 130px;
- border-radius: 20px;
- margin: 300px 50px 0 auto;
- text-align: right;
- direction: ltr;
- color: rgb(223, 223, 223);
- box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-}
-
-.box-h1{
- margin-top: 0;
- margin-bottom: 20px;
- font-size: 60px;
- font-family: "Rakkas", serif;
- padding-bottom: 10px;
-}
-
-.box-text{
- margin: 0;
- font-size: 38px;
- font-family: "Rakkas", serif; /* this is arabic font  */
- line-height: 1.6;
-}
-
-.InfoPage{
- text-decoration: none;
- color: rgb(255, 255, 255);
- font-family: "Rakkas" , serif;  
-}
-
-.InfoPage:hover{
-text-decoration: none;
-color: rgb(1, 83, 15);
+.SaudiCultureImage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center; /* Show the right side of the image */
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    box-shadow: none; /* keep it clean inside the rounded container */
+    z-index: 2;
 }
 
 
-
->>>>>>> 475085d82cb025f0416074be523df4d517cb8e33
