@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.logstash.logback.argument.StructuredArguments.keyValue;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -30,7 +32,11 @@ public class QuestionService {
     private final MongoTemplate mongoTemplate;
 
     public Page<InfoQuestionDTO> getInfo(String category, String region, int page, int size) {
-        log.info("Fetching info questions - category: {}, region: {}, page: {}, size: {}", category, region, page, size);
+        log.info("Fetching info questions",
+                keyValue("category", category),
+                keyValue("region", region),
+                keyValue("page", page),
+                keyValue("size", size));
         Pageable pageable = PageRequest.of(page, size);
         Page<Question> questionsPage;
 
@@ -48,12 +54,18 @@ public class QuestionService {
                 .map(this::convertToInfoDTO)
                 .toList();
 
-        log.info("Retrieved {} info questions", dtoList.size());
+        log.info("Retrieved info questions",
+                keyValue("count", dtoList.size()),
+                keyValue("totalElements", questionsPage.getTotalElements()));
         return new PageImpl<>(dtoList, pageable, questionsPage.getTotalElements());
     }
 
     public List<QuizQuestionDTO> getQuizzes(String category, String region, String type, int size) {
-        log.info("Fetching quiz questions - category: {}, region: {}, type: {}, size: {}", category, region, type, size);
+        log.info("Fetching quiz questions",
+                keyValue("category", category),
+                keyValue("region", region),
+                keyValue("type", type),
+                keyValue("size", size));
 
         List<Criteria> criteriaList = new ArrayList<>();
         if (category != null) {
@@ -82,7 +94,8 @@ public class QuestionService {
         AggregationResults<Question> results = mongoTemplate.aggregate(aggregation, "questions", Question.class);
         List<Question> randomQuestions = results.getMappedResults();
 
-        log.info("Retrieved {} random quiz questions", randomQuestions.size());
+        log.info("Retrieved random quiz questions",
+                keyValue("count", randomQuestions.size()));
 
         return randomQuestions.stream()
             .map(this::convertToQuizDTO)

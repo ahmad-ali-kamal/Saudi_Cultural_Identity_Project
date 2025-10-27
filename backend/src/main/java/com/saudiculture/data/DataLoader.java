@@ -16,6 +16,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.*;
 
+import static net.logstash.logback.argument.StructuredArguments.keyValue;
+
 @Component
 @Slf4j
 public class DataLoader {
@@ -115,11 +117,16 @@ public class DataLoader {
 
       log.info("=".repeat(80));
       log.info("Global Statistics:");
-      log.info("Total Questions Loaded: {} (Skipped: {})", totalLoaded, totalSkipped);
+      log.info("CSV loading summary",
+              keyValue("totalLoaded", totalLoaded),
+              keyValue("totalSkipped", totalSkipped),
+              keyValue("filesProcessed", results.size()));
       log.info("Category Distribution:");
       globalCategoryStats.entrySet().stream()
               .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-              .forEach(entry -> log.info("  - {}: {}", entry.getKey(), entry.getValue()));
+              .forEach(entry -> log.info("Category count",
+                      keyValue("category", entry.getKey()),
+                      keyValue("count", entry.getValue())));
       log.info("=".repeat(80));
 
     } catch (Exception e) {
@@ -167,12 +174,18 @@ public class DataLoader {
 
       if (!questionsToSave.isEmpty()) {
         questionRepository.saveAll(questionsToSave);
-        log.info("Saved {} questions from {}", questionsToSave.size(), filename);
+        log.info("Saved questions from CSV file",
+                keyValue("filename", filename),
+                keyValue("count", questionsToSave.size()),
+                keyValue("region", region));
       }
 
     } catch (Exception e) {
       result.addError("Failed to load file: " + e.getMessage());
-      log.error("Error loading CSV file {}", filename, e);
+      log.error("Error loading CSV file",
+              keyValue("filename", filename),
+              keyValue("error", e.getMessage()),
+              e);
     }
 
     return result;
