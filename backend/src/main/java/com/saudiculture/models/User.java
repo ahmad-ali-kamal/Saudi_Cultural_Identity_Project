@@ -20,7 +20,6 @@ public class User {
 
   @Indexed(unique = true)
   String email;
-
   String username;
 
   @CreatedDate
