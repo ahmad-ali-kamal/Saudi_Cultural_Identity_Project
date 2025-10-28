@@ -16,9 +16,15 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http
         .csrf(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
-        .oauth2Login(Customizer.withDefaults())
-        .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.logoutSuccessUrl("/"))
+        .authorizeHttpRequests(auth -> {
+          auth.requestMatchers("/api/info/**").permitAll();
+          auth.requestMatchers("/api/quiz/**").permitAll();
+          auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
+          auth.requestMatchers("/actuator/health").permitAll();
+          auth.anyRequest().authenticated();
+        })
+        .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+        .cors(Customizer.withDefaults())
         .build();
   }
 

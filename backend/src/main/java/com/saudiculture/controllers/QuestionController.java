@@ -57,7 +57,7 @@ public class QuestionController {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved quiz questions"),
             @ApiResponse(responseCode = "400", description = "Invalid parameters")
     })
-    @GetMapping("/quizzes")
+    @GetMapping("/quiz")
     public ResponseEntity<List<QuizQuestionDTO>> getQuizzes(
             @Parameter(description = "Filter by category")
             @RequestParam(required = false) String category,
