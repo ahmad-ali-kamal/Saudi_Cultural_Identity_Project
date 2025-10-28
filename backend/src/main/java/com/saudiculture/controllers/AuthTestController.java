@@ -36,7 +36,7 @@ public class AuthTestController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Authentication successful!");
-        response.put("username", authentication.getName());
+        response.put("username", jwt.getClaim("cognito:username"));
         response.put("cognitoId", jwt.getSubject());
         response.put("email", jwt.getClaim("email"));
         response.put("authorities", authentication.getAuthorities().toString());
@@ -46,3 +46,5 @@ public class AuthTestController {
         return response;
     }
 }
+
+
