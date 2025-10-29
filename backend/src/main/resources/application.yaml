@@ -56,6 +56,12 @@ logging:
     org.springframework.web: INFO
     org.springframework.data.mongodb: INFO
 
+aws:
+  cognito:
+    user-pool-id: ${AWS_COGNITO_USER_POOL_ID}
+    region: ${AWS_COGNITO_REGION}
+    client-id: ${AWS_COGNITO_CLIENT_ID}
+    client-secret: ${AWS_COGNITO_CLIENT_SECRET}
 ---
 # Development Profile
 spring:
@@ -63,9 +69,16 @@ spring:
     activate:
       on-profile: dev
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://cognito-idp.${AWS_COGNITO_REGION}.amazonaws.com/${AWS_COGNITO_USER_POOL_ID}/.well-known/jwks.json
+          issuer-uri: https://cognito-idp.${AWS_COGNITO_REGION}.amazonaws.com/${AWS_COGNITO_USER_POOL_ID}
+
   data:
     mongodb:
-      uri: mongodb://${MONGO_USERNAME:admin}:${MONGO_PASSWORD:admin123}@${MONGO_HOST:localhost}:${MONGO_PORT:27017}/${MONGO_DATABASE:saudiculture}?authSource=admin
+      uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD:admin123}@${MONGO_HOST:localhost}:${MONGO_PORT:27017}/${MONGO_DATABASE:saudiculture}?authSource=admin
 
 logging:
   level:
@@ -75,6 +88,7 @@ logging:
 csv:
   loading:
     log-warnings: true
+
 
 ---
 # Test Profile
@@ -101,6 +115,13 @@ spring:
   config:
     activate:
       on-profile: prod
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://cognito-idp.${AWS_COGNITO_REGION}.amazonaws.com/${AWS_COGNITO_USER_POOL_ID}/.well-known/jwks.json
+          issuer-uri: https://cognito-idp.${AWS_COGNITO_REGION}.amazonaws.com/${AWS_COGNITO_USER_POOL_ID}
 
   data:
     mongodb:

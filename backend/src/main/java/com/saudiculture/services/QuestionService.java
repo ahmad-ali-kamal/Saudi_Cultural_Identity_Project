@@ -114,6 +114,7 @@ public class QuestionService {
 
     private QuizQuestionDTO convertToQuizDTO(Question question) {
         QuizQuestionDTO dto = new QuizQuestionDTO();
+        dto.setId(question.getId());
         dto.setQuestionText(question.getQuestionText());
         dto.setOptions(question.getOptions());
         dto.setAnswer(question.getAnswer());
