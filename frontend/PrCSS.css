@@ -156,8 +156,8 @@
 
 
 .rounded-rectangle {
-    height: clamp(40rem, 70%, 100rem);
-    width: clamp(60rem, 80%, 90rem);
+    height: clamp(150px, 10.417vw, 250px);
+    width: clamp(260px, 16.927vw, 400px);
     background-color: rgba(139, 69, 19, 0.9);
     box-shadow: #000000 10px 10px 20px;
     border-radius: 30px;
@@ -171,6 +171,7 @@
 }
 
 .rounded-rectangle .fontBody2 {
+  font-size: clamp(0.5rem, 105vw, 5rem);
   position: relative;
   top: 5rem;
   left: 15rem;
