@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 
 function LandingPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-primary">
       <Navbar />
 
       {/* Hero Section */}
@@ -33,7 +33,7 @@ function LandingPage() {
           </p>
           <Link
             to="/quiz"
-            className="inline-block px-12 py-5 bg-saudi-green text-white text-2xl font-bold rounded-xl hover:bg-green-700 transition-all duration-300 hover:scale-110 shadow-2xl hover:shadow-saudi-green/50"
+            className="inline-block px-12 py-5 bg-secondary text-light text-2xl font-bold rounded-xl hover:bg-accent transition-all duration-300 hover:scale-110 shadow-2xl"
           >
             جرب مستواك
           </Link>
@@ -41,25 +41,23 @@ function LandingPage() {
       </section>
 
       {/* About Section */}
-      <section className="py-20 px-6 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-20 px-6 bg-primary">
         <div className="container mx-auto max-w-6xl">
-          <div className="bg-white rounded-3xl p-12 shadow-2xl border border-gray-100">
-            <p className="text-2xl md:text-3xl text-gray-800 leading-relaxed text-center font-semibold">
-              انغمس في عمق التراث السعودي العريق. استكشف العادات الأصيلة، والمأكولات
-              التقليدية، والمهرجانات النابضة بالحياة من خلال تجارب تفاعلية وقصص مرئية
-              وتحديات ثقافية ممتعة. حيث يلتقي التاريخ بالإبداع، ويُلهم التراث مستقبل
-              الوطن.
-            </p>
-          </div>
+          <p className="text-2xl md:text-3xl text-light leading-relaxed text-center font-semibold">
+            انغمس في عمق التراث السعودي العريق. استكشف العادات الأصيلة، والمأكولات
+            التقليدية، والمهرجانات النابضة بالحياة من خلال تجارب تفاعلية وقصص مرئية
+            وتحديات ثقافية ممتعة. حيث يلتقي التاريخ بالإبداع، ويُلهم التراث مستقبل
+            الوطن.
+          </p>
         </div>
       </section>
 
       {/* Feature Cards Section */}
-      <section className="py-20 px-6 bg-gray-50">
+      <section className="py-20 px-6 bg-primary">
         <div className="container mx-auto max-w-7xl">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Quiz Card */}
-            <div className="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+            <div className="group relative bg-light rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
               {/* Card Image */}
               <div className="relative h-64 overflow-hidden">
                 <img
@@ -72,26 +70,26 @@ function LandingPage() {
 
               {/* Card Content */}
               <div className="p-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">تحس انك سعودي؟</h2>
-                <p className="text-gray-600 text-lg leading-relaxed mb-6 whitespace-pre-line">
-                  {`اذا تحس نفسك فاهم في\nالثقافة السعودية فــــــــــــــــــــــ`}
+                <h2 className="text-3xl font-bold text-secondary mb-4">تحس انك سعودي؟</h2>
+                <p className="text-primary text-lg leading-relaxed mb-6">
+                  اذا تحس نفسك فاهم في الثقافة السعودية فــــــــــــــــــــــ
                 </p>
 
                 {/* CTA Button */}
                 <Link
                   to="/quiz"
-                  className="inline-block px-8 py-3 bg-saudi-green text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   تحدى نفسك!
                 </Link>
               </div>
 
               {/* Decorative Element */}
-              <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-saudi-green to-green-700 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+              <div className="absolute top-0 left-0 w-2 h-full bg-secondary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
             </div>
 
             {/* Learn Card */}
-            <div className="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+            <div className="group relative bg-light rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
               {/* Card Image */}
               <div className="relative h-64 overflow-hidden">
                 <img
@@ -104,22 +102,24 @@ function LandingPage() {
 
               {/* Card Content */}
               <div className="p-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">منت فاهم لثقافتنا؟</h2>
-                <p className="text-gray-600 text-lg leading-relaxed mb-6 whitespace-pre-line">
-                  {`بسيطة!\nبنعلمك كل شي تحتاجه عن ثقافتنا\nاذا ضغطت على الزر اللي تحت`}
+                <h2 className="text-3xl font-bold text-secondary mb-4">منت فاهم لثقافتنا؟</h2>
+                <p className="text-primary text-lg leading-relaxed mb-6">
+                  بسيطة!<br/>
+                  بنعلمك كل شي تحتاجه عن ثقافتنا<br/>
+                  اذا ضغطت على الزر اللي تحت
                 </p>
 
                 {/* CTA Button */}
                 <Link
                   to="/learn"
-                  className="inline-block px-8 py-3 bg-saudi-green text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   تعلم
                 </Link>
               </div>
 
               {/* Decorative Element */}
-              <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-saudi-green to-green-700 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+              <div className="absolute top-0 left-0 w-2 h-full bg-secondary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
             </div>
           </div>
         </div>

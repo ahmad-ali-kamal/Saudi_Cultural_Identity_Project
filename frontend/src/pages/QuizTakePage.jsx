@@ -1,0 +1,235 @@
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import QuestionRenderer from '../components/quiz/QuestionRenderer';
+import { apiService } from '../services/api';
+
+function QuizTakePage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const config = location.state?.config;
+
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!config) {
+      // No config, redirect to quiz setup
+      navigate('/quiz');
+      return;
+    }
+
+    fetchQuestions();
+  }, [config, navigate]);
+
+  const fetchQuestions = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const params = {
+        size: config.size,
+      };
+
+      if (config.category) params.category = config.category;
+      if (config.region) params.region = config.region;
+      if (config.type && config.type !== 'all') params.type = config.type;
+
+      const data = await apiService.getQuiz(params);
+      setQuestions(data);
+    } catch (err) {
+      console.error('Failed to fetch questions:', err);
+      setError(err.response?.data?.message || 'فشل في تحميل الأسئلة. حاول مرة أخرى.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const progress = questions.length > 0 ? ((currentQuestionIndex + 1) / questions.length) * 100 : 0;
+  const isLastQuestion = currentQuestionIndex === questions.length - 1;
+  const isFirstQuestion = currentQuestionIndex === 0;
+
+  const handleAnswerSelect = (answer) => {
+    setAnswers({
+      ...answers,
+      [currentQuestion.id]: answer,
+    });
+  };
+
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleSubmit = () => {
+    // Navigate to results page with questions and answers
+    navigate('/quiz/results', {
+      state: {
+        questions,
+        answers,
+      },
+    });
+  };
+
+  const currentAnswer = currentQuestion ? answers[currentQuestion.id] : null;
+  const hasAnswer = currentAnswer !== undefined && currentAnswer !== null && currentAnswer !== '' &&
+    (Array.isArray(currentAnswer) ? currentAnswer.length > 0 : true);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <Navbar />
+        <div className="container mx-auto px-6 py-24">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-saudi-green mx-auto mb-6"></div>
+              <p className="text-xl text-gray-600">جاري تحميل الأسئلة...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <Navbar />
+        <div className="container mx-auto px-6 py-24">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-red-50 border-2 border-red-300 rounded-2xl shadow-xl p-12 text-center">
+              <div className="text-6xl mb-6">❌</div>
+              <h2 className="text-2xl font-bold text-red-900 mb-4">حدث خطأ</h2>
+              <p className="text-lg text-red-700 mb-8">{error}</p>
+              <button
+                onClick={fetchQuestions}
+                className="px-8 py-3 bg-saudi-green text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300 ml-4"
+              >
+                حاول مرة أخرى
+              </button>
+              <button
+                onClick={() => navigate('/quiz')}
+                className="px-8 py-3 bg-gray-200 text-gray-800 font-bold rounded-lg hover:bg-gray-300 transition-all duration-300"
+              >
+                العودة للإعدادات
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <Navbar />
+        <div className="container mx-auto px-6 py-24">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-yellow-50 border-2 border-yellow-300 rounded-2xl shadow-xl p-12 text-center">
+              <div className="text-6xl mb-6">🤔</div>
+              <h2 className="text-2xl font-bold text-yellow-900 mb-4">لا توجد أسئلة متاحة</h2>
+              <p className="text-lg text-yellow-700 mb-8">
+                لم نجد أسئلة تطابق اختيارك. جرب تغيير الفئة أو المنطقة.
+              </p>
+              <button
+                onClick={() => navigate('/quiz')}
+                className="px-8 py-3 bg-saudi-green text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300"
+              >
+                العودة للإعدادات
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <Navbar />
+
+      <div className="container mx-auto px-6 py-24">
+        <div className="max-w-4xl mx-auto">
+          {/* Progress Bar */}
+          <div className="mb-8">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-lg font-semibold text-gray-700">
+                السؤال {currentQuestionIndex + 1} من {questions.length}
+              </span>
+              <span className="text-lg font-semibold text-saudi-green">
+                {Math.round(progress)}%
+              </span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              <div
+                className="bg-saudi-green h-full transition-all duration-500 ease-out"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+          </div>
+
+          {/* Question Card */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-6">
+            <QuestionRenderer
+              question={currentQuestion}
+              selectedAnswer={currentAnswer}
+              onAnswerSelect={handleAnswerSelect}
+            />
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-between items-center gap-4">
+            <button
+              onClick={handlePrevious}
+              disabled={isFirstQuestion}
+              className="px-6 py-3 bg-gray-200 text-gray-800 font-bold rounded-lg hover:bg-gray-300 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              ← السابق
+            </button>
+
+            <div className="flex-1"></div>
+
+            {isLastQuestion ? (
+              <button
+                onClick={handleSubmit}
+                className="px-8 py-3 bg-saudi-green text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300 hover:scale-105 shadow-lg"
+              >
+                إنهاء الاختبار →
+              </button>
+            ) : (
+              <button
+                onClick={handleNext}
+                disabled={!hasAnswer}
+                className="px-8 py-3 bg-saudi-green text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                التالي →
+              </button>
+            )}
+          </div>
+
+          {!hasAnswer && (
+            <p className="text-center text-amber-600 mt-4 font-semibold">
+              ⚠️ الرجاء اختيار إجابة قبل المتابعة
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default QuizTakePage;

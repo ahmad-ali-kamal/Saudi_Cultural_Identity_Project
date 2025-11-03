@@ -23,20 +23,20 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar for modern look */
+/* Custom scrollbar for heritage theme */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #422B15;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #028b1b;
+  background: #623F1F;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #026a15;
+  background: #C2B09F;
 }
