@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import CustomSelect from '../components/CustomSelect';
 
 function QuizPage() {
   const navigate = useNavigate();
@@ -12,18 +13,20 @@ function QuizPage() {
     size: 10,
   });
 
-  const categories = [
-    'Traditional Food',
-    'Clothing',
-    'Festivals',
-    'Music & Dance',
-    'Architecture',
-    'Customs & Traditions',
-    'History',
-    'Geography',
+  const categoryOptions = [
+    { value: '', label: 'جميع الفئات' },
+    { value: 'Traditional Food', label: 'Traditional Food' },
+    { value: 'Clothing', label: 'Clothing' },
+    { value: 'Festivals', label: 'Festivals' },
+    { value: 'Music & Dance', label: 'Music & Dance' },
+    { value: 'Architecture', label: 'Architecture' },
+    { value: 'Customs & Traditions', label: 'Customs & Traditions' },
+    { value: 'History', label: 'History' },
+    { value: 'Geography', label: 'Geography' },
   ];
 
-  const regions = [
+  const regionOptions = [
+    { value: '', label: 'جميع المناطق' },
     { value: 'GENERAL', label: 'عام' },
     { value: 'WEST', label: 'الغربية' },
     { value: 'EAST', label: 'الشرقية' },
@@ -68,18 +71,12 @@ function QuizPage() {
               <label className="block text-secondary font-bold mb-3 text-lg">
                 الفئة (اختياري)
               </label>
-              <select
+              <CustomSelect
                 value={config.category}
-                onChange={(e) => setConfig({ ...config, category: e.target.value })}
-                className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors text-lg bg-white"
-              >
-                <option value="">جميع الفئات</option>
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
+                onChange={(value) => setConfig({ ...config, category: value })}
+                options={categoryOptions}
+                placeholder="جميع الفئات"
+              />
             </div>
 
             {/* Region Selection */}
@@ -87,18 +84,12 @@ function QuizPage() {
               <label className="block text-secondary font-bold mb-3 text-lg">
                 المنطقة (اختياري)
               </label>
-              <select
+              <CustomSelect
                 value={config.region}
-                onChange={(e) => setConfig({ ...config, region: e.target.value })}
-                className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors text-lg bg-white"
-              >
-                <option value="">جميع المناطق</option>
-                {regions.map((region) => (
-                  <option key={region.value} value={region.value}>
-                    {region.label}
-                  </option>
-                ))}
-              </select>
+                onChange={(value) => setConfig({ ...config, region: value })}
+                options={regionOptions}
+                placeholder="جميع المناطق"
+              />
             </div>
 
             {/* Question Type */}

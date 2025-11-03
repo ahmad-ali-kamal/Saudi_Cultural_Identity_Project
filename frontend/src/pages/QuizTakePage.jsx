@@ -90,13 +90,13 @@ function QuizTakePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="min-h-screen bg-primary">
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-saudi-green mx-auto mb-6"></div>
-              <p className="text-xl text-gray-600">جاري تحميل الأسئلة...</p>
+            <div className="bg-light rounded-2xl shadow-xl p-12 text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-secondary mx-auto mb-6"></div>
+              <p className="text-xl text-primary">جاري تحميل الأسئلة...</p>
             </div>
           </div>
         </div>
@@ -106,23 +106,23 @@ function QuizTakePage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="min-h-screen bg-primary">
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-red-50 border-2 border-red-300 rounded-2xl shadow-xl p-12 text-center">
+            <div className="bg-light border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
               <div className="text-6xl mb-6">❌</div>
               <h2 className="text-2xl font-bold text-red-900 mb-4">حدث خطأ</h2>
               <p className="text-lg text-red-700 mb-8">{error}</p>
               <button
                 onClick={fetchQuestions}
-                className="px-8 py-3 bg-saudi-green text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300 ml-4"
+                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 ml-4"
               >
                 حاول مرة أخرى
               </button>
               <button
                 onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-gray-200 text-gray-800 font-bold rounded-lg hover:bg-gray-300 transition-all duration-300"
+                className="px-8 py-3 bg-accent text-primary font-bold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300"
               >
                 العودة للإعدادات
               </button>
@@ -135,19 +135,19 @@ function QuizTakePage() {
 
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="min-h-screen bg-primary">
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-yellow-50 border-2 border-yellow-300 rounded-2xl shadow-xl p-12 text-center">
+            <div className="bg-light border-2 border-accent rounded-2xl shadow-xl p-12 text-center">
               <div className="text-6xl mb-6">🤔</div>
-              <h2 className="text-2xl font-bold text-yellow-900 mb-4">لا توجد أسئلة متاحة</h2>
-              <p className="text-lg text-yellow-700 mb-8">
+              <h2 className="text-2xl font-bold text-secondary mb-4">لا توجد أسئلة متاحة</h2>
+              <p className="text-lg text-primary mb-8">
                 لم نجد أسئلة تطابق اختيارك. جرب تغيير الفئة أو المنطقة.
               </p>
               <button
                 onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-saudi-green text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300"
+                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300"
               >
                 العودة للإعدادات
               </button>
@@ -159,7 +159,7 @@ function QuizTakePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-primary">
       <Navbar />
 
       <div className="container mx-auto px-6 py-24">
@@ -167,23 +167,23 @@ function QuizTakePage() {
           {/* Progress Bar */}
           <div className="mb-8">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-lg font-semibold text-gray-700">
+              <span className="text-lg font-semibold text-light">
                 السؤال {currentQuestionIndex + 1} من {questions.length}
               </span>
-              <span className="text-lg font-semibold text-saudi-green">
+              <span className="text-lg font-semibold text-light">
                 {Math.round(progress)}%
               </span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div className="w-full bg-accent rounded-full h-3 overflow-hidden">
               <div
-                className="bg-saudi-green h-full transition-all duration-500 ease-out"
+                className="bg-secondary h-full transition-all duration-500 ease-out"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
           </div>
 
           {/* Question Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-6">
+          <div className="bg-light rounded-2xl shadow-xl p-8 md:p-12 mb-6">
             <QuestionRenderer
               question={currentQuestion}
               selectedAnswer={currentAnswer}
@@ -196,7 +196,7 @@ function QuizTakePage() {
             <button
               onClick={handlePrevious}
               disabled={isFirstQuestion}
-              className="px-6 py-3 bg-gray-200 text-gray-800 font-bold rounded-lg hover:bg-gray-300 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-3 bg-accent text-primary font-bold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               ← السابق
             </button>
@@ -206,7 +206,7 @@ function QuizTakePage() {
             {isLastQuestion ? (
               <button
                 onClick={handleSubmit}
-                className="px-8 py-3 bg-saudi-green text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300 hover:scale-105 shadow-lg"
+                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 إنهاء الاختبار →
               </button>
@@ -214,7 +214,7 @@ function QuizTakePage() {
               <button
                 onClick={handleNext}
                 disabled={!hasAnswer}
-                className="px-8 py-3 bg-saudi-green text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 التالي →
               </button>
@@ -222,7 +222,7 @@ function QuizTakePage() {
           </div>
 
           {!hasAnswer && (
-            <p className="text-center text-amber-600 mt-4 font-semibold">
+            <p className="text-center text-light mt-4 font-semibold bg-secondary/20 py-3 rounded-lg">
               ⚠️ الرجاء اختيار إجابة قبل المتابعة
             </p>
           )}
