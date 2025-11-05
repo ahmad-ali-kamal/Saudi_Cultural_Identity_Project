@@ -13,31 +13,78 @@
   src: url('Fonts/AA-GALAXY.otf');
 }
 
-.backGround {
-    background-color: #FCEBB6;
-    background-image: url("Images/backGround.jpg");
-    background-size: auto;
-    background-attachment: scroll;
-    background-position: center;
-    background-repeat: repeat;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
+.SliderbackGround {
+    margin: 100px auto;
+    width: 90%;
+    border: #000000 5px solid;
+    display: flex;
+    overflow-x: auto;
 }
+
+.SliderbackGround::-webkit-scrollbar{
+    display: none;
+}
+
+.carousel {
+  position: relative;   /* makes .groupBGpic stay behind this section only */
+  overflow: hidden;     /* hides anything that moves outside */
+  width: 100%;
+  height: 100vh;        /* height of the top section */
+}
+
+
+/* Moving background behind the main image */
+.groupBGpic {
+  background-color: rgb(0, 0, 0);
+  position: absolute;         /* place it behind the main image */
+  top: 0;
+  left: 0;
+  width: max-content;
+  height: 100%;
+  display: flex;
+  gap: 3em;
+  animation: spin 30s linear infinite;
+  overflow: hidden;
+  z-index: -1;                 /* send it behind */
+}
+
+.BGpic {
+  flex: 0 0 auto;
+  width: 30vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.BGpic img {
+  width: 75%;
+  height: 75%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  padding-bottom: 35%;
+}
+
+
 
 .nav {
     overflow: hidden;
     background-color: #333;
     font-family: Arial, Helvetica, sans-serif;
     width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;    
 }
 .nav a {
   float: right;
-  color: white;
+  color: red;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+ 
 }
 
 .container {
@@ -48,18 +95,17 @@
 }
 
 .containerBase {
-    width: 60%;
+    width: 100%;
     margin: 0 auto;
     box-sizing: content-box;
     position: relative;
-    display: grid;
-    background-image: url(Images/sejada1.png),
-                      url(Images/sejadabg2.jpg);
-    background-size: 100% auto, cover;
+    display: inline-block;
+    background-image: url(Images/sejadabg2.jpg);
+    background-size: cover;
     background-repeat: repeat;
     background-attachment: scroll;
     background-position: center;
-    box-shadow: inset 0px 100px 200px rgba(176, 114, 0, 0.75);
+    box-shadow: inset 0px 600px 200px rgba(0, 0, 0, 0.75);
 }
 
 .img {
@@ -99,9 +145,9 @@
 }
 
 .buttonChoices {
-    display: inline-block;
+    display: block;
     padding: 3rem 3rem;
-    font-size: 2.5rem;
+    font-size: 5rem;
     background-color: #016514;
     color: white;
     border: none;
@@ -110,14 +156,9 @@
     font-family: 'AA-GALAXY', sans-serif;
     transition: background-color 0.3s ease;
     position: relative;
-    padding-bottom: 6rem;
     margin: 0;
-    text-align: center;
-    text-wrap: pretty;
-    left: 20%;
-    bottom: -20%;
-    width: 30%;
-    height: 20%;
+    text-align: justify;
+    
 }
 
 .buttonChoices:hover {
@@ -129,18 +170,16 @@
     color: white;
     text-align: center;
     text-shadow: 7px 10px 12px #000000 ;
-    font-size: clamp(25px, 5.5vw, 150px);
-    margin-bottom: 10px;
+    font-size: 9rem;
 }
 
 .fontBody1 {
     font-family: 'Tasees', sans-serif;
     color: white;
-    font-size: clamp(10px, 3.5vw, 75px);
+    font-size: 6rem;
     text-align: center;
     text-shadow: 7px 5px 15px #000000;
     text-overflow: balance;
-   padding-top: 5%;
 }
 
 .fontBody2 {
@@ -156,8 +195,8 @@
 
 
 .rounded-rectangle {
-    height: clamp(150px, 10.417vw, 250px);
-    width: clamp(260px, 16.927vw, 400px);
+    width: 80%;
+    height: 30rem;
     background-color: rgba(139, 69, 19, 0.9);
     box-shadow: #000000 10px 10px 20px;
     border-radius: 30px;
@@ -171,16 +210,16 @@
 }
 
 .rounded-rectangle .fontBody2 {
-  font-size: clamp(0.5rem, 105vw, 5rem);
+  font-size: 5rem;
   position: relative;
   top: 5rem;
   left: 15rem;
   padding-top: 1rem;
-  margin: 0;
-  text-align: left;
+  margin-left: 20rem;
   text-shadow: #000000 6px 6px 12px;
   color: white;
   -webkit-text-stroke: 3px black;
+  border: #000000 2px solid;
 }
 
 .SaudiCultureImage {
@@ -195,13 +234,23 @@
 }
 
 .Footer {
+    height: 5%;
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
     color: white;
     width: 100%;
+    
     background-color: #562b00;
     text-align: center;
-    margin-top: 0;
-    padding-block: 1%;
     transform: none;
+    margin-top: -1%;
 }
 
+.Footer p {
+    transform: translate(0%, 150%);
+}
+
+@keyframes spin {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
