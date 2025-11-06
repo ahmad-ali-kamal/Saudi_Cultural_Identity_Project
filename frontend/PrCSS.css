@@ -1,4 +1,10 @@
 
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 @font-face {
     font-family: 'DARK';
     src: url('Fonts/DARK.otf');
@@ -13,85 +19,37 @@
   src: url('Fonts/AA-GALAXY.otf');
 }
 
-.SliderbackGround {
-    margin: 100px auto;
-    width: 90%;
-    border: #000000 5px solid;
-    display: flex;
-    overflow-x: auto;
-}
-
-.SliderbackGround::-webkit-scrollbar{
-    display: none;
-}
-
-.carousel {
-  position: relative;   /* makes .groupBGpic stay behind this section only */
-  overflow: hidden;     /* hides anything that moves outside */
-  width: 100%;
-  height: 100vh;        /* height of the top section */
-}
 
 
-/* Moving background behind the main image */
-.groupBGpic {
-  background-color: rgb(0, 0, 0);
-  position: absolute;         /* place it behind the main image */
-  top: 0;
-  left: 0;
-  width: max-content;
-  height: 100%;
-  display: flex;
-  gap: 3em;
-  animation: spin 30s linear infinite;
-  overflow: hidden;
-  z-index: -1;                 /* send it behind */
-}
-
-.BGpic {
-  flex: 0 0 auto;
-  width: 30vw;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.BGpic img {
-  width: 75%;
-  height: 75%;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 10px;
-  padding-bottom: 35%;
-}
-
-
-
-.nav {
-    overflow: hidden;
-    background-color: #333;
+nav {
+    background-color: #000000;
     font-family: Arial, Helvetica, sans-serif;
     width: 100%;
+    padding: 1rem 0;
     position: sticky;
     top: 0;
-    z-index: 1000;    
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
 }
-.nav a {
-  float: right;
-  color: red;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
- 
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #cccccc;
 }
 
 .container {
-  position: relative;
-  display: block;
-  width: 60%;
+  position: scroll;
+  width: 100%;
   margin: 0 auto;
+  box-shadow: inset 0px 600px 200px rgba(0, 0, 0, 0.75);
 }
 
 .containerBase {
@@ -100,12 +58,13 @@
     box-sizing: content-box;
     position: relative;
     display: inline-block;
-    background-image: url(Images/sejadabg2.jpg);
+    background-image: url(Images/BG1.jpg);
     background-size: cover;
     background-repeat: repeat;
     background-attachment: scroll;
     background-position: center;
     box-shadow: inset 0px 600px 200px rgba(0, 0, 0, 0.75);
+    
 }
 
 .img {
@@ -235,6 +194,7 @@
 
 .Footer {
     height: 5%;
+    display: grid;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1rem;
     color: white;
@@ -243,14 +203,10 @@
     background-color: #562b00;
     text-align: center;
     transform: none;
-    margin-top: -1%;
 }
 
 .Footer p {
     transform: translate(0%, 150%);
 }
 
-@keyframes spin {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+
