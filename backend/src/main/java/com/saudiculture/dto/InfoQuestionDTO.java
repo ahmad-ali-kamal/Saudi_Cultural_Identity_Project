@@ -10,7 +10,6 @@ public class InfoQuestionDTO {
     private String language;
     private String region;
 
-    // Image fields - base64 encoded for JSON transport
     private String imageBase64;
     private String imageMimeType;
 }
