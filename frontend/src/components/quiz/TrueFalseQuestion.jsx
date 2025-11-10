@@ -4,21 +4,32 @@ function TrueFalseQuestion({ question, selectedAnswer, onAnswerSelect, showImage
     { value: 'False', label: 'خطأ ✗', color: 'red' },
   ];
 
+  // Decode base64 image if available
+  const getImageSrc = () => {
+    if (question.imageBase64 && question.imageMimeType) {
+      return `data:${question.imageMimeType};base64,${question.imageBase64}`;
+    }
+    // Fallback to imageUrl for backward compatibility
+    return question.imageUrl;
+  };
+
+  const imageSrc = getImageSrc();
+
   return (
     <div className="space-y-6">
       {/* Question Image (if exists) */}
-      {showImage && question.imageUrl && (
-        <div className="rounded-lg overflow-hidden shadow-lg mb-6">
+      {showImage && imageSrc && (
+        <div className="rounded-lg overflow-hidden shadow-lg mb-6 bg-gray-50">
           <img
-            src={question.imageUrl}
+            src={imageSrc}
             alt="Question visual"
-            className="w-full h-64 object-cover"
+            className="w-full max-h-96 object-contain"
           />
         </div>
       )}
 
       {/* Question Text */}
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
+      <h2 className="text-2xl md:text-3xl font-bold text-primary mb-8">
         {question.questionText}
       </h2>
 
@@ -33,9 +44,9 @@ function TrueFalseQuestion({ question, selectedAnswer, onAnswerSelect, showImage
               className={`p-8 rounded-2xl border-3 transition-all duration-300 transform hover:scale-105 ${
                 isSelected
                   ? option.color === 'green'
-                    ? 'bg-green-600 text-white border-green-600 shadow-2xl scale-105'
-                    : 'bg-red-600 text-white border-red-600 shadow-2xl scale-105'
-                  : 'bg-white text-gray-800 border-gray-300 hover:border-gray-400 hover:shadow-lg'
+                    ? 'bg-secondary text-light border-secondary shadow-2xl scale-105'
+                    : 'bg-accent text-primary border-accent shadow-2xl scale-105'
+                  : 'bg-white text-primary border-accent hover:border-secondary hover:shadow-lg'
               }`}
             >
               <div className="text-3xl font-bold">{option.label}</div>

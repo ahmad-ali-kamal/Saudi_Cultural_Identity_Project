@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import QuestionRenderer from '../components/quiz/QuestionRenderer';
@@ -15,6 +15,10 @@ function QuizTakePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Prevent multiple fetches (especially in React Strict Mode)
+  const hasFetchedRef = useRef(false);
+  const configRef = useRef(null);
+
   useEffect(() => {
     if (!config) {
       // No config, redirect to quiz setup
@@ -22,8 +26,17 @@ function QuizTakePage() {
       return;
     }
 
-    fetchQuestions();
-  }, [config, navigate]);
+    // Check if config actually changed (allow re-fetch on new config)
+    const configChanged = JSON.stringify(configRef.current) !== JSON.stringify(config);
+
+    // Only fetch once per config
+    if (!hasFetchedRef.current || configChanged) {
+      hasFetchedRef.current = true;
+      configRef.current = config;
+      fetchQuestions();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config]);
 
   const fetchQuestions = async () => {
     try {

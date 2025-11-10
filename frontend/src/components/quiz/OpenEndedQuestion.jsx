@@ -1,21 +1,32 @@
 function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage = true }) {
   const answer = selectedAnswer || '';
 
+  // Decode base64 image if available
+  const getImageSrc = () => {
+    if (question.imageBase64 && question.imageMimeType) {
+      return `data:${question.imageMimeType};base64,${question.imageBase64}`;
+    }
+    // Fallback to imageUrl for backward compatibility
+    return question.imageUrl;
+  };
+
+  const imageSrc = getImageSrc();
+
   return (
     <div className="space-y-6">
       {/* Question Image (if exists) */}
-      {showImage && question.imageUrl && (
-        <div className="rounded-lg overflow-hidden shadow-lg mb-6">
+      {showImage && imageSrc && (
+        <div className="rounded-lg overflow-hidden shadow-lg mb-6 bg-gray-50">
           <img
-            src={question.imageUrl}
+            src={imageSrc}
             alt="Question visual"
-            className="w-full h-64 object-cover"
+            className="w-full max-h-96 object-contain"
           />
         </div>
       )}
 
       {/* Question Text */}
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+      <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6">
         {question.questionText}
       </h2>
 
@@ -25,10 +36,10 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
           value={answer}
           onChange={(e) => onAnswerSelect(e.target.value)}
           placeholder="اكتب إجابتك هنا..."
-          className="w-full p-5 border-2 border-gray-300 rounded-xl focus:border-saudi-green focus:outline-none transition-colors text-lg min-h-[150px] resize-none"
+          className="w-full p-5 border-2 border-accent rounded-xl focus:border-secondary focus:outline-none transition-colors text-lg min-h-[150px] resize-none text-primary"
           dir="auto"
         />
-        <div className="flex justify-between items-center mt-2 text-sm text-gray-500">
+        <div className="flex justify-between items-center mt-2 text-sm text-primary/60">
           <span>{answer.length} حرف</span>
           {answer.length === 0 && (
             <span className="text-amber-600">⚠️ الرجاء كتابة إجابة</span>
@@ -37,8 +48,8 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
       </div>
 
       {/* Helper Text */}
-      <div className="bg-gray-50 border-r-4 border-saudi-green p-4 rounded-lg">
-        <p className="text-gray-700">
+      <div className="bg-light/30 border-r-4 border-secondary p-4 rounded-lg">
+        <p className="text-primary">
           💡 اكتب إجابتك بشكل واضح. سيتم مقارنتها بالإجابة الصحيحة.
         </p>
       </div>
