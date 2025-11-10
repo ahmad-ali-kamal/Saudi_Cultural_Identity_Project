@@ -42,4 +42,10 @@ public class Question {
 
   @NotBlank(message = "Region cannot be blank")
   private String region;
+
+  @Field("image_data")
+  private byte[] imageData;
+
+  @Field("image_mime_type")
+  private String imageMimeType;
 }

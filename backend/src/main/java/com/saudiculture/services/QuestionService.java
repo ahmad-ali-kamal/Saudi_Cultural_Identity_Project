@@ -19,6 +19,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import static net.logstash.logback.argument.StructuredArguments.keyValue;
@@ -109,6 +110,13 @@ public class QuestionService {
         dto.setCategory(question.getCategory());
         dto.setLanguage(question.getLanguage());
         dto.setRegion(question.getRegion());
+
+        // Convert image bytes to base64 if present
+        if (question.getImageData() != null) {
+            dto.setImageBase64(Base64.getEncoder().encodeToString(question.getImageData()));
+            dto.setImageMimeType(question.getImageMimeType());
+        }
+
         return dto;
     }
 
@@ -122,6 +130,13 @@ public class QuestionService {
         dto.setRegion(question.getRegion());
         dto.setType(question.getType());
         dto.setCategory(question.getCategory());
+
+        // Convert image bytes to base64 if present
+        if (question.getImageData() != null) {
+            dto.setImageBase64(Base64.getEncoder().encodeToString(question.getImageData()));
+            dto.setImageMimeType(question.getImageMimeType());
+        }
+
         return dto;
     }
 }
