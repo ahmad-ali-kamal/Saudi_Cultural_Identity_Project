@@ -134,14 +134,14 @@ function SignupPage() {
             </div>
 
             {/* Back Link */}
-            <div className="mt-4 text-center">
-              <Link
-                to="/"
-                className="text-secondary hover:text-accent hover:underline font-semibold transition-colors"
-              >
-                العودة للصفحة الرئيسية
-              </Link>
-            </div>
+            <div className="text-center mt-12">
+            <a
+              href="/"
+              className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              العودة للصفحة الرئيسية
+            </a>
+          </div>
           </div>
         </div>
       </div>

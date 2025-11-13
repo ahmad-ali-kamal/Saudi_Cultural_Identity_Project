@@ -37,7 +37,7 @@ function QuizPage() {
 
   const questionTypes = [
     { value: 'all', label: 'مختلط (كل الأنواع)' },
-    { value: 'MCQ', label: 'اختيار من متعدد' },
+    { value: 'MCQ', label: 'اختيار متعدد' },
     { value: 'True/False', label: 'صح أو خطأ' },
   ];
 
@@ -144,13 +144,13 @@ function QuizPage() {
           </div>
 
           {/* Back Link */}
-          <div className="mt-8 text-center">
-            <Link
-              to="/"
-              className="text-light hover:text-accent hover:underline font-semibold text-lg transition-colors"
+          <div className="text-center mt-12">
+            <a
+              href="/"
+              className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
             >
-              ← العودة للصفحة الرئيسية
-            </Link>
+              العودة للصفحة الرئيسية
+            </a>
           </div>
         </div>
       </div>

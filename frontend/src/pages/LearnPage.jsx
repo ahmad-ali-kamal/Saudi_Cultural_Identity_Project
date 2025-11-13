@@ -49,10 +49,10 @@ function LearnPage() {
           </div>
 
           {/* Back Button */}
-          <div className="text-center">
+          <div className="text-center mt-12">
             <a
               href="/"
-              className="inline-block px-8 py-3 bg-gray-200 text-gray-800 font-bold rounded-lg hover:bg-gray-300 transition-all duration-300"
+              className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
             >
               العودة للصفحة الرئيسية
             </a>
