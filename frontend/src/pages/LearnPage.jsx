@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CustomSelect from '../components/CustomSelect';
@@ -66,95 +66,17 @@ function LearnPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, currentPage]);
 
-  const fetchInfo = async () => {
-    try {
-      setLoading(true);
-      setError(null);
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
+  }, []);
 
-      const params = {
-        language: filters.language,
-        page: currentPage,
-        size: pageSize,
-      };
-
-      if (filters.category) params.category = filters.category;
-      if (filters.region) params.region = filters.region;
-      if (filters.search && filters.search.trim()) params.search = filters.search.trim();
-
-      const data = await apiService.getInfo(params);
-      setInfoItems(data.content || []);
-      // Fix: Parse pagination from nested 'page' object (VIA_DTO structure)
-      setTotalPages(data.page?.totalPages || 0);
-      setTotalElements(data.page?.totalElements || 0);
-
-      console.log('Pagination info:', {
-        totalPages: data.page?.totalPages,
-        totalElements: data.page?.totalElements,
-        currentPage: currentPage,
-        itemsCount: data.content?.length,
-        rawData: data
-      });
-    } catch (err) {
-      console.error('Failed to fetch info:', err);
-      setError('فشل في تحميل المعلومات. حاول مرة أخرى.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleFilterChange = (field, value) => {
-    setFilters({ ...filters, [field]: value });
-    setCurrentPage(0); // Reset to first page when filters change
-    hasFetchedRef.current = false; // Allow new fetch
-  };
-
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchInput(value);
-
-    // Clear existing timeout
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current);
-    }
-
-    // Set new timeout for debounced search (800ms after user stops typing)
-    searchTimeoutRef.current = setTimeout(() => {
-      setFilters({ ...filters, search: value });
-      setCurrentPage(0);
-      hasFetchedRef.current = false;
-    }, 800);
-  };
-
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    hasFetchedRef.current = false;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleRetry = () => {
-    hasFetchedRef.current = false;
-    fetchInfo();
-  };
-
-  // Initial loading state (first load)
-  if (loading && infoItems.length === 0) {
-    return (
-      <div className="min-h-screen bg-primary">
-        <Navbar />
-        <div className="container mx-auto px-6 py-24">
-          <div className="max-w-6xl mx-auto">
-            <div className="bg-light rounded-2xl shadow-xl p-12 text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-secondary mx-auto mb-6"></div>
-              <p className="text-xl text-primary">جاري تحميل المعلومات...</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Helper function to generate page numbers with ellipsis
-  const getPageNumbers = () => {
+  // Helper function to generate page numbers with ellipsis (must be before early returns)
+  const getPageNumbers = useCallback(() => {
     const pages = [];
     const maxVisible = 7; // Show max 7 page numbers
 
@@ -188,7 +110,86 @@ function LearnPage() {
     }
 
     return pages;
+  }, [currentPage, totalPages]);
+
+  const fetchInfo = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const params = {
+        language: filters.language,
+        page: currentPage,
+        size: pageSize,
+      };
+
+      if (filters.category) params.category = filters.category;
+      if (filters.region) params.region = filters.region;
+      if (filters.search && filters.search.trim()) params.search = filters.search.trim();
+
+      const data = await apiService.getInfo(params);
+      setInfoItems(data.content || []);
+      // Fix: Parse pagination from nested 'page' object (VIA_DTO structure)
+      setTotalPages(data.page?.totalPages || 0);
+      setTotalElements(data.page?.totalElements || 0);
+    } catch (err) {
+      console.error('Failed to fetch info:', err);
+      setError('فشل في تحميل المعلومات. حاول مرة أخرى.');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const handleFilterChange = (field, value) => {
+    setFilters({ ...filters, [field]: value });
+    setCurrentPage(0); // Reset to first page when filters change
+    hasFetchedRef.current = false; // Allow new fetch
+  };
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchInput(value);
+
+    // Clear existing timeout
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    // Set new timeout for debounced search (800ms after user stops typing)
+    searchTimeoutRef.current = setTimeout(() => {
+      setFilters((prevFilters) => ({ ...prevFilters, search: value }));
+      setCurrentPage(0);
+      hasFetchedRef.current = false;
+    }, 800);
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    hasFetchedRef.current = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleRetry = () => {
+    hasFetchedRef.current = false;
+    fetchInfo();
+  };
+
+  // Initial loading state (first load)
+  if (loading && infoItems.length === 0) {
+    return (
+      <div className="min-h-screen bg-primary">
+        <Navbar />
+        <div className="container mx-auto px-6 py-24">
+          <div className="max-w-6xl mx-auto">
+            <div className="bg-light rounded-2xl shadow-xl p-12 text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-secondary mx-auto mb-6"></div>
+              <p className="text-xl text-primary">جاري تحميل المعلومات...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -318,70 +319,75 @@ function LearnPage() {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {infoItems.map((info, index) => (
-                  <InfoCard key={index} info={info} />
+                  <InfoCard
+                    key={info.questionText || info.term || `info-${index}`}
+                    info={info}
+                  />
                 ))}
               </div>
 
-{/* Pagination */}
-{totalPages > 1 && (
-  <div className="bg-light/10 rounded-xl p-6">
-    <div className="flex justify-center items-center gap-2 flex-wrap">
-      {/* Previous Button */}
-      <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 0}
-        className="px-5 py-2.5 bg-light text-primary font-bold rounded-lg hover:bg-accent hover:scale-105 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
-      >
-        ← السابق
-      </button>
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="bg-light/10 rounded-xl p-6">
+                  <div className="flex justify-center items-center gap-2 flex-wrap">
+                    {/* Previous Button */}
+                    <button
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 0}
+                      className="px-5 py-2.5 bg-light text-primary font-bold rounded-lg hover:bg-accent hover:scale-105 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    >
+                      ← السابق
+                    </button>
 
-      {/* Page Numbers */}
-      {getPageNumbers().map((pageNum, idx) => (
-        pageNum === '...' ? (
-          <span key={`ellipsis-${idx}`} className="px-3 text-light font-bold">
-            ...
-          </span>
-        ) : (
-          <button
-            key={pageNum}
-            onClick={() => handlePageChange(pageNum)}
-            className={`px-4 py-2.5 font-bold rounded-lg transition-all duration-300 ${
-              currentPage === pageNum
-                ? 'bg-secondary text-light scale-110 shadow-lg'
-                : 'bg-light/50 text-primary hover:bg-light hover:scale-105'
-            }`}
-          >
-            {pageNum + 1}
-          </button>
-        )
-      ))}
+                    {/* Page Numbers */}
+                    {getPageNumbers().map((pageNum, idx) => (
+                      pageNum === '...' ? (
+                        <span key={`ellipsis-${idx}`} className="px-3 text-light font-bold">
+                          ...
+                        </span>
+                      ) : (
+                        <button
+                          key={pageNum}
+                          onClick={() => handlePageChange(pageNum)}
+                          className={`px-4 py-2.5 font-bold rounded-lg transition-all duration-300 ${
+                            currentPage === pageNum
+                              ? 'bg-secondary text-light scale-110 shadow-lg'
+                              : 'bg-light/50 text-primary hover:bg-light hover:scale-105'
+                          }`}
+                        >
+                          {pageNum + 1}
+                        </button>
+                      )
+                    ))}
 
-      {/* Next Button */}
-      <button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage >= totalPages - 1}
-        className="px-5 py-2.5 bg-light text-primary font-bold rounded-lg hover:bg-accent hover:scale-105 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
-      >
-        التالي →
-      </button>
-    </div>
+                    {/* Next Button */}
+                    <button
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage >= totalPages - 1}
+                      className="px-5 py-2.5 bg-light text-primary font-bold rounded-lg hover:bg-accent hover:scale-105 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    >
+                      التالي →
+                    </button>
+                  </div>
 
-    {/* Page Info */}
-    <div className="text-center mt-3 text-light/70 text-sm">
-      صفحة {currentPage + 1} من {totalPages} ({totalElements} نتيجة)
-    </div>
-  </div>
-)}
+                  {/* Page Info */}
+                  <div className="text-center mt-3 text-light/70 text-sm">
+                    صفحة {currentPage + 1} من {totalPages} ({totalElements} نتيجة)
+                  </div>
+                </div>
+              )}
 
-{/* Back Button */}
-<div className="text-center mt-12">
-  <a
-    href="/"
-    className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
-  >
-    العودة للصفحة الرئيسية
-  </a>
-</div>
+              {/* Back Button */}
+              <div className="text-center mt-12">
+                <a
+                  href="/"
+                  className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+                >
+                  العودة للصفحة الرئيسية
+                </a>
+              </div>
+            </>
+          )}
         </div>
       </div>
 

@@ -16,7 +16,7 @@ function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
   const questionType = question.type?.toLowerCase() || 'mcq';
 
   // Handle different type variations
-  if (questionType === 'mcq' || questionType === 'multiple choice') {
+  if (questionType === 'mcq' || questionType === 'single_choice') {
     return (
       <MCQQuestion
         question={question}
