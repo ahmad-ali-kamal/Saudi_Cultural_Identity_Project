@@ -26,7 +26,7 @@ function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
     );
   }
 
-  if (questionType === 'true/false' || questionType === 'true-false' || questionType === 'boolean') {
+  if (questionType === 'true/false' || questionType === 'true_false' || questionType === 'boolean') {
     return (
       <TrueFalseQuestion
         question={question}

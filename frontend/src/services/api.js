@@ -61,9 +61,9 @@ export const apiService = {
 
   // Info/Learning endpoints
   getInfo: async (params = {}) => {
-    const { category, region, page = 0, size = 10 } = params;
+    const { language = 'Arabic', category, region, search, page = 0, size = 21 } = params;
     const response = await api.get('/info', {
-      params: { category, region, page, size },
+      params: { language, category, region, search, page, size },
     });
     return response.data;
   },
