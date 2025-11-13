@@ -1,10 +1,5 @@
 function Footer() {
-  const socialLinks = [
-    { icon: '📘', label: 'Facebook', url: '#' },
-    { icon: '🐦', label: 'Twitter', url: '#' },
-    { icon: '📷', label: 'Instagram', url: '#' },
-    { icon: '▶️', label: 'YouTube', url: '#' },
-  ];
+  const socialLinks = [];
 
   return (
     <footer className="bg-secondary text-light py-12">

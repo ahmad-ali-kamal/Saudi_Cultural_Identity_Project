@@ -6,12 +6,14 @@ import QuizResultsPage from './pages/QuizResultsPage';
 import LearnPage from './pages/LearnPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import AboutPage from './pages/AboutPage';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/quiz" element={<QuizPage />} />
         <Route path="/quiz/take" element={<QuizTakePage />} />
         <Route path="/quiz/results" element={<QuizResultsPage />} />

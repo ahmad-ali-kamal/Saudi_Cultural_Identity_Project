@@ -39,7 +39,7 @@ function LandingPage() {
           </Link>
         </div>
       </section>
-
+      
       {/* About Section */}
       <section className="py-20 px-6 bg-primary">
         <div className="container mx-auto max-w-6xl">
@@ -59,7 +59,7 @@ function LandingPage() {
             {/* Quiz Card */}
             <div className="group relative bg-light rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
               {/* Card Image */}
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-65 overflow-hidden">
                 <img
                   src="/images/quiz-card-img.jpg"
                   alt="Saudi Traditional Dance"
@@ -72,7 +72,7 @@ function LandingPage() {
               <div className="p-8">
                 <h2 className="text-3xl font-bold text-secondary mb-4">تحس انك سعودي؟</h2>
                 <p className="text-primary text-lg leading-relaxed mb-6">
-                  اذا تحس نفسك فاهم في الثقافة السعودية فــــــــــــــــــــــ
+                  اذا تحس نفسك فاهم في الثقافة السعودية
                 </p>
 
                 {/* CTA Button */}
