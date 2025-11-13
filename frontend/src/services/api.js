@@ -11,12 +11,21 @@ const api = axios.create({
   },
 });
 
-// Add request interceptor to include JWT token
+// Add request interceptor to include Amplify/Cognito access token
 api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('jwtToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+  async (config) => {
+    // Get token from Amplify (async)
+    try {
+      const { fetchAuthSession } = await import('aws-amplify/auth');
+      const session = await fetchAuthSession();
+      const token = session.tokens?.accessToken?.toString();
+
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (error) {
+      // User is not authenticated, continue without token
+      console.log('No auth session available');
     }
     return config;
   },
@@ -28,10 +37,15 @@ api.interceptors.request.use(
 // Add response interceptor for error handling
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     if (error.response?.status === 401) {
-      // Unauthorized - clear token and redirect to login
-      localStorage.removeItem('jwtToken');
+      // Unauthorized - sign out user and redirect to login
+      try {
+        const { signOut } = await import('aws-amplify/auth');
+        await signOut();
+      } catch (err) {
+        console.error('Error signing out:', err);
+      }
       window.location.href = '/login';
     }
     return Promise.reject(error);
