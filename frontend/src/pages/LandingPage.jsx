@@ -21,19 +21,21 @@ function LandingPage() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 text-center text-white px-6 max-w-5xl mx-auto">
+        <div className="relative z-10 text-center px-6 max-w-7xl mx-auto">
           <h1
-            className="text-7xl md:text-8xl font-extrabold mb-6 drop-shadow-2xl"
-            style={{ textShadow: '6px 9px 0px rgba(0,0,0,0.25)' }}
+            className="text-7xl md:text-9xl py-10 font-extrabold mb-6 bg-gradient-to-t from-white via-green-400 to-green-600 text-transparent bg-clip-text drop-shadow-2xl"
           >
             عزنا بطبعنا
           </h1>
-          <p className="text-3xl md:text-4xl mb-12 drop-shadow-lg font-semibold">
+
+          <p
+            className="text-3xl md:text-6xl text-white mb-12 font-semibold drop-shadow-lg"
+          >
             تبي تشوف مستواك في الثقافة السعودية ؟
           </p>
           <Link
             to="/quiz"
-            className="inline-block px-12 py-5 bg-secondary text-light text-2xl font-bold rounded-xl hover:bg-accent transition-all duration-300 hover:scale-110 shadow-2xl"
+            className="inline-block px-12 py-10 bg-secondary text-light text-6xl font-bold rounded-xl hover:bg-accent transition-all duration-300 hover:scale-110 shadow-2xl"
           >
             جرب مستواك
           </Link>
@@ -54,7 +56,7 @@ function LandingPage() {
 
       {/* Feature Cards Section */}
       <section className="py-20 px-6 bg-primary">
-        <div className="container mx-auto max-w-7xl">
+        <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Quiz Card */}
             <div className="group relative bg-light rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
@@ -103,16 +105,16 @@ function LandingPage() {
               {/* Card Content */}
               <div className="p-8">
                 <h2 className="text-3xl font-bold text-secondary mb-4">منت فاهم لثقافتنا؟</h2>
-                <p className="text-primary text-lg leading-relaxed mb-6">
+                <p className="text-primary text-lg leading-relaxed mb-7">
                   بسيطة!<br/>
-                  بنعلمك كل شي تحتاجه عن ثقافتنا<br/>
+                  بنعلمك كل شي تحتاجه عن ثقافتنا
                   اذا ضغطت على الزر اللي تحت
                 </p>
 
                 {/* CTA Button */}
                 <Link
                   to="/learn"
-                  className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="inline-block px-12 py-5 bg-secondary text-light text-3xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   تعلم
                 </Link>

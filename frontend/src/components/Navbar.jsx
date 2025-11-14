@@ -21,6 +21,23 @@ function Navbar() {
           >
             هوية المملكة الثقافية
           </Link>
+
+          {/* Logo/Brand */}
+          <Link
+            to="/learn"
+            className="text-light text-xl font-bold hover:text-accent transition-colors "
+          >
+          تعلم
+          </Link>
+
+          {/* Logo/Brand */}
+          <Link
+            to="/quiz"
+            className="text-light text-xl font-bold hover:text-accent transition-colors "
+          >
+          اختبر نفسك
+          </Link>
+
           {/* Logo/Brand */}
           <Link
             to="/about"
