@@ -88,6 +88,11 @@ export const apiService = {
     return response.data;
   },
 
+  getUserStats: async () => {
+    const response = await api.get('/users/me/stats');
+    return response.data;
+  },
+
   // Auth test endpoint
   testAuth: async () => {
     const response = await api.get('/auth/test');

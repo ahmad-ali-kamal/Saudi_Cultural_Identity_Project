@@ -68,6 +68,12 @@ function Navbar() {
                 <span className="text-light">
                   مرحباً، {user?.name || user?.email?.split('@')[0] || 'مستخدم'}
                 </span>
+                <Link
+                  to="/dashboard"
+                  className="px-6 py-2 border-2 border-light text-light rounded-lg hover:bg-accent hover:border-accent transition-all duration-300"
+                >
+                  الملف الشخصي
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="px-6 py-2 border-2 border-light text-light rounded-lg hover:bg-accent hover:border-accent transition-all duration-300"

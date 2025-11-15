@@ -6,7 +6,7 @@ import { apiService } from '../services/api';
 import { authService } from '../services/auth';
 
 // FALSE answer variants (mirrors backend logic)
-const FALSE_VARIANTS = ['false', 'خطأ', 'حطا', 'خاطئ'];
+const FALSE_VARIANTS = ['false', 'خطأ', 'حطا', 'خاطئ', 'خاطئة'];
 
 function QuizResultsPage() {
   const location = useLocation();

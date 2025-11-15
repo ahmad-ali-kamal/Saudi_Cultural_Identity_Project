@@ -8,7 +8,6 @@ import { apiService } from '../services/api';
 function LearnPage() {
   const [filters, setFilters] = useState({
     language: 'Arabic',
-    category: '',
     region: '',
     search: '',
   });
@@ -32,26 +31,14 @@ function LearnPage() {
     { value: 'English', label: 'English' },
   ];
 
-  const categoryOptions = [
-    { value: '', label: 'جميع الفئات' },
-    { value: 'Traditional Food', label: 'Traditional Food' },
-    { value: 'Clothing', label: 'Clothing' },
-    { value: 'Festivals', label: 'Festivals' },
-    { value: 'Music & Dance', label: 'Music & Dance' },
-    { value: 'Architecture', label: 'Architecture' },
-    { value: 'Customs & Traditions', label: 'Customs & Traditions' },
-    { value: 'History', label: 'History' },
-    { value: 'Geography', label: 'Geography' },
-  ];
-
   const regionOptions = [
     { value: '', label: 'جميع المناطق' },
-    { value: 'GENERAL', label: 'عام' },
-    { value: 'WEST', label: 'الغربية' },
-    { value: 'EAST', label: 'الشرقية' },
-    { value: 'NORTH', label: 'الشمالية' },
-    { value: 'SOUTH', label: 'الجنوبية' },
-    { value: 'CENTRAL', label: 'الوسطى' },
+    { value: 'general', label: 'عام' },
+    { value: 'west', label: 'الغربية' },
+    { value: 'east', label: 'الشرقية' },
+    { value: 'north', label: 'الشمالية' },
+    { value: 'south', label: 'الجنوبية' },
+    { value: 'centeral', label: 'الوسطى' },
   ];
 
   useEffect(() => {
@@ -123,7 +110,6 @@ function LearnPage() {
         size: pageSize,
       };
 
-      if (filters.category) params.category = filters.category;
       if (filters.region) params.region = filters.region;
       if (filters.search && filters.search.trim()) params.search = filters.search.trim();
 
@@ -244,7 +230,7 @@ function LearnPage() {
           <div className="bg-light rounded-2xl shadow-xl p-6 mb-8">
             <h2 className="text-2xl font-bold text-primary mb-6">فلترة المحتوى</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
               {/* Language Filter */}
               <div>
                 <label className="block text-sm font-semibold text-primary mb-2">
@@ -255,19 +241,6 @@ function LearnPage() {
                   onChange={(value) => handleFilterChange('language', value)}
                   options={languageOptions}
                   placeholder="اختر اللغة"
-                />
-              </div>
-
-              {/* Category Filter */}
-              <div>
-                <label className="block text-sm font-semibold text-primary mb-2">
-                  الفئة
-                </label>
-                <CustomSelect
-                  value={filters.category}
-                  onChange={(value) => handleFilterChange('category', value)}
-                  options={categoryOptions}
-                  placeholder="اختر الفئة"
                 />
               </div>
 

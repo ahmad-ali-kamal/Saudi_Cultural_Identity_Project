@@ -7,6 +7,7 @@ import LearnPage from './pages/LearnPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import DashboardPage from './pages/DashboardPage';
 import AboutPage from './pages/AboutPage';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/quiz/take" element={<QuizTakePage />} />
         <Route path="/quiz/results" element={<QuizResultsPage />} />
         <Route path="/learn" element={<LearnPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
