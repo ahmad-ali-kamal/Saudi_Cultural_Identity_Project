@@ -6,6 +6,7 @@ import QuizResultsPage from './pages/QuizResultsPage';
 import LearnPage from './pages/LearnPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import AboutPage from './pages/AboutPage';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/learn" element={<LearnPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Routes>
     </Router>
   );

@@ -19,6 +19,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import static net.logstash.logback.argument.StructuredArguments.keyValue;
@@ -31,23 +32,41 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final MongoTemplate mongoTemplate;
 
-    public Page<InfoQuestionDTO> getInfo(String category, String region, int page, int size) {
+    public Page<InfoQuestionDTO> getInfo(String language, String category, String region, String searchTerm, int page, int size) {
         log.info("Fetching info questions",
+                keyValue("language", language),
                 keyValue("category", category),
                 keyValue("region", region),
+                keyValue("searchTerm", searchTerm),
                 keyValue("page", page),
                 keyValue("size", size));
         Pageable pageable = PageRequest.of(page, size);
         Page<Question> questionsPage;
 
-        if (category != null && region != null) {
-            questionsPage = questionRepository.findByCategoryAndRegion(category, region, pageable);
-        } else if (category != null) {
-            questionsPage = questionRepository.findByCategory(category, pageable);
-        } else if (region != null) {
-            questionsPage = questionRepository.findByRegion(region, pageable);
+        // Determine which query method to use based on parameters
+        // Language is always present (defaults to Arabic)
+        if (searchTerm != null && !searchTerm.trim().isEmpty()) {
+            // Search is active - use text search queries with language filter
+            if (category != null && region != null) {
+                questionsPage = questionRepository.searchQuestionsByLanguageCategoryAndRegion(searchTerm, language, category, region, pageable);
+            } else if (category != null) {
+                questionsPage = questionRepository.searchQuestionsByLanguageAndCategory(searchTerm, language, category, pageable);
+            } else if (region != null) {
+                questionsPage = questionRepository.searchQuestionsByLanguageAndRegion(searchTerm, language, region, pageable);
+            } else {
+                questionsPage = questionRepository.searchQuestionsByLanguage(searchTerm, language, pageable);
+            }
         } else {
-            questionsPage = questionRepository.findAll(pageable);
+            // No search - use filter queries with language
+            if (category != null && region != null) {
+                questionsPage = questionRepository.findByContentLanguageAndCategoryAndRegion(language, category, region, pageable);
+            } else if (category != null) {
+                questionsPage = questionRepository.findByContentLanguageAndCategory(language, category, pageable);
+            } else if (region != null) {
+                questionsPage = questionRepository.findByContentLanguageAndRegion(language, region, pageable);
+            } else {
+                questionsPage = questionRepository.findByContentLanguage(language, pageable);
+            }
         }
 
         List<InfoQuestionDTO> dtoList = questionsPage.getContent().stream()
@@ -107,8 +126,15 @@ public class QuestionService {
         dto.setQuestionText(question.getQuestionText());
         dto.setAnswer(question.getAnswer());
         dto.setCategory(question.getCategory());
-        dto.setLanguage(question.getLanguage());
+        dto.setLanguage(question.getContentLanguage());
         dto.setRegion(question.getRegion());
+
+        // Convert image bytes to base64 if present
+        if (question.getImageData() != null) {
+            dto.setImageBase64(Base64.getEncoder().encodeToString(question.getImageData()));
+            dto.setImageMimeType(question.getImageMimeType());
+        }
+
         return dto;
     }
 
@@ -118,10 +144,17 @@ public class QuestionService {
         dto.setQuestionText(question.getQuestionText());
         dto.setOptions(question.getOptions());
         dto.setAnswer(question.getAnswer());
-        dto.setLanguage(question.getLanguage());
+        dto.setLanguage(question.getContentLanguage());
         dto.setRegion(question.getRegion());
         dto.setType(question.getType());
         dto.setCategory(question.getCategory());
+
+        // Convert image bytes to base64 if present
+        if (question.getImageData() != null) {
+            dto.setImageBase64(Base64.getEncoder().encodeToString(question.getImageData()));
+            dto.setImageMimeType(question.getImageMimeType());
+        }
+
         return dto;
     }
 }

@@ -1,9 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { apiService } from '../services/api';
 import { authService } from '../services/auth';
+
+// FALSE answer variants (mirrors backend logic)
+const FALSE_VARIANTS = ['false', 'خطأ', 'حطا', 'خاطئ'];
 
 function QuizResultsPage() {
   const location = useLocation();
@@ -14,17 +17,21 @@ function QuizResultsPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submissionError, setSubmissionError] = useState(null);
 
+  // Ref to prevent duplicate submissions (StrictMode-safe)
+  const hasSubmitted = useRef(false);
+
   useEffect(() => {
     if (!questions || !answers) {
       navigate('/quiz');
       return;
     }
 
-    // Auto-submit if user is authenticated
-    if (authService.isAuthenticated() && !submitted && !submitting) {
+    // Auto-submit if user is authenticated (only once)
+    if (authService.isAuthenticated() && !hasSubmitted.current) {
+      hasSubmitted.current = true; // Set immediately (synchronous)
       submitToBackend();
     }
-  }, [questions, answers, navigate, submitted, submitting]);
+  }, [questions, answers, navigate]);
 
   const submitToBackend = async () => {
     try {
@@ -44,6 +51,7 @@ function QuizResultsPage() {
     } catch (err) {
       console.error('Failed to submit quiz:', err);
       setSubmissionError(err.response?.data?.message || 'فشل في حفظ النتيجة');
+      hasSubmitted.current = false; // Reset ref to allow retry on error
     } finally {
       setSubmitting(false);
     }
@@ -68,8 +76,21 @@ function QuizResultsPage() {
         ? [...correctAnswer].sort().join(',')
         : correctAnswer;
       isCorrect = sortedUser === sortedCorrect;
+    } else if (question.type === 'true_false') {
+      // TRUE/FALSE: Use same logic as backend
+      let normalizedUser = String(userAnswer).trim();
+
+      // Convert "False" to "خطأ" for Arabic questions (mirrors backend)
+      if (question.contentLanguage === 'arabic' && normalizedUser.toLowerCase() === 'false') {
+        normalizedUser = 'خطأ';
+      }
+
+      // Check if both have same "falseness" status
+      const userInFalse = FALSE_VARIANTS.includes(normalizedUser.toLowerCase());
+      const correctInFalse = FALSE_VARIANTS.includes(String(correctAnswer).trim().toLowerCase());
+      isCorrect = userInFalse === correctInFalse;
     } else {
-      // Single answer: case-insensitive comparison
+      // Other question types: case-insensitive comparison
       isCorrect =
         String(userAnswer).trim().toLowerCase() ===
         String(correctAnswer).trim().toLowerCase();

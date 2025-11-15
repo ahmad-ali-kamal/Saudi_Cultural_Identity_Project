@@ -197,7 +197,7 @@ public class DataLoader {
     question.setAnswer(trimAndNormalize(csvRecord.getAnswer(), false));
     question.setCategory(trimAndNormalize(csvRecord.getCategory(), true));
     question.setType(trimAndNormalize(csvRecord.getQuestionType(), true));
-    question.setLanguage(trimAndNormalize(csvRecord.getLanguage(), true));
+    question.setContentLanguage(trimAndNormalize(csvRecord.getLanguage(), true));
     question.setRegion(trimAndNormalize(region, true));
 
     question.setOptions(parseChoices(csvRecord.getChoices()));

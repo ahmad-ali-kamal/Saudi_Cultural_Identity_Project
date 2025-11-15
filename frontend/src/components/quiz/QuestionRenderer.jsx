@@ -16,7 +16,7 @@ function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
   const questionType = question.type?.toLowerCase() || 'mcq';
 
   // Handle different type variations
-  if (questionType === 'mcq' || questionType === 'multiple choice') {
+  if (questionType === 'mcq' || questionType === 'single_choice') {
     return (
       <MCQQuestion
         question={question}
@@ -26,7 +26,7 @@ function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
     );
   }
 
-  if (questionType === 'true/false' || questionType === 'true-false' || questionType === 'boolean') {
+  if (questionType === 'true/false' || questionType === 'true_false' || questionType === 'boolean') {
     return (
       <TrueFalseQuestion
         question={question}

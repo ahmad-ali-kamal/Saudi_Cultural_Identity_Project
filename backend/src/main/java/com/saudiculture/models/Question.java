@@ -37,9 +37,16 @@ public class Question {
   @NotBlank(message = "Type cannot be blank")
   private String type;
 
-  @NotBlank(message = "Language cannot be blank")
-  private String language;
+  @NotBlank(message = "Content language cannot be blank")
+  @Field("content_language")
+  private String contentLanguage;
 
   @NotBlank(message = "Region cannot be blank")
   private String region;
+
+  @Field("image_data")
+  private byte[] imageData;
+
+  @Field("image_mime_type")
+  private String imageMimeType;
 }

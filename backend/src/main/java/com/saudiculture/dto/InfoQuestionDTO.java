@@ -9,4 +9,7 @@ public class InfoQuestionDTO {
     private String category;
     private String language;
     private String region;
+
+    private String imageBase64;
+    private String imageMimeType;
 }

@@ -12,4 +12,7 @@ public class QuizQuestionDTO {
     private String region;
     private String type;
     private String category;
+
+    private String imageBase64;
+    private String imageMimeType;
 }

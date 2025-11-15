@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base API URL - change this to your backend URL
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+const API_BASE_URL = import.meta.env.API_BASE_URL || 'http://localhost:8080/api';
 
 // Create axios instance with default config
 const api = axios.create({
@@ -11,12 +11,21 @@ const api = axios.create({
   },
 });
 
-// Add request interceptor to include JWT token
+// Add request interceptor to include Amplify/Cognito access token
 api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('jwtToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+  async (config) => {
+    // Get token from Amplify (async)
+    try {
+      const { fetchAuthSession } = await import('aws-amplify/auth');
+      const session = await fetchAuthSession();
+      const token = session.tokens?.accessToken?.toString();
+
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (error) {
+      // User is not authenticated, continue without token
+      console.log('No auth session available');
     }
     return config;
   },
@@ -28,10 +37,15 @@ api.interceptors.request.use(
 // Add response interceptor for error handling
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     if (error.response?.status === 401) {
-      // Unauthorized - clear token and redirect to login
-      localStorage.removeItem('jwtToken');
+      // Unauthorized - sign out user and redirect to login
+      try {
+        const { signOut } = await import('aws-amplify/auth');
+        await signOut();
+      } catch (err) {
+        console.error('Error signing out:', err);
+      }
       window.location.href = '/login';
     }
     return Promise.reject(error);
@@ -61,9 +75,9 @@ export const apiService = {
 
   // Info/Learning endpoints
   getInfo: async (params = {}) => {
-    const { category, region, page = 0, size = 10 } = params;
+    const { language = 'Arabic', category, region, search, page = 0, size = 21 } = params;
     const response = await api.get('/info', {
-      params: { category, region, page, size },
+      params: { language, category, region, search, page, size },
     });
     return response.data;
   },

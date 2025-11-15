@@ -12,26 +12,37 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
     }
   };
 
+  // Decode base64 image if available
+  const getImageSrc = () => {
+    if (question.imageBase64 && question.imageMimeType) {
+      return `data:${question.imageMimeType};base64,${question.imageBase64}`;
+    }
+    // Fallback to imageUrl for backward compatibility
+    return question.imageUrl;
+  };
+
+  const imageSrc = getImageSrc();
+
   return (
     <div className="space-y-6">
       {/* Question Image (if exists) */}
-      {showImage && question.imageUrl && (
-        <div className="rounded-lg overflow-hidden shadow-lg mb-6">
+      {showImage && imageSrc && (
+        <div className="rounded-lg overflow-hidden shadow-lg mb-6 bg-gray-50">
           <img
-            src={question.imageUrl}
+            src={imageSrc}
             alt="Question visual"
-            className="w-full h-64 object-cover"
+            className="w-full max-h-96 object-contain"
           />
         </div>
       )}
 
       {/* Question Text */}
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+      <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">
         {question.questionText}
       </h2>
 
       {/* Instruction */}
-      <p className="text-gray-600 text-lg mb-6">
+      <p className="text-primary/70 text-lg mb-6">
         اختر جميع الإجابات الصحيحة ({selectedAnswers.length} محددة)
       </p>
 
@@ -45,24 +56,24 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
               onClick={() => handleToggle(option)}
               className={`w-full p-5 text-right rounded-xl border-2 transition-all duration-300 ${
                 isSelected
-                  ? 'bg-saudi-green/10 border-saudi-green shadow-md'
-                  : 'bg-white border-gray-300 hover:border-saudi-green hover:shadow-sm'
+                  ? 'bg-secondary/10 border-secondary shadow-md'
+                  : 'bg-white border-accent hover:border-secondary hover:shadow-sm'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className={`text-lg font-semibold ${isSelected ? 'text-saudi-green' : 'text-gray-800'}`}>
+                <span className={`text-lg font-semibold ${isSelected ? 'text-secondary' : 'text-primary'}`}>
                   {option}
                 </span>
                 <div
                   className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-all ${
                     isSelected
-                      ? 'bg-saudi-green border-saudi-green'
-                      : 'border-gray-400 bg-white'
+                      ? 'bg-secondary border-secondary'
+                      : 'border-accent bg-white'
                   }`}
                 >
                   {isSelected && (
                     <svg
-                      className="w-4 h-4 text-white"
+                      className="w-4 h-4 text-light"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import QuestionRenderer from '../components/quiz/QuestionRenderer';
@@ -14,6 +14,11 @@ function QuizTakePage() {
   const [answers, setAnswers] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Prevent multiple fetches (especially in React Strict Mode)
+  const hasFetchedRef = useRef(false);
+  const configRef = useRef(null);
 
   useEffect(() => {
     if (!config) {
@@ -22,8 +27,17 @@ function QuizTakePage() {
       return;
     }
 
-    fetchQuestions();
-  }, [config, navigate]);
+    // Check if config actually changed (allow re-fetch on new config)
+    const configChanged = JSON.stringify(configRef.current) !== JSON.stringify(config);
+
+    // Only fetch once per config
+    if (!hasFetchedRef.current || configChanged) {
+      hasFetchedRef.current = true;
+      configRef.current = config;
+      fetchQuestions();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config]);
 
   const fetchQuestions = async () => {
     try {
@@ -75,6 +89,7 @@ function QuizTakePage() {
   };
 
   const handleSubmit = () => {
+    setIsSubmitting(true);
     // Navigate to results page with questions and answers
     navigate('/quiz/results', {
       state: {
@@ -206,9 +221,10 @@ function QuizTakePage() {
             {isLastQuestion ? (
               <button
                 onClick={handleSubmit}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg"
+                disabled={isSubmitting}
+                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                إنهاء الاختبار →
+                {isSubmitting ? 'جاري الإرسال...' : 'إنهاء الاختبار →'}
               </button>
             ) : (
               <button

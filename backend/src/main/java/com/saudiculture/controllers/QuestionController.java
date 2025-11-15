@@ -45,7 +45,7 @@ public class QuestionController {
 
   @Operation(
       summary = "Get informational questions",
-      description = "Retrieve paginated informational questions about Saudi culture, optionally filtered by category and region"
+      description = "Retrieve paginated informational questions about Saudi culture, filtered by language (defaults to Arabic) and optionally filtered by category, region, and search term. Search looks across question text, answer, term, and term meaning."
   )
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Successfully retrieved questions"),
@@ -53,16 +53,20 @@ public class QuestionController {
   })
   @GetMapping("/info")
   public ResponseEntity<Page<InfoQuestionDTO>> getInfo(
+      @Parameter(description = "Filter by language (defaults to Arabic)")
+      @RequestParam(defaultValue = "Arabic") String language,
       @Parameter(description = "Filter by category (e.g., Traditional Food, Clothing, Festivals)")
       @RequestParam(required = false) String category,
       @Parameter(description = "Filter by region (e.g., WEST, EAST, NORTH, SOUTH, CENTRAL, GENERAL)")
       @RequestParam(required = false) String region,
+      @Parameter(description = "Search term to find in question text, answer, term, or term meaning")
+      @RequestParam(required = false) String search,
       @Parameter(description = "Page number (zero-indexed)")
       @RequestParam(defaultValue = "0") int page,
       @Parameter(description = "Number of items per page")
       @RequestParam(defaultValue = "20") int size
   ) {
-    Page<InfoQuestionDTO> infoPage = questionService.getInfo(category, region, page, size);
+    Page<InfoQuestionDTO> infoPage = questionService.getInfo(language, category, region, search, page, size);
     return ResponseEntity.ok(infoPage);
   }
 
