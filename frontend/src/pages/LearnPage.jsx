@@ -198,7 +198,7 @@ function LearnPage() {
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-6xl mx-auto">
             <div className="bg-light border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
-              <div className="text-6xl mb-6">❌</div>
+              <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
               <h2 className="text-2xl font-bold text-red-900 mb-4">حدث خطأ</h2>
               <p className="text-lg text-red-700 mb-8">{error}</p>
               <button
