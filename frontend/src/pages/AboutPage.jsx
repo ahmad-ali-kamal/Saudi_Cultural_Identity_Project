@@ -42,28 +42,24 @@ function AboutPage() {
               <h2 className="text-3xl font-bold text-secondary mb-6">ما يقدمه المشروع</h2>
               <ul className="space-y-4 text-primary">
                 <li className="flex items-start gap-4">
-                  <span className="text-accent text-3xl flex-shrink-0">🎯</span>
                   <div>
                     <h3 className="font-bold text-lg mb-1">اختبارات ثقافية تفاعلية</h3>
                     <p>اختبر معلوماتك عن الثقافة السعودية من خلال أسئلة متنوعة وممتعة</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-4">
-                  <span className="text-accent text-3xl flex-shrink-0">📚</span>
                   <div>
                     <h3 className="font-bold text-lg mb-1">محتوى تعليمي غني</h3>
                     <p>تعلم عن العادات والتقاليد والمأكولات والملابس التراثية</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-4">
-                  <span className="text-accent text-3xl flex-shrink-0">🎨</span>
                   <div>
                     <h3 className="font-bold text-lg mb-1">تجربة جذابة وحديثة</h3>
                     <p>واجهة تفاعلية وسهلة الاستخدام توفر تجربة ممتعة للجميع</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-4">
-                  <span className="text-accent text-3xl flex-shrink-0">🌟</span>
                   <div>
                     <h3 className="font-bold text-lg mb-1">تحدى نفسك واصدقائك</h3>
                     <p>اختبر نفسك وتنافس مع الآخرين للحصول على اعلى قدر من الاجابات الصحيحة</p>
@@ -72,7 +68,6 @@ function AboutPage() {
               </ul>
             </div>
 
-            
             <div className="bg-light rounded-2xl shadow-xl p-8">
               <h2 className="text-3xl font-bold text-secondary mb-6">فريق المشروع</h2>
               <p className="text-primary text-lg leading-relaxed mb-6">

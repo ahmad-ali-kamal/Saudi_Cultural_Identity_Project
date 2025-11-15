@@ -23,19 +23,19 @@ function LandingPage() {
         {/* Hero Content */}
         <div className="relative z-10 text-center px-6 max-w-7xl mx-auto">
           <h1
-            className="text-7xl md:text-9xl py-10 font-extrabold mb-6 bg-gradient-to-t from-green-400 to-green-1000 text-transparent bg-clip-text drop-shadow-2xl"
+            className="text-7xl md:text-9xl py-10 font-extrabold mb-6 bg-gradient-to-t from-green-400 to-green-1000 bg-clip-text drop-shadow-2xl text-white"
           >
             عزنا بطبعنا
           </h1>
 
           <p
-            className="text-3xl md:text-6xl text-white mb-12 font-semibold drop-shadow-lg"
+            className="text-2xl md:text-4xl text-light mb-12 font-semibold  drop-shadow-lg"
           >
             تبي تشوف مستواك في الثقافة السعودية ؟
           </p>
           <Link
             to="/quiz"
-            className="inline-block px-12 py-10 bg-secondary text-light text-6xl font-bold rounded-xl hover:bg-accent transition-all duration-300 hover:scale-110 shadow-2xl"
+            className="inline-block px-10 py-8 bg-secondary text-light text-4xl font-bold rounded-xl hover:bg-accent transition-all duration-300 hover:scale-110 shadow-2xl"
           >
             جرب مستواك
           </Link>
