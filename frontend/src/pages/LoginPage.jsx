@@ -32,6 +32,9 @@ function LoginPage() {
         return;
       }
 
+      // Sync user to MongoDB backend
+      await authService.syncUser();
+
       // Redirect to home on successful login
       navigate('/');
     } catch (error) {
@@ -63,6 +66,8 @@ function LoginPage() {
       await authService.confirmSignUp(usernameOrEmail, confirmationCode);
       // Auto-login after confirmation
       await authService.login(usernameOrEmail, password);
+      // Sync user to MongoDB backend
+      await authService.syncUser();
       navigate('/');
     } catch (error) {
       console.error('Confirmation error:', error);
@@ -131,9 +136,17 @@ function LoginPage() {
                 </div>
 
                 <div>
-                  <label className="block text-secondary font-semibold mb-2">
-                    كلمة المرور
-                  </label>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="text-secondary font-semibold">
+                      كلمة المرور
+                    </label>
+                    <Link
+                      to="/forgot-password"
+                      className="text-sm text-secondary hover:text-accent hover:underline transition-colors"
+                    >
+                      هل نسيت كلمة المرور؟
+                    </Link>
+                  </div>
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}

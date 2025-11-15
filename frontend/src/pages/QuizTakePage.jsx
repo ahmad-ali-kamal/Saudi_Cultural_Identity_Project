@@ -14,6 +14,7 @@ function QuizTakePage() {
   const [answers, setAnswers] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Prevent multiple fetches (especially in React Strict Mode)
   const hasFetchedRef = useRef(false);
@@ -88,6 +89,7 @@ function QuizTakePage() {
   };
 
   const handleSubmit = () => {
+    setIsSubmitting(true);
     // Navigate to results page with questions and answers
     navigate('/quiz/results', {
       state: {
@@ -219,9 +221,10 @@ function QuizTakePage() {
             {isLastQuestion ? (
               <button
                 onClick={handleSubmit}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg"
+                disabled={isSubmitting}
+                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                إنهاء الاختبار →
+                {isSubmitting ? 'جاري الإرسال...' : 'إنهاء الاختبار →'}
               </button>
             ) : (
               <button

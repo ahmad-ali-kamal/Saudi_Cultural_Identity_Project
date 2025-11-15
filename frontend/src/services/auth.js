@@ -1,5 +1,5 @@
 // Auth Service - AWS Amplify Direct Authentication
-import { signIn, signUp, confirmSignUp, signOut, fetchAuthSession, getCurrentUser } from 'aws-amplify/auth';
+import { signIn, signUp, confirmSignUp, signOut, fetchAuthSession, getCurrentUser, resetPassword, confirmResetPassword } from 'aws-amplify/auth';
 
 // ========== Auth Service ==========
 
@@ -186,6 +186,63 @@ export const authService = {
   },
 
   /**
+   * Initiate password reset - sends verification code to user's email
+   * @param {string} email - User's email address
+   */
+  resetPassword: async (email) => {
+    try {
+      const result = await resetPassword({
+        username: email, // Using email as username for password reset
+      });
+      return result;
+    } catch (error) {
+      console.error('Reset password error:', error);
+      const errorType = error.__type || error.name;
+
+      if (errorType === 'UserNotFoundException') {
+        throw new Error('البريد الإلكتروني غير مسجل');
+      } else if (errorType === 'LimitExceededException') {
+        throw new Error('تم تجاوز الحد الأقصى للمحاولات. حاول مرة أخرى لاحقاً');
+      } else if (errorType === 'InvalidParameterException') {
+        throw new Error('البريد الإلكتروني غير صحيح');
+      }
+      throw new Error('حدث خطأ في إرسال رمز التحقق');
+    }
+  },
+
+  /**
+   * Confirm password reset with verification code and new password
+   * @param {string} email - User's email address
+   * @param {string} code - Verification code from email
+   * @param {string} newPassword - New password
+   */
+  confirmResetPassword: async (email, code, newPassword) => {
+    try {
+      await confirmResetPassword({
+        username: email, // Using email as username
+        confirmationCode: code,
+        newPassword: newPassword,
+      });
+    } catch (error) {
+      console.error('Confirm reset password error:', error);
+      const errorType = error.__type || error.name;
+
+      if (errorType === 'CodeMismatchException') {
+        throw new Error('رمز التحقق غير صحيح');
+      } else if (errorType === 'ExpiredCodeException') {
+        throw new Error('رمز التحقق منتهي الصلاحية');
+      } else if (errorType === 'InvalidPasswordException') {
+        throw new Error('كلمة المرور ضعيفة. يجب أن تحتوي على: 8 أحرف، حرف كبير، حرف صغير، رقم، رمز خاص');
+      } else if (errorType === 'LimitExceededException') {
+        throw new Error('تم تجاوز الحد الأقصى للمحاولات. حاول مرة أخرى لاحقاً');
+      } else if (errorType === 'UserNotFoundException') {
+        throw new Error('المستخدم غير موجود');
+      }
+      throw new Error('حدث خطأ في إعادة تعيين كلمة المرور');
+    }
+  },
+
+  /**
    * Sign out user
    */
   logout: async () => {
@@ -267,6 +324,27 @@ export const authService = {
    */
   getUser: async () => {
     return await authService.getUserAttributes();
+  },
+
+  /**
+   * Sync authenticated user from Cognito to MongoDB backend
+   * Creates or updates user record in MongoDB using JWT data
+   * Should be called after successful login/signup to ensure user exists in DB
+   * @returns {Promise<Object>} User data from MongoDB
+   */
+  syncUser: async () => {
+    try {
+      // Dynamic import to avoid circular dependency
+      const { apiService } = await import('./api');
+      const userData = await apiService.getCurrentUser();
+      console.log('User synced to MongoDB:', userData);
+      return userData;
+    } catch (error) {
+      console.error('Failed to sync user to MongoDB:', error);
+      // Don't throw - allow app to continue even if sync fails
+      // Backend will show helpful error if user tries quiz without sync
+      throw error;
+    }
   },
 };
 
