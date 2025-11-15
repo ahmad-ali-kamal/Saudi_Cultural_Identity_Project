@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface QuizSubmissionRepository extends MongoRepository<QuizSubmission, String> {
 
   List<QuizSubmission> findByUserIdOrderBySubmittedAtDesc(String userId);
+  List<QuizSubmission> findAllByUserId(String userId);
   long countByUserId(String userId);
 }

@@ -26,7 +26,7 @@ public class QuizSubmissionService {
   private final QuizSubmissionRepository quizSubmissionRepository;
   private final QuestionRepository questionRepository;
   private final List<String> FALSE_VARIANTS = new ArrayList<>(
-      Arrays.asList("false", "خطأ", "حطا", "خاطئ"));
+      Arrays.asList("false", "خطأ", "حطا", "خاطئ", "خاطئة"));
 
 
   public QuizSubmissionResponse submitQuiz(QuizSubmissionRequest quizSubmissionRequest,
