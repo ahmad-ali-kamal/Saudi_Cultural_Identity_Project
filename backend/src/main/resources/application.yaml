@@ -14,7 +14,7 @@ cors:
 # CSV Loading Configuration
 csv:
   loading:
-    enabled: true
+    enabled: false
     retries: 5
     retry-delay-ms: 2000
     log-errors: true

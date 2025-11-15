@@ -8,6 +8,7 @@ import com.saudiculture.models.QuizSubmission;
 import com.saudiculture.repositories.QuestionRepository;
 import com.saudiculture.repositories.QuizSubmissionRepository;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +25,13 @@ public class QuizSubmissionService {
 
   private final QuizSubmissionRepository quizSubmissionRepository;
   private final QuestionRepository questionRepository;
+  private final List<String> FALSE_VARIANTS = new ArrayList<>(
+      Arrays.asList("false", "خطأ", "حطا", "خاطئ"));
+
 
   public QuizSubmissionResponse submitQuiz(QuizSubmissionRequest quizSubmissionRequest,
       String userId) {
-    log.info("Submitting quiz",
-        keyValue("userId", userId),
+    log.info("Submitting quiz", keyValue("userId", userId),
         keyValue("questionCount", quizSubmissionRequest.answers().size()));
 
     QuizSubmission quizSubmission = new QuizSubmission();
@@ -51,7 +54,7 @@ public class QuizSubmissionService {
         throw new RuntimeException("Question not found: " + answer.questionId());
       }
 
-      boolean isCorrect = question.getAnswer().equalsIgnoreCase(answer.userAnswer());
+      boolean isCorrect = isCorrectAnswer(answer.userAnswer(), question.getAnswer(), question.getType(), question.getContentLanguage());
       if (isCorrect) {
         score++;
       }
@@ -65,10 +68,8 @@ public class QuizSubmissionService {
     quizSubmission.setScore(score);
     quizSubmission = quizSubmissionRepository.save(quizSubmission);
 
-    log.info("Quiz submitted successfully",
-        keyValue("userId", userId),
-        keyValue("submissionId", quizSubmission.getId()),
-        keyValue("score", score),
+    log.info("Quiz submitted successfully", keyValue("userId", userId),
+        keyValue("submissionId", quizSubmission.getId()), keyValue("score", score),
         keyValue("totalQuestions", quizSubmission.getTotalQuestions()));
 
     return convertToQuizSubmissionResponse(quizSubmission);
@@ -77,13 +78,49 @@ public class QuizSubmissionService {
   public List<QuizSubmissionResponse> getQuizSubmissions(String userId) {
     log.info("Fetching quiz submissions", keyValue("userId", userId));
 
-    List<QuizSubmission> quizSubmissions = quizSubmissionRepository.findByUserIdOrderBySubmittedAtDesc(userId);
+    List<QuizSubmission> quizSubmissions = quizSubmissionRepository.findByUserIdOrderBySubmittedAtDesc(
+        userId);
 
-    log.info("Retrieved quiz submissions",
-        keyValue("userId", userId),
+    log.info("Retrieved quiz submissions", keyValue("userId", userId),
         keyValue("count", quizSubmissions.size()));
 
     return quizSubmissions.stream().map(this::convertToQuizSubmissionResponse).toList();
+  }
+
+  private boolean isCorrectAnswer(String userAnswer, String correctAnswer, String questionType, String contentLanguage) {
+    correctAnswer = correctAnswer.trim();
+    if (contentLanguage.equalsIgnoreCase("arabic")) {
+      if (userAnswer.equalsIgnoreCase("False")) {
+        userAnswer = "خطأ";
+      }
+    }
+    if (questionType.equalsIgnoreCase("open_ended")) {
+      return correctAnswer.equalsIgnoreCase(userAnswer) || correctAnswer.contains(userAnswer);
+    } else if (questionType.equalsIgnoreCase("multiple_choice") || questionType.equalsIgnoreCase(
+        "single_choice")) {
+      if (userAnswer == null || userAnswer.trim().isEmpty()) {
+        return false;
+      }
+      return correctAnswer.equalsIgnoreCase(userAnswer) || correctAnswer.contains(userAnswer);
+    } else if (questionType.equalsIgnoreCase("true_false")) {
+      log.info("correctAnswer: {}", correctAnswer);
+      log.info("userAnswer: {}", userAnswer);
+      log.info("FALSE_VARIANTS: {}", FALSE_VARIANTS);
+
+      boolean userInFalse = FALSE_VARIANTS.contains(userAnswer.toLowerCase());
+      boolean correctInFalse = FALSE_VARIANTS.contains(correctAnswer.toLowerCase());
+      boolean result = userInFalse == correctInFalse;
+
+      log.info("userAnswer.toLowerCase(): {}", userAnswer.toLowerCase());
+      log.info("correctAnswer.toLowerCase(): {}", correctAnswer.toLowerCase());
+      log.info("userInFalse: {}", userInFalse);
+      log.info("correctInFalse: {}", correctInFalse);
+      log.info("result (userInFalse == correctInFalse): {}", result);
+
+      return result;
+    } else {
+      throw new RuntimeException("Invalid question type: " + questionType);
+    }
   }
 
   private QuizSubmissionResponse convertToQuizSubmissionResponse(QuizSubmission quizSubmission) {
