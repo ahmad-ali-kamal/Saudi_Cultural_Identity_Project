@@ -23,7 +23,7 @@ function LandingPage() {
         {/* Hero Content */}
         <div className="relative z-10 text-center px-6 max-w-7xl mx-auto">
           <h1
-            className="text-7xl md:text-9xl py-10 font-extrabold mb-6 bg-gradient-to-t from-white via-green-400 to-green-600 text-transparent bg-clip-text drop-shadow-2xl"
+            className="text-7xl md:text-9xl py-10 font-extrabold mb-6 bg-gradient-to-t from-green-400 to-green-1000 text-transparent bg-clip-text drop-shadow-2xl"
           >
             عزنا بطبعنا
           </h1>
