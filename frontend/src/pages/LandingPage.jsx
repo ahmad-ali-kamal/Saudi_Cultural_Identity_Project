@@ -29,13 +29,13 @@ function LandingPage() {
           </h1>
 
           <p
-            className="text-2xl md:text-4xl text-light mb-12 font-semibold  drop-shadow-lg"
+            className="text-2xl md:text-4xl text-primary mb-12 font-semibold  drop-shadow-lg"
           >
             تبي تشوف مستواك في الثقافة السعودية ؟
           </p>
           <Link
             to="/quiz"
-            className="inline-block px-10 py-8 bg-secondary text-light text-4xl font-bold rounded-xl hover:bg-accent transition-all duration-300 hover:scale-110 shadow-2xl"
+            className="inline-block px-10 py-8 bg-secondary text-primary text-4xl font-bold rounded-xl hover:bg-accent transition-all duration-300 hover:scale-110 shadow-2xl"
           >
             جرب مستواك
           </Link>
@@ -43,69 +43,83 @@ function LandingPage() {
       </section>
       
       {/* About Section */}
-      <section className="py-20 px-6 bg-primary">
-        <div className="container mx-auto max-w-6xl">
-          <p className="text-2xl md:text-3xl text-light leading-relaxed text-center font-semibold">
-            انغمس في عمق التراث السعودي العريق. استكشف العادات الأصيلة، والمأكولات
-            التقليدية، والمهرجانات النابضة بالحياة من خلال تجارب تفاعلية وقصص مرئية
-            وتحديات ثقافية ممتعة. حيث يلتقي التاريخ بالإبداع، ويُلهم التراث مستقبل
-            الوطن.
+      
+<div
+  className=" h-20 bg-sadu-pattern bg-repeat-x "
+  style={{ backgroundImage: "url('/images/Sadu_decoration.jpg')" }}
+></div>
+  <div
+         className=" w-20 h-32  bg-repeat- float-right ml-2 mx-auto pl-20 pr-0 "
+         style={{ backgroundImage: "url('/images/edge_decoration.jpg')",
+          backgroundSize: 'contain'
+          }}
+>       </div>
+      <section className="py-0 px-20 bg-primary">
+      
+        <div className=" ">
+         
+          <p className="text-3xl text-light leading-relaxed text-right font-semibold ">
+           انغمس في عمق التراث السعودي العريق، وتجول بين أصالته وروعة تنوعه.  اكتشف العادات والتقاليد التي توارثتها الأجيال، وتعرّف على القيم التي شكّلت هوية المجتمع السعودي عبر التاريخ. عِش تجربة المأكولات الشعبية بنكهاتها الفريدة التي تحمل في كل لقمة حكاية من أرض الخير والكرم<br/>
+
+واستمتع بالمهرجانات والاحتفالات الضخمة التي تملأ المدن والقرى حياةً وحيوية، حيث تمتزج الموسيقى الشعبية بالفنون الحرفية والرقصات الفلكلورية في مشهد يجسد الفخر والانتماء.
+
+من خلال تجارب تفاعلية مبتكرة، وقصص مرئية نابضة بالحياة، وتحديات ثقافية ممتعة، سنأخذك في رحلة لا تُنسى عبر الزمن، رحلة يتلاقى فيها الماضي مع الحاضر، ويُلهِم فيها التراث مستقبل الوطن. فهنا، يلتقي التاريخ بالإبداع، ويزدهر الشغف بالهوية، ويولد الإلهام ليصنع غدًا أجمل.
           </p>
         </div>
       </section>
 
       {/* Feature Cards Section */}
-      <section className="py-20 px-6 bg-primary">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-12">
+      <section className="py-48 px-6 bg-primary">
+        <div className="container mx-auto max-w-9xl">
+          <div className="grid md:grid-cols-2 gap-32">
             {/* Quiz Card */}
-            <div className="group relative bg-light rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+            <div className="group relative bg-primary rounded-2xl  overflow-hidden  ">
               {/* Card Image */}
-              <div className="relative h-65 overflow-hidden">
+              <div className="relative h-96 overflow-hidden">
                 <img
                   src="/images/quiz-card-img.jpg"
                   alt="Saudi Traditional Dance"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover "
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
               </div>
 
               {/* Card Content */}
               <div className="p-8">
-                <h2 className="text-3xl font-bold text-secondary mb-4">تحس انك سعودي؟</h2>
-                <p className="text-primary text-lg leading-relaxed mb-6">
+                <h2 className="text-4xl font-bold text-secondary mb-4">تحس انك سعودي؟</h2>
+                <p className="text-secondary text-2xl leading-relaxed mb-6">
                   اذا تحس نفسك فاهم في الثقافة السعودية
                 </p>
 
                 {/* CTA Button */}
                 <Link
                   to="/quiz"
-                  className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="inline-block px-12 py-5 bg-secondary text-primary text-3xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   تحدى نفسك!
                 </Link>
               </div>
 
               {/* Decorative Element */}
-              <div className="absolute top-0 left-0 w-2 h-full bg-secondary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+              <div className="absolute top-0 left-0  h-full bg-secondary "></div>
             </div>
 
             {/* Learn Card */}
-            <div className="group relative bg-light rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+            <div className="group relative bg-primary rounded-2xl overflow-hidden ">
               {/* Card Image */}
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-96 overflow-hidden">
                 <img
                   src="/images/info-card-img.jpg"
                   alt="Saudi Cultural Learning"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 "></div>
               </div>
 
               {/* Card Content */}
               <div className="p-8">
-                <h2 className="text-3xl font-bold text-secondary mb-4">منت فاهم لثقافتنا؟</h2>
-                <p className="text-primary text-lg leading-relaxed mb-7">
+                <h2 className="text-4xl font-bold text-secondary mb-4">منت فاهم لثقافتنا؟</h2>
+                <p className=" text-secondary text-2xl leading-relaxed mb-7">
                   بسيطة!<br/>
                   بنعلمك كل شي تحتاجه عن ثقافتنا
                   اذا ضغطت على الزر اللي تحت
@@ -114,14 +128,14 @@ function LandingPage() {
                 {/* CTA Button */}
                 <Link
                   to="/learn"
-                  className="inline-block px-12 py-5 bg-secondary text-light text-3xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="inline-block px-12 py-5 bg-secondary text-primary text-3xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   تعلم
                 </Link>
               </div>
 
               {/* Decorative Element */}
-              <div className="absolute top-0 left-0 w-2 h-full bg-secondary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+              <div className="absolute top-0 left-0  h-full bg-secondary "></div>
             </div>
           </div>
         </div>
