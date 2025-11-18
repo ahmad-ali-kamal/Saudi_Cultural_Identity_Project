@@ -11,7 +11,7 @@ function AboutPage() {
           
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold text-light mb-4">مشروع هوية المملكة الثقافة</h1>
-            <p className="text-xl text-light">
+            <p className="text-2xl text-light">
               تعريف الشباب بهويتنا الثقافية السعودية الأصيلة
             </p>
           </div>
@@ -20,7 +20,7 @@ function AboutPage() {
           <div className="space-y-8">
             
             <div className="bg-light rounded-2xl shadow-xl p-8">
-              <h2 className="text-3xl font-bold text-secondary mb-6">الهدف</h2>
+              <h2 className="text-3xl font-bold text-primary mb-6">الهدف</h2>
               <p className="text-primary text-lg leading-relaxed">
                 نحن نؤمن بأهمية الحفاظ على الهوية الثقافية السعودية ونقلها للأجيال القادمة.
                 يهدف هذا المشروع إلى تعريف الشباب بالتراث والعادات والتقاليد السعودية من خلال
@@ -30,7 +30,7 @@ function AboutPage() {
 
             
             <div className="bg-light rounded-2xl shadow-xl p-8">
-              <h2 className="text-3xl font-bold text-secondary mb-6">رؤيتنا</h2>
+              <h2 className="text-3xl font-bold text-primary mb-6">رؤيتنا</h2>
               <p className="text-primary text-lg leading-relaxed">
                 بناء جيل واعٍ بهويته الثقافية، يقدّر التراث السعودي الأصيل ويساهم في الحفاظ عليه
                 وتطويره. نسعى لجعل الثقافة السعودية حاضرة في حياة الشباب بطرق حديثة وجذابة.
@@ -39,7 +39,7 @@ function AboutPage() {
 
             
             <div className="bg-light rounded-2xl shadow-xl p-8">
-              <h2 className="text-3xl font-bold text-secondary mb-6">ما يقدمه المشروع</h2>
+              <h2 className="text-3xl font-bold text-primary mb-6">ما يقدمه المشروع</h2>
               <ul className="space-y-4 text-primary">
                 <li className="flex items-start gap-4">
                   <div>
@@ -69,7 +69,7 @@ function AboutPage() {
             </div>
 
             <div className="bg-light rounded-2xl shadow-xl p-8">
-              <h2 className="text-3xl font-bold text-secondary mb-6">فريق المشروع</h2>
+              <h2 className="text-3xl font-bold text-primary mb-6">فريق المشروع</h2>
               <p className="text-primary text-lg leading-relaxed mb-6">
                 يتألف فريقنا من خمسة أعضاء متحمسين يعملون معًا للحفاظ على الهوية الثقافية السعودية وتطويرها بطرق حديثة وجذابة.
               </p>
@@ -88,7 +88,7 @@ function AboutPage() {
                       className="w-16 h-16 rounded-full mx-auto mb-3 transform transition-all duration-300 hover:scale-110 hover:shadow-lg hover:brightness-110"
                     />
                   </a>
-                  <h3 className="font-bold text-secondary">أحمد علي كمال</h3>
+                  <h3 className="font-bold text-primary">أحمد علي كمال</h3>
                   <p className="text-primary text-sm"> منظم ملفات المشروع وملفات Excal</p>
                 </div>
 
@@ -105,7 +105,7 @@ function AboutPage() {
                       className="w-16 h-16 rounded-full mx-auto mb-3 transform transition-all duration-300 hover:scale-110 hover:shadow-lg hover:brightness-110"
                     />
                   </a>
-                  <h3 className="font-bold text-secondary">محمد ابراهيم حسن</h3>
+                  <h3 className="font-bold text-primary">محمد ابراهيم حسن</h3>
                   <p className="text-primary text-sm"> مسؤول البرمجة الخلفية (BackEnd)ومساعد تطوير البرمجة الامامية(FrontEnd) </p>
                 </div>
 
@@ -122,7 +122,7 @@ function AboutPage() {
                       className="w-16 h-16 rounded-full mx-auto mb-3 transform transition-all duration-300 hover:scale-110 hover:shadow-lg hover:brightness-110"
                     />
                   </a>
-                  <h3 className="font-bold text-secondary">نواف ابراهيم الخديدي</h3>
+                  <h3 className="font-bold text-primary">نواف ابراهيم الخديدي</h3>
                   <p className="text-primary text-sm">     مطور البرمجة الامامية (FrontEnd)وساعد في ترتيب الملفات وتصميم الموقع</p>
                 </div>
 
@@ -139,7 +139,7 @@ function AboutPage() {
                       className="w-16 h-16 rounded-full mx-auto mb-3 transform transition-all duration-300 hover:scale-110 hover:shadow-lg hover:brightness-110"
                     />
                   </a>
-                  <h3 className="font-bold text-secondary"> عبدالله بدر باجعيفر</h3>
+                  <h3 className="font-bold text-primary"> عبدالله بدر باجعيفر</h3>
                   <p className="text-primary text-sm"> مطور البرمجة الامامية (FrontEnd)وساهم في تصميم الشكل العام للموقع </p>
                 </div>
 
@@ -156,7 +156,7 @@ function AboutPage() {
                       className="w-16 h-16 rounded-full mx-auto mb-3 transform transition-all duration-300 hover:scale-110 hover:shadow-lg hover:brightness-110"
                     />
                   </a>
-                  <h3 className="font-bold text-secondary"> طلال ابراهيم العميري</h3>
+                  <h3 className="font-bold text-primary"> طلال ابراهيم العميري</h3>
                   <p className="text-primary text-sm">مطور البرمجة الامامية (FrontEnd)وساهم في تصميم الشكل العام للموقع </p>
                 </div>
               </div>
@@ -167,7 +167,7 @@ function AboutPage() {
           <div className="text-center mt-12">
             <a
               href="/"
-              className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+              className="inline-block px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
             >
               العودة للصفحة الرئيسية
             </a>

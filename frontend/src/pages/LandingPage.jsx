@@ -44,27 +44,25 @@ function LandingPage() {
       
       {/* About Section */}
       
-<div
+
+  {/* Decorative Divider */}
+  <div
   className=" h-20 bg-sadu-pattern bg-repeat-x "
   style={{ backgroundImage: "url('/images/Sadu_decoration.jpg')" }}
-></div>
-  <div
-         className=" w-20 h-32  bg-repeat- float-right ml-2 mx-auto pl-20 pr-0 "
-         style={{ backgroundImage: "url('/images/edge_decoration.jpg')",
-          backgroundSize: 'contain'
-          }}
->       </div>
+>  </div>
+
       <section className="py-0 px-20 bg-primary">
       
         <div className=" ">
          
           <p className="text-3xl text-light leading-relaxed text-right font-semibold ">
-           انغمس في عمق التراث السعودي العريق، وتجول بين أصالته وروعة تنوعه.  اكتشف العادات والتقاليد التي توارثتها الأجيال، وتعرّف على القيم التي شكّلت هوية المجتمع السعودي عبر التاريخ. عِش تجربة المأكولات الشعبية بنكهاتها الفريدة التي تحمل في كل لقمة حكاية من أرض الخير والكرم<br/>
-
-واستمتع بالمهرجانات والاحتفالات الضخمة التي تملأ المدن والقرى حياةً وحيوية، حيث تمتزج الموسيقى الشعبية بالفنون الحرفية والرقصات الفلكلورية في مشهد يجسد الفخر والانتماء.
-
-من خلال تجارب تفاعلية مبتكرة، وقصص مرئية نابضة بالحياة، وتحديات ثقافية ممتعة، سنأخذك في رحلة لا تُنسى عبر الزمن، رحلة يتلاقى فيها الماضي مع الحاضر، ويُلهِم فيها التراث مستقبل الوطن. فهنا، يلتقي التاريخ بالإبداع، ويزدهر الشغف بالهوية، ويولد الإلهام ليصنع غدًا أجمل.
-          </p>
+          انغمس في عمق التراث السعودي العريق، وتجول بين أصالته وروعة تنوعه. اكتشف العادات والتقاليد التي توارثتها الأجيال، وتعرّف على القيم التي شكّلت هوية المجتمع السعودي عبر التاريخ. عِش تجربة المأكولات الشعبية بنكهاتها الفريدة التي تحمل في كل لقمة حكاية من أرض الخير والكرم.         </p>
+         <p className="text-3xl text-light leading-relaxed text-right font-semibold mt-14">
+       واستمتع بالمهرجانات والاحتفالات الضخمة التي تملأ المدن والقرى حياةً وحيوية، حيث تمتزج الموسيقى الشعبية بالفنون الحرفية والرقصات الفلكلورية في مشهد يجسد الفخر والانتماء.
+       </p>
+       <p className="text-3xl text-light leading-relaxed text-right font-semibold mt-14">
+        من خلال تجارب تفاعلية مبتكرة، وقصص مرئية نابضة بالحياة، وتحديات ثقافية ممتعة، سنأخذك في رحلة لا تُنسى عبر الزمن، رحلة يتلاقى فيها الماضي مع الحاضر، ويُلهِم فيها التراث مستقبل الوطن. فهنا، يلتقي التاريخ بالإبداع، ويزدهر الشغف بالهوية، ويولد الإلهام ليصنع غدًا أجمل.
+        </p>
         </div>
       </section>
 
@@ -73,7 +71,7 @@ function LandingPage() {
         <div className="container mx-auto max-w-9xl">
           <div className="grid md:grid-cols-2 gap-32">
             {/* Quiz Card */}
-            <div className="group relative bg-primary rounded-2xl  overflow-hidden  ">
+            <div className="group relative bg-primary rounded-2xl  overflow-hidden shadow-xl ">
               {/* Card Image */}
               <div className="relative h-96 overflow-hidden">
                 <img

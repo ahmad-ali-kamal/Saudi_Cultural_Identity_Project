@@ -197,13 +197,13 @@ function LearnPage() {
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-6xl mx-auto">
-            <div className="bg-light border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
+            <div className="bg-light border-2 border-primary-400 rounded-2xl shadow-xl p-12 text-center">
               <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
-              <h2 className="text-2xl font-bold text-red-900 mb-4">حدث خطأ</h2>
+              <h2 className="text-2xl font-bold text-red-900 mb-4 ">حدث خطأ</h2>
               <p className="text-lg text-red-700 mb-8">{error}</p>
               <button
                 onClick={handleRetry}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300"
+                className="px-8 py-3 bg-secondary text-primary shadow-primary shadow-inner font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300"
               >
                 حاول مرة أخرى
               </button>

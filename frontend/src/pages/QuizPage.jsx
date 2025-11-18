@@ -59,7 +59,7 @@ function QuizPage() {
             <h1 className="text-5xl font-bold text-light mb-4">
               اختبر معرفتك بالثقافة السعودية
             </h1>
-            <p className="text-xl text-light">
+            <p className="text-3xl text-light">
               اختر تفضيلاتك وابدأ التحدي
             </p>
           </div>
@@ -68,7 +68,7 @@ function QuizPage() {
           <div className="bg-light rounded-2xl shadow-xl p-8 mb-8">
             {/* Category Selection */}
             <div className="mb-6">
-              <label className="block text-secondary font-bold mb-3 text-lg">
+              <label className="block text-primary font-bold mb-3 text-lg">
                 الفئة (اختياري)
               </label>
               <CustomSelect
@@ -81,7 +81,7 @@ function QuizPage() {
 
             {/* Region Selection */}
             <div className="mb-6">
-              <label className="block text-secondary font-bold mb-3 text-lg">
+              <label className="block text-primary font-bold mb-3 text-lg">
                 المنطقة (اختياري)
               </label>
               <CustomSelect
@@ -94,7 +94,7 @@ function QuizPage() {
 
             {/* Question Type */}
             <div className="mb-6">
-              <label className="block text-secondary font-bold mb-3 text-lg">
+              <label className="block text-primary font-bold mb-3 text-lg">
                 نوع الأسئلة
               </label>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -104,8 +104,8 @@ function QuizPage() {
                     onClick={() => setConfig({ ...config, type: type.value })}
                     className={`px-4 py-3 rounded-lg border-2 font-semibold transition-all duration-300 ${
                       config.type === type.value
-                        ? 'bg-secondary text-light border-secondary'
-                        : 'bg-white text-primary border-accent hover:border-secondary'
+                        ? 'bg-secondary text-primary border-secondary'
+                        : 'bg-black text-primary border-accent hover:border-secondary'
                     }`}
                   >
                     {type.label}
@@ -116,8 +116,8 @@ function QuizPage() {
 
             {/* Number of Questions */}
             <div className="mb-8">
-              <label className="block text-secondary font-bold mb-3 text-lg">
-                عدد الأسئلة: <span className="text-secondary">{config.size}</span>
+              <label className="block text-primary font-bold mb-3 text-lg">
+                عدد الأسئلة: <span className="text-primary">{config.size}</span>
               </label>
               <input
                 type="range"
@@ -137,7 +137,7 @@ function QuizPage() {
             <button
               onClick={handleStart}
               disabled={!isValid}
-              className="w-full px-8 py-4 bg-secondary text-light text-xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="w-full px-8 py-4 bg-secondary text-primary text-xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
               ابدأ الاختبار
             </button>
@@ -147,7 +147,7 @@ function QuizPage() {
           <div className="text-center mt-12">
             <a
               href="/"
-              className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+              className="inline-block px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
             >
               العودة للصفحة الرئيسية
             </a>
