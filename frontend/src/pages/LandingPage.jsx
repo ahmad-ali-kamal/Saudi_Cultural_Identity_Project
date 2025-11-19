@@ -61,7 +61,7 @@ function LandingPage() {
             {/* Quiz Card */}
             <div className="group relative bg-light rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
               {/* Card Image */}
-              <div className="relative h-65 overflow-hidden">
+              <div className="relative h-64 overflow-hidden">
                 <img
                   src="/images/quiz-card-img.jpg"
                   alt="Saudi Traditional Dance"
@@ -72,7 +72,7 @@ function LandingPage() {
 
               {/* Card Content */}
               <div className="p-8">
-                <h2 className="text-3xl font-bold text-secondary mb-4">تحس انك سعودي؟</h2>
+                <h2 className="text-3xl font-bold text-secondary mb-5">تحس انك سعودي؟</h2>
                 <p className="text-primary text-lg leading-relaxed mb-6">
                   اذا تحس نفسك فاهم في الثقافة السعودية
                 </p>
@@ -80,7 +80,7 @@ function LandingPage() {
                 {/* CTA Button */}
                 <Link
                   to="/quiz"
-                  className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="inline-block px-12 py-5 bg-secondary text-light font-bold rounded-lg text-3xl hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   تحدى نفسك!
                 </Link>
@@ -104,11 +104,10 @@ function LandingPage() {
 
               {/* Card Content */}
               <div className="p-8">
-                <h2 className="text-3xl font-bold text-secondary mb-4">منت فاهم لثقافتنا؟</h2>
-                <p className="text-primary text-lg leading-relaxed mb-7">
-                  بسيطة!<br/>
+                <h2 className="text-3xl font-bold text-secondary mb-5">منت فاهم لثقافتنا؟</h2>
+                <p className="text-primary text-lg leading-relaxed mb-6">
+                  
                   بنعلمك كل شي تحتاجه عن ثقافتنا
-                  اذا ضغطت على الزر اللي تحت
                 </p>
 
                 {/* CTA Button */}
@@ -116,7 +115,7 @@ function LandingPage() {
                   to="/learn"
                   className="inline-block px-12 py-5 bg-secondary text-light text-3xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
                 >
-                  تعلم
+                  تعلم الأن
                 </Link>
               </div>
 
