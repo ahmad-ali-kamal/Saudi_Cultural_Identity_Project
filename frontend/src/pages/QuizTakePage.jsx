@@ -109,7 +109,7 @@ function QuizTakePage() {
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-light rounded-2xl shadow-xl p-12 text-center">
+            <div className="bg-secondary rounded-2xl shadow-xl p-12 text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-secondary mx-auto mb-6"></div>
               <p className="text-xl text-primary">جاري تحميل الأسئلة...</p>
             </div>
@@ -125,19 +125,19 @@ function QuizTakePage() {
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-light border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
+            <div className="bg-secondary border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
               <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
               <h2 className="text-2xl font-bold text-red-900 mb-4">حدث خطأ</h2>
               <p className="text-lg text-red-700 mb-8">{error}</p>
               <button
                 onClick={fetchQuestions}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 ml-4"
+                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 ml-4"
               >
                 حاول مرة أخرى
               </button>
               <button
                 onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-accent text-primary font-bold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300"
+                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300"
               >
                 العودة للإعدادات
               </button>

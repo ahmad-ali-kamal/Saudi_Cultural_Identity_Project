@@ -65,7 +65,7 @@ function QuizPage() {
           </div>
 
           {/* Configuration Form */}
-          <div className="bg-light rounded-2xl shadow-xl p-8 mb-8">
+          <div className="bg-secondary rounded-2xl shadow-xl p-8 mb-8">
             {/* Category Selection */}
             <div className="mb-6">
               <label className="block text-primary font-bold mb-3 text-lg">
@@ -104,8 +104,8 @@ function QuizPage() {
                     onClick={() => setConfig({ ...config, type: type.value })}
                     className={`px-4 py-3 rounded-lg border-2 font-semibold transition-all duration-300 ${
                       config.type === type.value
-                        ? 'bg-secondary text-primary border-secondary'
-                        : 'bg-black text-primary border-accent hover:border-secondary'
+                        ? 'bg-primary text-secondary border-primary'
+                        : 'bg-first text-primary border-secondary hover:border-secondary'
                     }`}
                   >
                     {type.label}
@@ -125,7 +125,7 @@ function QuizPage() {
                 max="30"
                 value={config.size}
                 onChange={(e) => setConfig({ ...config, size: parseInt(e.target.value) })}
-                className="w-full h-2 bg-accent rounded-lg appearance-none cursor-pointer accent-secondary"
+                className="w-full h-2 bg-primary rounded-lg appearance-none cursor-pointer accent-first "
               />
               <div className="flex justify-between text-sm text-primary mt-2">
                 <span>5 أسئلة</span>
@@ -137,7 +137,7 @@ function QuizPage() {
             <button
               onClick={handleStart}
               disabled={!isValid}
-              className="w-full px-8 py-4 bg-secondary text-primary text-xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="w-full px-8 py-4 bg-first text-primary text-xl font-bold rounded-lg hover:bg-primary hover:text-first transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
               ابدأ الاختبار
             </button>
@@ -155,7 +155,7 @@ function QuizPage() {
         </div>
       </div>
 
-      <Footer />
+      <Footer/>
     </div>
   );
 }

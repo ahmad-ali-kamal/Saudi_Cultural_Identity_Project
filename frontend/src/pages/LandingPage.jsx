@@ -53,9 +53,9 @@ function LandingPage() {
 
       <section className="py-0 px-20 bg-primary">
       
-        <div className=" ">
-         
-          <p className="text-3xl text-light leading-relaxed text-right font-semibold ">
+        <div className="max-w-7xl mx-auto ">
+         <br/><br/>
+          <p className="text-3xl text-light leading-relaxed text-right font-semibold">
           انغمس في عمق التراث السعودي العريق، وتجول بين أصالته وروعة تنوعه. اكتشف العادات والتقاليد التي توارثتها الأجيال، وتعرّف على القيم التي شكّلت هوية المجتمع السعودي عبر التاريخ. عِش تجربة المأكولات الشعبية بنكهاتها الفريدة التي تحمل في كل لقمة حكاية من أرض الخير والكرم.         </p>
          <p className="text-3xl text-light leading-relaxed text-right font-semibold mt-14">
        واستمتع بالمهرجانات والاحتفالات الضخمة التي تملأ المدن والقرى حياةً وحيوية، حيث تمتزج الموسيقى الشعبية بالفنون الحرفية والرقصات الفلكلورية في مشهد يجسد الفخر والانتماء.
@@ -67,11 +67,11 @@ function LandingPage() {
       </section>
 
       {/* Feature Cards Section */}
-      <section className="py-48 px-6 bg-primary">
+      <section className="py-28 px-6 bg-primary">
         <div className="container mx-auto max-w-9xl">
           <div className="grid md:grid-cols-2 gap-32">
             {/* Quiz Card */}
-            <div className="group relative bg-primary rounded-2xl  overflow-hidden shadow-xl ">
+            <div className="group relative bg-secondary rounded-2xl  overflow-hidden shadow-xl ">
               {/* Card Image */}
 
               <div className="relative h-96 overflow-hidden">
@@ -88,8 +88,8 @@ function LandingPage() {
               <div className="p-8">
 
 
-                <h2 className="text-4xl font-bold text-secondary mb-4">تحس انك سعودي؟</h2>
-                <p className="text-secondary text-2xl leading-relaxed mb-6">
+                <h2 className="text-4xl font-bold text-primary mb-4">تحس انك سعودي؟</h2>
+                <p className="text-primary text-2xl leading-relaxed mb-7">
 
                   اذا تحس نفسك فاهم في الثقافة السعودية
                 </p>
@@ -99,7 +99,7 @@ function LandingPage() {
                   to="/quiz"
 
 
-                  className="inline-block px-12 py-5 bg-secondary text-primary text-3xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="inline-block px-12 py-5 bg-primary text-secondary text-3xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
 
                 >
                   تحدى نفسك!
@@ -111,7 +111,7 @@ function LandingPage() {
             </div>
 
             {/* Learn Card */}
-            <div className="group relative bg-primary rounded-2xl overflow-hidden ">
+            <div className="group relative bg-secondary rounded-2xl overflow-hidden ">
               {/* Card Image */}
               <div className="relative h-96 overflow-hidden">
                 <img
@@ -125,17 +125,15 @@ function LandingPage() {
               {/* Card Content */}
               <div className="p-8">
 
-                <h2 className="text-4xl font-bold text-secondary mb-4">منت فاهم لثقافتنا؟</h2>
-                <p className=" text-secondary text-2xl leading-relaxed mb-7">
-                  بسيطة!<br/>
-
+                <h2 className="text-4xl font-bold text-primary mb-4">منت فاهم لثقافتنا؟</h2>
+                <p className=" text-primary text-2xl leading-relaxed mb-7">
                   بنعلمك كل شي تحتاجه عن ثقافتنا
                 </p>
 
                 {/* CTA Button */}
                 <Link
                   to="/learn"
-                  className="inline-block px-12 py-5 bg-secondary text-primary text-3xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="inline-block px-12 py-5 bg-primary text-secondary text-3xl font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   تعلم الأن
                 </Link>

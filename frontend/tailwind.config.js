@@ -11,7 +11,10 @@ export default {
         'primary': '#FFDBBA',      // Dark brown (backgrounds, main color)
         'secondary': '#623F1F',    // Medium brown (buttons, CTAs)
         'accent': '#000000ff',       // Taupe (hover states, borders)
-        'light': '#5a3513ff',        // Peach/sand (text on dark, light cards)
+        'light': '#5a3513ff',  
+
+
+        'first': '#855d38ff',      // Peach/sand (text on dark, light cards)
         // Legacy (for backward compatibility)
         'saudi-green': '#1D2F1F',
       },

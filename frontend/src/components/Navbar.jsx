@@ -95,7 +95,7 @@ function Navbar() {
             ) : (
               <Link
                 to="/login"
-                className="px-6 py-2 text-2xl border-2 border-light text-primary rounded-lg hover:bg-primary transition-all duration-300"
+                className="px-6 py-2 text-2xl border-2 border-primary text-primary rounded-lg hover:bg-accent transition-all duration-300"
               >
                 تسجيل دخول
               </Link>
