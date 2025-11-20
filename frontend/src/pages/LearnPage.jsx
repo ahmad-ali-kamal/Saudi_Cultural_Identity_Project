@@ -199,7 +199,7 @@ function LearnPage() {
           <div className="max-w-6xl mx-auto">
             <div className="bg-secondary border-2 border-primary-400 rounded-2xl shadow-xl p-12 text-center">
               <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
-              <h2 className="text-2xl font-bold text-red-900 mb-4 ">حدث خطأ</h2>
+              <h2 className="text-2xl font-bold text-primary mb-4 ">حدث خطأ</h2>
               <p className="text-lg text-red-700 mb-8">{error}</p>
               <button
                 onClick={handleRetry}
@@ -381,7 +381,7 @@ function LearnPage() {
               <div className="text-center mt-12">
                 <a
                   href="/"
-                  className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="inline-block px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   العودة للصفحة الرئيسية
                 </a>
