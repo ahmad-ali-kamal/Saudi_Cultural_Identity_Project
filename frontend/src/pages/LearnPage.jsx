@@ -115,7 +115,7 @@ function LearnPage() {
 
       const data = await apiService.getInfo(params);
       setInfoItems(data.content || []);
-      // Fix: Parse pagination from nested 'page' object (VIA_DTO structure)
+      // Fix: Parse pagination from nested 'page' object
       setTotalPages(data.page?.totalPages || 0);
       setTotalElements(data.page?.totalElements || 0);
     } catch (err) {

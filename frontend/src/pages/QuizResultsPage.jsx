@@ -16,6 +16,7 @@ function QuizResultsPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submissionError, setSubmissionError] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Ref to prevent duplicate submissions (StrictMode-safe)
   const hasSubmitted = useRef(false);
@@ -27,10 +28,17 @@ function QuizResultsPage() {
     }
 
     // Auto-submit if user is authenticated (only once)
-    if (authService.isAuthenticated() && !hasSubmitted.current) {
-      hasSubmitted.current = true; // Set immediately (synchronous)
-      submitToBackend();
-    }
+    const checkAuthAndSubmit = async () => {
+      const isAuth = await authService.isAuthenticated();
+      setIsAuthenticated(isAuth); // Store auth status in state
+
+      if (isAuth && !hasSubmitted.current) {
+        hasSubmitted.current = true; // Set immediately (synchronous)
+        submitToBackend();
+      }
+    };
+
+    checkAuthAndSubmit();
   }, [questions, answers, navigate]);
 
   const submitToBackend = async () => {
@@ -173,7 +181,7 @@ function QuizResultsPage() {
             </h2>
 
             {/* Submission Status */}
-            {authService.isAuthenticated() ? (
+            {isAuthenticated ? (
               submitting ? (
                 <p className="text-primary">جاري حفظ النتيجة...</p>
               ) : submitted ? (

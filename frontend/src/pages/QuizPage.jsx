@@ -57,7 +57,7 @@ function QuizPage() {
           <div className="bg-light rounded-2xl shadow-xl p-8 mb-8">
             {/* Region Selection */}
             <div className="mb-6">
-              <label className="block text-secondary font-bold mb-3 text-lg">
+              <label className="block text-primary font-bold mb-3 text-lg">
                 المنطقة (اختياري)
               </label>
               <CustomSelect
