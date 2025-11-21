@@ -1,4 +1,5 @@
 import Navbar from '../components/Navbar'; 
+import HomeButton from '../components/HomeButton';
 import Footer from '../components/Footer';
 
 function AboutPage() {
@@ -183,17 +184,8 @@ function AboutPage() {
             
 
           </div>
-
-          {/* Return to homepage button */}
-          <div className="text-center mt-12"> 
-            <a
-              href="/" /* link to homepage */ 
-              className="inline-block px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
-
-            >
-              العودة للصفحة الرئيسية
-            </a>
-          </div>
+          
+          <HomeButton />
         </div>
       </div>
 

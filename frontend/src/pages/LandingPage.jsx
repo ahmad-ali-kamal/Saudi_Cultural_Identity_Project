@@ -1,14 +1,21 @@
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 
 function LandingPage() {
+  useEffect(() => {
+    AOS.init({ duration: 1000 }); // fade duration
+  }, []);
   return (
     <div className="min-h-screen bg-primary">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section 
+      className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
@@ -21,7 +28,7 @@ function LandingPage() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 text-center px-6 max-w-7xl mx-auto">
+        <div className="relative z-10 text-center px-6 max-w-7xl mx-auto" data-aos="fade-up">
           <h1
             className="text-7xl md:text-9xl py-10 font-extrabold mb-6 bg-gradient-to-t from-green-400 to-green-1000 bg-clip-text drop-shadow-2xl text-white"
           >
@@ -30,15 +37,26 @@ function LandingPage() {
 
           <p
             className="text-2xl md:text-4xl text-primary mb-12 font-semibold  drop-shadow-lg"
+            data-aos="fade-up"
           >
             تبي تشوف مستواك في الثقافة السعودية ؟
           </p>
-          <Link
-            to="/quiz"
-            className="inline-block px-10 py-8 bg-secondary text-primary text-4xl font-bold rounded-xl hover:bg-accent transition-all duration-300 hover:scale-110 shadow-2xl"
-          >
-            جرب مستواك
-          </Link>
+  <Link
+  to="/quiz"
+  className="
+    inline-block px-10 py-8
+    bg-secondary text-primary text-4xl font-bold
+    rounded-xl
+    shadow-2xl
+    transform transition duration-700 ease-out
+    hover:scale-110
+  "
+  data-aos="zoom-in"
+>
+  جرب مستواك
+</Link>
+
+
         </div>
       </section>
       
@@ -51,9 +69,9 @@ function LandingPage() {
   style={{ backgroundImage: "url('/images/Sadu_decoration.jpg')" }}
 >  </div>
 
-      <section className="py-0 px-20 bg-primary">
+      <section className="py-0 px-20 bg-primary" >
       
-        <div className="max-w-7xl mx-auto ">
+        <div className="max-w-7xl mx-auto" data-aos="fade-up">
          <br/><br/>
           <p className="text-3xl text-light leading-relaxed text-right font-semibold">
           انغمس في عمق التراث السعودي العريق، وتجول بين أصالته وروعة تنوعه. اكتشف العادات والتقاليد التي توارثتها الأجيال، وتعرّف على القيم التي شكّلت هوية المجتمع السعودي عبر التاريخ. عِش تجربة المأكولات الشعبية بنكهاتها الفريدة التي تحمل في كل لقمة حكاية من أرض الخير والكرم.         </p>
@@ -68,10 +86,10 @@ function LandingPage() {
 
       {/* Feature Cards Section */}
       <section className="py-28 px-6 bg-primary">
-        <div className="container mx-auto max-w-9xl">
+        <div className="container mx-auto max-w-9xl" >
           <div className="grid md:grid-cols-2 gap-32">
             {/* Quiz Card */}
-            <div className="group relative bg-secondary rounded-2xl  overflow-hidden shadow-xl ">
+            <div className="group relative bg-secondary rounded-2xl  overflow-hidden shadow-xl " data-aos="flip-left" data-aos-duration="1000">
               {/* Card Image */}
 
               <div className="relative h-96 overflow-hidden">
@@ -111,9 +129,9 @@ function LandingPage() {
             </div>
 
             {/* Learn Card */}
-            <div className="group relative bg-secondary rounded-2xl overflow-hidden ">
+            <div className="group relative bg-secondary rounded-2xl overflow-hidden shadow-xl"  data-aos="flip-right" data-aos-duration="1000" >
               {/* Card Image */}
-              <div className="relative h-96 overflow-hidden">
+              <div className="relative h-96 overflow-hidden" >
                 <img
                   src="/images/info-card-img.jpg"
                   alt="Saudi Cultural Learning"

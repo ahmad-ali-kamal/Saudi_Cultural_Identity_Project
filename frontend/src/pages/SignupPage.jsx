@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import HomeButton from '../components/HomeButton';
 import { authService } from '../services/auth';
 
 function SignupPage() {
@@ -321,12 +322,8 @@ function SignupPage() {
 
             {/* Back Link */}
             <div className="text-center mt-12">
-            <a
-              href="/"
-              className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              العودة للصفحة الرئيسية
-            </a>
+              
+              <HomeButton />
           </div>
           </div>
         </div>

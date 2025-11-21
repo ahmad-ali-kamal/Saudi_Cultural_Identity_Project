@@ -11,7 +11,8 @@ export default {
         'primary': '#FFDBBA',      // Dark brown (backgrounds, main color)
         'secondary': '#623F1F',    // Medium brown (buttons, CTAs)
         'accent': '#000000ff',       // Taupe (hover states, borders)
-        'light': '#5a3513ff',  
+        'light': '#5a3513ff',
+        'glow': '#FFAE3C',  
 
 
         'first': '#855d38ff',      // Peach/sand (text on dark, light cards)
