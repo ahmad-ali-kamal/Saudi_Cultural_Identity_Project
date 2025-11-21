@@ -5,6 +5,7 @@ import static net.logstash.logback.argument.StructuredArguments.keyValue;
 import com.saudiculture.dto.UserDTO;
 import com.saudiculture.models.User;
 import com.saudiculture.repositories.UserRepository;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -29,10 +30,10 @@ public class UserService {
           keyValue("username", username), keyValue("email", email));
 
       User user = userRepository.findByCognitoId(cognitoId).get();
-      if (!user.getUsername().equals(username)) {
+      if (!Objects.equals(user.getUsername(), username)) {
         user.setUsername(username);
       }
-      if (!user.getEmail().equals(email)) {
+      if (!Objects.equals(user.getEmail(), email)) {
         user.setEmail(email);
       }
       user = userRepository.save(user);
