@@ -39,7 +39,7 @@ function LandingPage() {
           <div data-aos="zoom-in">
             <Link
               to="/quiz"
-              className="inline-block px-10 py-8 bg-secondary text-primary text-4xl font-bold rounded-xl hover:bg-glow hover:text-white hover:scale-150 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:text-5xl hover:shadow-white transition-all duration-300">
+              className="inline-block px-10 py-8 bg-secondary text-primary text-4xl font-bold rounded-xl hover:bg-green-600 hover:text-white hover:scale-150 hover:ease-out hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:text-5xl hover:shadow-white transition-all duration-300">
               جرب مستواك
             </Link>
           </div>
@@ -57,14 +57,14 @@ function LandingPage() {
 
       <section className="py-0 px-20 bg-primary" >
       
-        <div className="max-w-7xl mx-auto " data-aos="fade-up">
+        <div className="max-w-7xl mx-auto text-light text-4xl leading-relaxed text-right font-semibold">
          <br/><br/>
-          <p className="text-light text-4xl sm:text-lg md:text-lg leading-relaxed text-right font-semibold">
+          <p className="" data-aos="fade-left">
           انغمس في عمق التراث السعودي العريق، وتجول بين أصالته وروعة تنوعه. اكتشف العادات والتقاليد التي توارثتها الأجيال، وتعرّف على القيم التي شكّلت هوية المجتمع السعودي عبر التاريخ. عِش تجربة المأكولات الشعبية بنكهاتها الفريدة التي تحمل في كل لقمة حكاية من أرض الخير والكرم.         </p>
-         <p className="mt-14 text-4xl sm:text-lg md:text-lg">
+         <p className="mt-14" data-aos="fade-left">
        واستمتع بالمهرجانات والاحتفالات الضخمة التي تملأ المدن والقرى حياةً وحيوية، حيث تمتزج الموسيقى الشعبية بالفنون الحرفية والرقصات الفلكلورية في مشهد يجسد الفخر والانتماء.
        </p>
-       <p className="text-3xl text-light leading-relaxed text-right font-semibold mt-14">
+       <p className="mt-14" data-aos="fade-left">
         من خلال تجارب تفاعلية مبتكرة، وقصص مرئية نابضة بالحياة، وتحديات ثقافية ممتعة، سنأخذك في رحلة لا تُنسى عبر الزمن، رحلة يتلاقى فيها الماضي مع الحاضر، ويُلهِم فيها التراث مستقبل الوطن. فهنا، يلتقي التاريخ بالإبداع، ويزدهر الشغف بالهوية، ويولد الإلهام ليصنع غدًا أجمل.
         </p>
         </div>
@@ -136,7 +136,7 @@ function LandingPage() {
                 <h2 className="text-6xl font-bold text-primary mb-8">
                   منت فاهم لثقافتنا؟
                 </h2>
-                
+
                 <p className=" text-primary text-2xl leading-relaxed mb-7">
                   بنعلمك كل شي تحتاجه عن ثقافتنا
                 </p>
