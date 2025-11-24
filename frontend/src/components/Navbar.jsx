@@ -45,12 +45,12 @@ function Navbar() {
 
   // ============ RENDER ============
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-secondary shadow-lg">
-      <div className="mx-auto px-4 md:px-16 lg:px-72 py-4 md:py-6">
-        <div className="flex items-center justify-between gap-2 md:gap-4">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-secondary shadow-lg"> {/*make the nav stick up*/}
+      <div className="container mx-auto -my-4 px-6 py-6">
+        <div className="flex items-center justify-between">
 
           {/* Navigation Links */}
-          <div className="flex items-center ml-60 gap-3 md:gap-6 lg:gap-8 ">
+          <div className="flex items-center gap-3 md:gap-6 lg:gap-8 ">
             <Link to="/" className="pl-7 text-primary text-sm md:text-lg lg:text-2xl font-bold transition-transform duration-300 ease-out hover:scale-125 hover:text-glow ">
               هوية المملكة الثقافية
             </Link>
@@ -87,7 +87,7 @@ function Navbar() {
                 className="
                   py-1 md:px-8 md:py-2 text-sm md:text-2xl
                   text-primary border-2 border-primary rounded-lg
-                  duration-300 ease-out hover:scale-125 hover:shadow-stone-700 hover:shadow-xl
+                  duration-300 ease-out hover:scale-110 hover:shadow-slate-300 hover:shadow-md
                   whitespace-nowrap inline-block bg-transparent
                   min-w-[110px] shrink-0">
                 تسجيل دخول

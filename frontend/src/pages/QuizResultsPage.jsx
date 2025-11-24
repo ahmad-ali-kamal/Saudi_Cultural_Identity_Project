@@ -193,13 +193,13 @@ function QuizResultsPage() {
             <div className="flex flex-wrap justify-center gap-4 mt-8">
               <button
                 onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg"
+                className="px-8 py-3 bg-primary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 حاول مرة أخرى
               </button>
               <button
                 onClick={() => navigate('/')}
-                className="px-8 py-3 bg-accent text-primary font-bold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300"
+                className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300"
               >
                 الصفحة الرئيسية
               </button>

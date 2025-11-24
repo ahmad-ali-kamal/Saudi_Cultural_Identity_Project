@@ -61,7 +61,7 @@ function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
     <div>
       <div className="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-4 mb-6">
         <p className="text-yellow-800">
-          ⚠️ نوع السؤال غير معروف: <strong>{question.type}</strong> - سيتم عرضه كسؤال اختيار من متعدد
+          نوع السؤال غير معروف: <strong>{question.type}</strong> - سيتم عرضه كسؤال اختيار من متعدد
         </p>
       </div>
       <MCQQuestion

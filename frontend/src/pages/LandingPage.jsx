@@ -39,7 +39,7 @@ function LandingPage() {
           <div data-aos="zoom-in">
             <Link
               to="/quiz"
-              className="inline-block px-10 py-8 bg-secondary text-primary text-4xl font-bold rounded-xl hover:bg-green-600 hover:text-white hover:scale-150 hover:ease-out hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:text-5xl hover:shadow-white transition-all duration-300">
+              className="inline-block px-10 py-8 bg-secondary text-primary text-4xl font-bold rounded-xl hover:bg-green-600 hover:text-white hover:scale-125 hover:ease-out hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:text-5xl hover:shadow-white transition-all duration-300">
               جرب مستواك
             </Link>
           </div>
