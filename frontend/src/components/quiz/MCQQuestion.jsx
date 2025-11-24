@@ -16,6 +16,7 @@ function MCQQuestion({ question, selectedAnswer, onAnswerSelect, showImage = tru
     <div className="space-y-6">
       {/* Question Image (if exists) */}
       {showImage && imageSrc && (
+
         <div className="rounded-lg overflow-hidden  mb-6 bg-light-50">
           <img
             src={imageSrc}
@@ -45,7 +46,7 @@ function MCQQuestion({ question, selectedAnswer, onAnswerSelect, showImage = tru
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-lg font-semibold">{option}</span>
+                <span className="text-2xl font-semibold" data-aos="fade-right" data-aos-duration="2000">{option}</span>
                 <div
                   className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
                     isSelected ? 'border-primary' : 'border-accent'

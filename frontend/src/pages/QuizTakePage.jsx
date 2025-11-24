@@ -110,7 +110,7 @@ function QuizTakePage() {
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-4xl mx-auto">
             <div className="bg-secondary rounded-2xl shadow-xl p-12 text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-secondary mx-auto mb-6"></div>
+              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-primary mx-auto mb-6"></div>
               <p className="text-xl text-primary">جاري تحميل الأسئلة...</p>
             </div>
           </div>
@@ -189,16 +189,16 @@ function QuizTakePage() {
                 {Math.round(progress)}%
               </span>
             </div>
-            <div className="w-full bg-accent rounded-full h-3 overflow-hidden">
+            <div className="w-full bg-secondary rounded-full h-3 overflow-hidden">
               <div
-                className="bg-secondary h-full transition-all duration-500 ease-out"
+                className="bg-green-600 h-full transition-all duration-500 ease-out"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
           </div>
 
           {/* Question Card */}
-          <div className="bg-light rounded-2xl shadow-xl p-8 md:p-12 mb-6">
+          <div className="bg-light rounded-2xl shadow-xl p-8 md:p-12 mb-6" data-aos="fade-up">
             <QuestionRenderer
               question={currentQuestion}
               selectedAnswer={currentAnswer}
@@ -213,7 +213,7 @@ function QuizTakePage() {
               disabled={isFirstQuestion}
               className="px-6 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              ← السابق
+              السابق →
             </button>
 
             <div className="flex-1"></div>
@@ -224,22 +224,24 @@ function QuizTakePage() {
                 disabled={isSubmitting}
                 className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                {isSubmitting ? 'جاري الإرسال...' : 'إنهاء الاختبار →'}
+                {isSubmitting ? 'جاري الإرسال...' : 'إنهاء الاختبار ←'}
               </button>
             ) : (
               <button
                 onClick={handleNext}
                 disabled={!hasAnswer}
+
                 className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+
               >
-                التالي →
+                التالي ←
               </button>
             )}
           </div>
 
           {!hasAnswer && (
             <p className="text-center text-light mt-4 font-semibold bg-secondary/20 py-3 rounded-lg">
-              ⚠️ الرجاء اختيار إجابة قبل المتابعة
+               الرجاء اختيار إجابة قبل المتابعة
             </p>
           )}
         </div>

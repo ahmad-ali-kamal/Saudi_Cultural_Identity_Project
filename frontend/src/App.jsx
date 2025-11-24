@@ -9,7 +9,20 @@ import SignupPage from './pages/SignupPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import AboutPage from './pages/AboutPage';
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
+
 function App() {
+useEffect(() => {
+  AOS.init({
+    duration: 1000, // animation duration
+    once: false,    // animate every time it scrolls into view
+  });
+}, []);
+
+
+
   return (
     <Router>
       <Routes>
@@ -26,5 +39,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;

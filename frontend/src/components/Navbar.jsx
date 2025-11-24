@@ -3,14 +3,17 @@ import { Link } from 'react-router-dom';
 import { authService } from '../services/auth';
 
 function Navbar() {
+  // ============ STATE ============
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // ============ LIFECYCLE ============
   useEffect(() => {
     checkAuthStatus();
   }, []);
 
+  // ============ METHODS ============
   const checkAuthStatus = async () => {
     try {
       const authenticated = await authService.isAuthenticated();
@@ -40,54 +43,40 @@ function Navbar() {
     }
   };
 
+  // ============ RENDER ============
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-secondary shadow-lg">
-      <div className="container mx-auto px-8 py-6">
-        <div className="flex items-center justify-evenly">
-          {/* Logo/Brand */}
-          <Link
-            to="/"
-            className="text-primary text-2xl font-bold hover:text-accent transition-colors "
-          >
-            هوية المملكة الثقافية
-          </Link>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-secondary shadow-lg"> {/*make the nav stick up*/}
+      <div className="container mx-auto -my-4 px-6 py-6">
+        <div className="flex items-center justify-between">
 
-          {/* Logo/Brand */}
-          <Link
-            to="/learn"
-            className="text-primary text-2xl font-bold hover:text-accent transition-colors "
-          >
-          تعلم
-          </Link>
+          {/* Navigation Links */}
+          <div className="flex items-center gap-3 md:gap-6 lg:gap-8 ">
+            <Link to="/" className="pl-7 text-primary text-sm md:text-lg lg:text-2xl font-bold transition-transform duration-300 ease-out hover:scale-125 hover:text-glow ">
+              هوية المملكة الثقافية
+            </Link>
+            <Link to="/learn" className="pl-7 text-primary text-sm md:text-lg lg:text-2xl font-bold transition-transform duration-300 ease-out hover:scale-125 hover:text-glow ">
+              تعلم
+            </Link>
+            <Link to="/quiz" className="pl-7 text-primary text-sm md:text-lg lg:text-2xl font-bold transition-transform duration-300 ease-out hover:scale-125 hover:text-glow ">
+              اختبر نفسك
+            </Link>
+            <Link to="/about" className="pl-7 text-primary text-sm md:text-lg lg:text-2xl font-bold transition-transform duration-300 ease-out hover:scale-125 hover:text-glow ">
+              فريق التطوير
+            </Link>
+          </div>
 
-          {/* Logo/Brand */}
-          <Link
-            to="/quiz"
-            className="text-primary text-2xl font-bold hover:text-accent transition-colors "
-          >
-          اختبر نفسك
-          </Link>
-
-          {/* Logo/Brand */}
-          <Link
-            to="/about"
-            className="text-primary text-2xl font-bold hover:text-accent transition-colors "
-          >
-          فريق التطوير
-          </Link>
-
-          {/* Login/Profile Button */}
+          {/* Auth Section */}
           <div>
             {loading ? (
-              <div className="text-light text-sm">جاري التحميل...</div>
+              <div className="text-light text-xs md:text-sm ">جاري التحميل...</div>
             ) : isAuthenticated ? (
-              <div className="flex items-center gap-4">
-                <span className="text-light">
+              <div className="flex items-center gap-2 md:gap-4 ">
+                <span className="text-light text-xs md:text-base">
                   مرحباً، {user?.name || user?.email?.split('@')[0] || 'مستخدم'}
                 </span>
                 <button
                   onClick={handleLogout}
-                  className="px-6 py-2 border-2 border-light text-light rounded-lg hover:bg-accent hover:border-accent transition-all duration-300"
+                  className="px-3 py-1 md:px-6 md:py-2 border-2 border-light text-light rounded-lg hover:bg-accent hover:border-accent transition-all duration-300 text-xs md:text-base"
                 >
                   تسجيل خروج
                 </button>
@@ -95,16 +84,25 @@ function Navbar() {
             ) : (
               <Link
                 to="/login"
-                className="px-6 py-2 text-2xl border-2 border-primary text-primary rounded-lg hover:bg-accent transition-all duration-300"
-              >
+                className="
+                  py-1 md:px-8 md:py-2 text-sm md:text-2xl
+                  text-primary border-2 border-primary rounded-lg
+                  duration-300 ease-out hover:scale-110 hover:shadow-slate-300 hover:shadow-md
+                  whitespace-nowrap inline-block bg-transparent
+                  min-w-[110px] shrink-0">
                 تسجيل دخول
               </Link>
+
+
+
             )}
           </div>
+
         </div>
       </div>
     </nav>
   );
+
 }
 
 export default Navbar;

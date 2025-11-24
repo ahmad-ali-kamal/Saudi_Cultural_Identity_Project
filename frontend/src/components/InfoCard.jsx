@@ -15,7 +15,8 @@ function InfoCard({ info }) {
   const hasLongAnswer = info.answer && info.answer.length > 200;
 
   return (
-    <div className="bg-light rounded-2xl shadow-xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-102">
+    <div className="bg-light rounded-2xl shadow-xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-102" 
+         data-aos="fade-up">
       {/* Image */}
       {imageSrc && (
         <div className="rounded-lg overflow-hidden mb-4 bg-light-50">
