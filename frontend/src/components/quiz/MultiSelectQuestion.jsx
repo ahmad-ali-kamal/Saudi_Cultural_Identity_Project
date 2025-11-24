@@ -27,7 +27,7 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
     <div className="space-y-6">
       {/* Question Image (if exists) */}
       {showImage && imageSrc && (
-        <div className="rounded-lg overflow-hidden shadow-lg mb-6 bg-gray-50">
+        <div className="rounded-lg overflow-hidden mb-6 bg-light-50">
           <img
             src={imageSrc}
             alt="Question visual"
@@ -56,24 +56,24 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
               onClick={() => handleToggle(option)}
               className={`w-full p-5 text-right rounded-xl border-2 transition-all duration-300 ${
                 isSelected
-                  ? 'bg-secondary/10 border-secondary shadow-md'
-                  : 'bg-white border-accent hover:border-secondary hover:shadow-sm'
+                  ? 'bg-secondary text-primary border border-primary shadow-lg scale-102'
+                  : 'bg-first text-primary border-accent hover:border-primary hover:shadow-md'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className={`text-lg font-semibold ${isSelected ? 'text-secondary' : 'text-primary'}`}>
+                <span className={`text-lg font-semibold ${isSelected ? 'text-primary' : 'text-primary'}`}>
                   {option}
                 </span>
                 <div
                   className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-all ${
                     isSelected
-                      ? 'bg-secondary border-secondary'
-                      : 'border-accent bg-white'
+                      ? 'bg-primary border-primary'
+                      : 'border-accent bg-first'
                   }`}
                 >
                   {isSelected && (
                     <svg
-                      className="w-4 h-4 text-light"
+                      className="w-4 h-4 text-primary"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"

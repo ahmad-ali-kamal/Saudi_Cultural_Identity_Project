@@ -6,7 +6,7 @@ import OpenEndedQuestion from './OpenEndedQuestion';
 function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
   if (!question) {
     return (
-      <div className="text-center text-gray-500 py-12">
+      <div className="text-center text-primary py-12">
         <p className="text-xl">لا توجد أسئلة متاحة</p>
       </div>
     );

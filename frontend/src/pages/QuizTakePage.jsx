@@ -154,15 +154,15 @@ function QuizTakePage() {
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-light border-2 border-accent rounded-2xl shadow-xl p-12 text-center">
-              <div className="text-6xl mb-6">🤔</div>
-              <h2 className="text-2xl font-bold text-secondary mb-4">لا توجد أسئلة متاحة</h2>
+            <div className="bg-secondary border-2 border-accent rounded-2xl shadow-xl p-12 text-center">
+              <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
+              <h2 className="text-2xl font-bold text-primary mb-4">لا توجد أسئلة متاحة</h2>
               <p className="text-lg text-primary mb-8">
                 لم نجد أسئلة تطابق اختيارك. جرب تغيير الفئة أو المنطقة.
               </p>
               <button
                 onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300"
+                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300"
               >
                 العودة للإعدادات
               </button>
@@ -211,7 +211,7 @@ function QuizTakePage() {
             <button
               onClick={handlePrevious}
               disabled={isFirstQuestion}
-              className="px-6 py-3 bg-accent text-primary font-bold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               ← السابق
             </button>
@@ -222,7 +222,7 @@ function QuizTakePage() {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {isSubmitting ? 'جاري الإرسال...' : 'إنهاء الاختبار →'}
               </button>
@@ -230,7 +230,7 @@ function QuizTakePage() {
               <button
                 onClick={handleNext}
                 disabled={!hasAnswer}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 التالي →
               </button>
