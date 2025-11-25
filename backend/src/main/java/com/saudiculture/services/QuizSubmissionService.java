@@ -54,7 +54,8 @@ public class QuizSubmissionService {
         throw new RuntimeException("Question not found: " + answer.questionId());
       }
 
-      boolean isCorrect = isCorrectAnswer(answer.userAnswer(), question.getAnswer(), question.getType(), question.getContentLanguage());
+      boolean isCorrect = isCorrectAnswer(answer.userAnswer(), question.getAnswer(),
+          question.getType(), question.getContentLanguage());
       if (isCorrect) {
         score++;
       }
@@ -87,7 +88,8 @@ public class QuizSubmissionService {
     return quizSubmissions.stream().map(this::convertToQuizSubmissionResponse).toList();
   }
 
-  private boolean isCorrectAnswer(String userAnswer, String correctAnswer, String questionType, String contentLanguage) {
+  private boolean isCorrectAnswer(String userAnswer, String correctAnswer, String questionType,
+      String contentLanguage) {
     correctAnswer = correctAnswer.trim();
     if (contentLanguage.equalsIgnoreCase("arabic")) {
       if (userAnswer.equalsIgnoreCase("False")) {
@@ -96,12 +98,25 @@ public class QuizSubmissionService {
     }
     if (questionType.equalsIgnoreCase("open_ended")) {
       return correctAnswer.equalsIgnoreCase(userAnswer) || correctAnswer.contains(userAnswer);
-    } else if (questionType.equalsIgnoreCase("multiple_choice") || questionType.equalsIgnoreCase(
+    } else if (questionType.equalsIgnoreCase(
         "single_choice")) {
       if (userAnswer == null || userAnswer.trim().isEmpty()) {
         return false;
       }
       return correctAnswer.equalsIgnoreCase(userAnswer) || correctAnswer.contains(userAnswer);
+    } else if (questionType.equalsIgnoreCase("multiple_choice")) {
+      // Split by comma, trim whitespace, lowercase, and sort for order-independent comparison
+      String[] userOptions = Arrays.stream(userAnswer.split(","))
+          .map(String::trim)
+          .map(String::toLowerCase)
+          .sorted()
+          .toArray(String[]::new);
+      String[] correctOptions = Arrays.stream(correctAnswer.split(","))
+          .map(String::trim)
+          .map(String::toLowerCase)
+          .sorted()
+          .toArray(String[]::new);
+      return Arrays.equals(userOptions, correctOptions);
     } else if (questionType.equalsIgnoreCase("true_false")) {
       log.info("correctAnswer: {}", correctAnswer);
       log.info("userAnswer: {}", userAnswer);
