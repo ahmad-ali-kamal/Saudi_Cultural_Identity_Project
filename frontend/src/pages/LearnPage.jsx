@@ -114,6 +114,7 @@ function LearnPage() {
       if (filters.search && filters.search.trim()) params.search = filters.search.trim();
 
       const data = await apiService.getInfo(params);
+
       setInfoItems(data.content || []);
       // Fix: Parse pagination from nested 'page' object
       setTotalPages(data.page?.totalPages || 0);
@@ -293,7 +294,7 @@ function LearnPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {infoItems.map((info, index) => (
                   <InfoCard
-                    key={info.questionText || info.term || `info-${index}`}
+                    key={info.id || info._id || `${info.questionText || info.term}-${info.region}-${info.language}-${index}`}
                     info={info}
                   />
                 ))}
