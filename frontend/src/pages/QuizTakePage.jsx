@@ -48,6 +48,7 @@ function QuizTakePage() {
         size: config.size,
       };
 
+      if (config.language) params.language = config.language;
       if (config.category) params.category = config.category;
       if (config.region) params.region = config.region;
       if (config.type && config.type !== 'all') params.type = config.type;

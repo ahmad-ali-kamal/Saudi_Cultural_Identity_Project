@@ -78,12 +78,16 @@ function QuizResultsPage() {
 
     // Handle different answer types
     if (Array.isArray(userAnswer)) {
-      // Multi-select: compare arrays
-      const sortedUser = [...userAnswer].sort().join(',');
-      const sortedCorrect = Array.isArray(correctAnswer)
-        ? [...correctAnswer].sort().join(',')
-        : correctAnswer;
-      isCorrect = sortedUser === sortedCorrect;
+      // Multi-select: normalize, trim, lowercase, and sort (matches backend logic)
+      const normalizeArray = (arr) =>
+        arr.map(item => String(item).trim().toLowerCase()).sort();
+
+      const userNormalized = normalizeArray(userAnswer);
+      const correctNormalized = Array.isArray(correctAnswer)
+        ? normalizeArray(correctAnswer)
+        : correctAnswer.split(',').map(item => item.trim().toLowerCase()).sort();
+
+      isCorrect = JSON.stringify(userNormalized) === JSON.stringify(correctNormalized);
     } else if (question.type === 'true_false') {
       // TRUE/FALSE: Use same logic as backend
       let normalizedUser = String(userAnswer).trim();
@@ -97,8 +101,13 @@ function QuizResultsPage() {
       const userInFalse = FALSE_VARIANTS.includes(normalizedUser.toLowerCase());
       const correctInFalse = FALSE_VARIANTS.includes(String(correctAnswer).trim().toLowerCase());
       isCorrect = userInFalse === correctInFalse;
+    } else if (question.type === 'open_ended') {
+      // Open-ended: exact match OR user answer is within correct answer
+      const userLower = String(userAnswer).trim().toLowerCase();
+      const correctLower = String(correctAnswer).trim().toLowerCase();
+      isCorrect = correctLower === userLower || correctLower.includes(userLower);
     } else {
-      // Other question types: case-insensitive comparison
+      // Other question types (single_choice, etc.): case-insensitive comparison
       isCorrect =
         String(userAnswer).trim().toLowerCase() ===
         String(correctAnswer).trim().toLowerCase();

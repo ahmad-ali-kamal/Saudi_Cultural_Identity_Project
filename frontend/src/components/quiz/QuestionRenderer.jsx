@@ -16,7 +16,7 @@ function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
   const questionType = question.type?.toLowerCase() || 'mcq';
 
   // Handle different type variations
-  if (questionType === 'mcq' || questionType === 'single_choice') {
+  if (questionType === 'single_choice') {
     return (
       <MCQQuestion
         question={question}
@@ -26,7 +26,7 @@ function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
     );
   }
 
-  if (questionType === 'true/false' || questionType === 'true_false' || questionType === 'boolean') {
+  if (questionType === 'true_false') {
     return (
       <TrueFalseQuestion
         question={question}
@@ -36,7 +36,7 @@ function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
     );
   }
 
-  if (questionType === 'multi-select' || questionType === 'multiple answer' || questionType === 'checkbox') {
+  if (questionType === 'multiple_choice') {
     return (
       <MultiSelectQuestion
         question={question}
@@ -46,7 +46,7 @@ function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
     );
   }
 
-  if (questionType === 'open-ended' || questionType === 'text' || questionType === 'essay') {
+  if (questionType === 'open_ended') {
     return (
       <OpenEndedQuestion
         question={question}

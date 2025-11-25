@@ -7,10 +7,17 @@ import CustomSelect from '../components/CustomSelect';
 function QuizPage() {
   const navigate = useNavigate();
   const [config, setConfig] = useState({
+    language: '',
     region: '',
     type: 'all',
     size: 10,
   });
+
+  const languageOptions = [
+    { value: '', label: 'جميع اللغات' },
+    { value: 'Arabic', label: 'العربية' },
+    { value: 'English', label: 'English' },
+  ];
 
   const regionOptions = [
     { value: '', label: 'جميع المناطق' },
@@ -25,7 +32,7 @@ function QuizPage() {
   const questionTypes = [
     { value: 'all', label: 'مختلط (كل الأنواع)' },
     { value: 'single_choice', label: 'اختيار من متعدد' },
-    { value: 'multi_choice', label: 'اختيارات متعددة' },
+    { value: 'multiple_choice', label: 'اختيارات متعددة' },
     { value: 'true_false', label: 'صح أو خطأ' },
     { value: 'open_ended', label: 'سؤال مفتوح' },
   ];
@@ -55,6 +62,19 @@ function QuizPage() {
 
           {/* Configuration Form */}
           <div className="bg-light rounded-2xl shadow-xl p-8 mb-8">
+            {/* Language Selection */}
+            <div className="mb-6">
+              <label className="block text-secondary font-bold mb-3 text-lg">
+                اللغة (اختياري)
+              </label>
+              <CustomSelect
+                value={config.language}
+                onChange={(value) => setConfig({ ...config, language: value })}
+                options={languageOptions}
+                placeholder="جميع اللغات"
+              />
+            </div>
+
             {/* Region Selection */}
             <div className="mb-6">
               <label className="block text-primary font-bold mb-3 text-lg">

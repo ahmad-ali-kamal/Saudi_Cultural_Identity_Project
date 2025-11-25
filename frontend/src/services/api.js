@@ -56,9 +56,9 @@ api.interceptors.response.use(
 export const apiService = {
   // Quiz endpoints
   getQuiz: async (params = {}) => {
-    const { category, region, type, size = 20 } = params;
+    const { language, category, region, type, size = 20 } = params;
     const response = await api.get('/quiz', {
-      params: { category, region, type, size },
+      params: { language, category, region, type, size },
     });
     return response.data;
   },
