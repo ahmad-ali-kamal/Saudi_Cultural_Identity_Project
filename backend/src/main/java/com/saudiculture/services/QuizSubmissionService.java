@@ -90,14 +90,19 @@ public class QuizSubmissionService {
 
   private boolean isCorrectAnswer(String userAnswer, String correctAnswer, String questionType,
       String contentLanguage) {
+    // Trim both answers for consistent comparison
     correctAnswer = correctAnswer.trim();
+    userAnswer = (userAnswer != null) ? userAnswer.trim() : "";
+
     if (contentLanguage.equalsIgnoreCase("arabic")) {
       if (userAnswer.equalsIgnoreCase("False")) {
         userAnswer = "خطأ";
       }
     }
     if (questionType.equalsIgnoreCase("open_ended")) {
-      return correctAnswer.equalsIgnoreCase(userAnswer) || correctAnswer.contains(userAnswer);
+      // Accept exact match OR if user answer is contained within correct answer
+      return correctAnswer.equalsIgnoreCase(userAnswer)
+          || correctAnswer.toLowerCase().contains(userAnswer.toLowerCase());
     } else if (questionType.equalsIgnoreCase(
         "single_choice")) {
       if (userAnswer == null || userAnswer.trim().isEmpty()) {
