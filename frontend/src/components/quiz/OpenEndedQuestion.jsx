@@ -12,6 +12,12 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
 
   const imageSrc = getImageSrc();
 
+  // Determine text direction based on language
+  const isEnglish = question.contentLanguage?.toLowerCase() === 'english' ||
+                    question.language?.toLowerCase() === 'english';
+  const textDir = isEnglish ? 'ltr' : 'rtl';
+  const textAlign = isEnglish ? 'text-left' : 'text-right';
+
   return (
     <div className="space-y-6">
       {/* Question Image (if exists) */}
@@ -26,7 +32,7 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
       )}
 
       {/* Question Text */}
-      <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6">
+      <h2 className={`text-2xl md:text-3xl font-bold text-primary mb-6 ${textAlign}`} dir={textDir}>
         {question.questionText}
       </h2>
 
@@ -36,8 +42,8 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
           value={answer}
           onChange={(e) => onAnswerSelect(e.target.value)}
           placeholder="اكتب إجابتك هنا..."
-          className="w-full p-5 border-2 border-accent rounded-xl focus:border-secondary focus:outline-none transition-colors text-lg min-h-[150px] resize-none text-primary"
-          dir="auto"
+          className={`w-full p-5 border-2 border-accent rounded-xl focus:border-secondary focus:outline-none transition-colors text-lg min-h-[150px] resize-none text-primary ${textAlign}`}
+          dir={textDir}
         />
         <div className="flex justify-between items-center mt-2 text-sm text-primary/60">
           <span>{answer.length} حرف</span>
