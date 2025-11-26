@@ -58,10 +58,13 @@ function QuizPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold text-light mb-4">
+             <br></br><br></br>
               اختبر معرفتك بالثقافة السعودية
             </h1>
             <p className="text-3xl text-light">
               اختر تفضيلاتك وابدأ التحدي
+              
+              
             </p>
           </div>
 
@@ -147,9 +150,9 @@ function QuizPage() {
           <HomeButton />
         </div>
       </div>
-
       <Footer/>
     </div>
+    
   );
 }
 
