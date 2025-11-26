@@ -79,14 +79,14 @@ function CallbackPage() {
 
             {status === 'error' && (
               <>
-                <div className="text-6xl mb-6">❌</div>
+                <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
                 <h2 className="text-2xl font-bold text-red-600 mb-2">
                   فشل تسجيل الدخول
                 </h2>
                 <p className="text-primary mb-6">{errorMessage}</p>
                 <button
                   onClick={() => navigate('/login')}
-                  className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   العودة لتسجيل الدخول
                 </button>

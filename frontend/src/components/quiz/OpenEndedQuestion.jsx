@@ -22,7 +22,7 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
     <div className="space-y-6">
       {/* Question Image (if exists) */}
       {showImage && imageSrc && (
-        <div className="rounded-lg overflow-hidden shadow-lg mb-6 bg-gray-50">
+        <div className="rounded-lg overflow-hidden mb-6 bg-light-50">
           <img
             src={imageSrc}
             alt="Question visual"
@@ -42,8 +42,8 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
           value={answer}
           onChange={(e) => onAnswerSelect(e.target.value)}
           placeholder="اكتب إجابتك هنا..."
-          className={`w-full p-5 border-2 border-accent rounded-xl focus:border-secondary focus:outline-none transition-colors text-lg min-h-[150px] resize-none text-primary ${textAlign}`}
-          dir={textDir}
+          className="w-full p-5 border-2 border-primary rounded-xl focus:border-secondary focus:outline-none transition-colors text-lg min-h-[150px] resize-none text-primary"
+          dir="auto"
         />
         <div className="flex justify-between items-center mt-2 text-sm text-primary/60">
           <span>{answer.length} حرف</span>

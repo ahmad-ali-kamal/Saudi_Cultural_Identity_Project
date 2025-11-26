@@ -30,9 +30,9 @@ function CustomSelect({ value, onChange, options, placeholder }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-4 pr-12 border-2 border-secondary rounded-xl focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 transition-all duration-300 text-lg bg-gradient-to-l from-white to-accent/10 text-secondary font-bold cursor-pointer hover:shadow-lg hover:scale-[1.02] text-right"
+        className="w-full px-4 py-4 pr-12 border-2 border-first rounded-xl focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 transition-all duration-300 text-lg bg-gradient-to-l from-primary to-secondary/10 text-secondary font-bold cursor-pointer hover:shadow-lg hover:scale-[1.02] text-right"
       >
-        <span className={value ? 'text-secondary' : 'text-primary/60'}>
+        <span className={value ? 'text-secondary' : 'text-secondary'}>
           {displayText}
         </span>
 
@@ -43,7 +43,7 @@ function CustomSelect({ value, onChange, options, placeholder }) {
           }`}
           fill="none"
           viewBox="0 0 24 24"
-          stroke="#623F1F"
+          stroke="#FFDBBA"
           strokeWidth="3"
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -52,17 +52,20 @@ function CustomSelect({ value, onChange, options, placeholder }) {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute z-50 w-full mt-2 bg-white border-2 border-secondary rounded-xl shadow-2xl max-h-80 overflow-y-auto">
+        <div className="absolute z-50 w-full mt-2 bg-primary border-2 border-secondary rounded-xl shadow-2xl max-h-80 overflow-y-auto">
           {options.map((option) => (
             <button
               key={option.value}
               type="button"
               onClick={() => handleSelect(option.value)}
-              className={`w-full px-6 py-4 text-right text-lg font-semibold transition-all duration-200 hover:bg-secondary hover:text-light ${
-                value === option.value
-                  ? 'bg-accent text-primary'
-                  : 'bg-white text-primary hover:bg-secondary hover:text-light'
-              } first:rounded-t-xl last:rounded-b-xl border-b border-accent/30 last:border-b-0`}
+              className={`
+  w-full px-6 py-4 text-right text-lg font-semibold transition-all duration-200
+  ${ value === option.value 
+      ? 'bg-primary text-secondary' 
+      : 'bg-secondary text-primary' }
+  ${ value !== option.value ? 'hover:bg-primary hover:text-secondary' : 'hover:bg-secondary hover:text-primary' }
+  first:rounded-t-xl last:rounded-b-xl border-b border-primary/70 last:border-b-0
+`}
             >
               {option.label}
             </button>

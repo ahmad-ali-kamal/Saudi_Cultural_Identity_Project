@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Navbar from '../components/Navbar';
+import HomeButton from '../components/HomeButton';
 import Footer from '../components/Footer';
 import CustomSelect from '../components/CustomSelect';
 import InfoCard from '../components/InfoCard';
@@ -168,7 +169,7 @@ function LearnPage() {
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-6xl mx-auto">
-            <div className="bg-light rounded-2xl shadow-xl p-12 text-center">
+            <div className="bg-secondary rounded-2xl shadow-xl p-12 text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-secondary mx-auto mb-6"></div>
               <p className="text-xl text-primary">جاري تحميل المعلومات...</p>
             </div>
@@ -184,13 +185,13 @@ function LearnPage() {
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-6xl mx-auto">
-            <div className="bg-light border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
-              <div className="text-6xl mb-6">❌</div>
-              <h2 className="text-2xl font-bold text-red-900 mb-4">حدث خطأ</h2>
+            <div className="bg-secondary border-2 border-primary-400 rounded-2xl shadow-xl p-12 text-center">
+              <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
+              <h2 className="text-2xl font-bold text-primary mb-4 ">حدث خطأ</h2>
               <p className="text-lg text-red-700 mb-8">{error}</p>
               <button
                 onClick={handleRetry}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300"
+                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300"
               >
                 حاول مرة أخرى
               </button>
@@ -208,7 +209,7 @@ function LearnPage() {
       {/* Loading Overlay - only shows during data fetch, not initial load */}
       {loading && infoItems.length > 0 && (
         <div className="fixed inset-0 bg-primary/80 backdrop-blur-sm z-40 flex items-center justify-center">
-          <div className="bg-light rounded-2xl shadow-2xl p-8 text-center">
+          <div className="bg-secondary rounded-2xl shadow-2xl p-8 text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-secondary mx-auto mb-4"></div>
             <p className="text-lg text-primary font-bold">جاري التحميل...</p>
           </div>
@@ -228,7 +229,7 @@ function LearnPage() {
           </div>
 
           {/* Filters Section */}
-          <div className="bg-light rounded-2xl shadow-xl p-6 mb-8">
+          <div className="bg-secondary rounded-2xl shadow-xl p-6 mb-8">
             <h2 className="text-2xl font-bold text-primary mb-6">فلترة المحتوى</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
@@ -282,7 +283,7 @@ function LearnPage() {
 
           {/* Content Grid */}
           {infoItems.length === 0 ? (
-            <div className="bg-light border-2 border-accent rounded-2xl shadow-xl p-12 text-center">
+            <div className="bg-secondary border-2 border-accent rounded-2xl shadow-xl p-12 text-center">
               <div className="text-6xl mb-6">🔍</div>
               <h2 className="text-2xl font-bold text-secondary mb-4">لا توجد نتائج</h2>
               <p className="text-lg text-primary">
@@ -351,15 +352,7 @@ function LearnPage() {
                 </div>
               )}
 
-              {/* Back Button */}
-              <div className="text-center mt-12">
-                <a
-                  href="/"
-                  className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
-                >
-                  العودة للصفحة الرئيسية
-                </a>
-              </div>
+              <HomeButton />
             </>
           )}
         </div>
