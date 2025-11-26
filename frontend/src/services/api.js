@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base API URL - change this to your backend URL
-const API_BASE_URL = import.meta.env.API_BASE_URL || 'http://localhost:8080/api';
+const API_BASE_URL = import.meta.env.API_BASE_URL || 'https://saudi-culture-backend.onrender.com/api';
 
 // Create axios instance with default config
 const api = axios.create({
@@ -56,9 +56,9 @@ api.interceptors.response.use(
 export const apiService = {
   // Quiz endpoints
   getQuiz: async (params = {}) => {
-    const { category, region, type, size = 20 } = params;
+    const { language, category, region, type, size = 20 } = params;
     const response = await api.get('/quiz', {
-      params: { category, region, type, size },
+      params: { language, category, region, type, size },
     });
     return response.data;
   },
@@ -85,6 +85,11 @@ export const apiService = {
   // User endpoints
   getCurrentUser: async () => {
     const response = await api.get('/users/me');
+    return response.data;
+  },
+
+  getUserStats: async () => {
+    const response = await api.get('/users/me/stats');
     return response.data;
   },
 

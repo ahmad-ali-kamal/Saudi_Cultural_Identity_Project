@@ -79,8 +79,9 @@ public class QuestionService {
         return new PageImpl<>(dtoList, pageable, questionsPage.getTotalElements());
     }
 
-    public List<QuizQuestionDTO> getQuizzes(String category, String region, String type, int size) {
+    public List<QuizQuestionDTO> getQuizzes(String category, String language, String region, String type, int size) {
         log.info("Fetching quiz questions",
+                keyValue("language", language),
                 keyValue("category", category),
                 keyValue("region", region),
                 keyValue("type", type),
@@ -89,6 +90,9 @@ public class QuestionService {
         List<Criteria> criteriaList = new ArrayList<>();
         if (category != null) {
             criteriaList.add(Criteria.where("category").is(category));
+        }
+        if (language != null) {
+          criteriaList.add(Criteria.where("content_language").is(language));
         }
         if (region != null) {
             criteriaList.add(Criteria.where("region").is(region));

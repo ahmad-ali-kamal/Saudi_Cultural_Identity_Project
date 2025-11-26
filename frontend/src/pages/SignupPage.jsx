@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import HomeButton from '../components/HomeButton';
 import { authService } from '../services/auth';
 
 function SignupPage() {
@@ -115,7 +116,7 @@ function SignupPage() {
           <div className="bg-light rounded-2xl shadow-2xl p-8">
             {/* Header */}
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-secondary mb-2">
+              <h1 className="text-4xl font-bold text-primary mb-2">
                 إنشاء حساب جديد
               </h1>
               <p className="text-primary">
@@ -133,7 +134,7 @@ function SignupPage() {
                 )}
 
                 <div>
-                  <label className="block text-secondary font-semibold mb-2">
+                  <label className="block text-primary font-semibold mb-2">
                     اسم المستخدم
                   </label>
                   <input
@@ -152,7 +153,7 @@ function SignupPage() {
                 </div>
 
                 <div>
-                  <label className="block text-secondary font-semibold mb-2">
+                  <label className="block text-primary font-semibold mb-2">
                     البريد الإلكتروني
                   </label>
                   <input
@@ -169,7 +170,7 @@ function SignupPage() {
                 </div>
 
                 <div>
-                  <label className="block text-secondary font-semibold mb-2">
+                  <label className="block text-primary font-semibold mb-2">
                     كلمة المرور
                   </label>
                   <div className="relative">
@@ -208,7 +209,7 @@ function SignupPage() {
                 </div>
 
                 <div>
-                  <label className="block text-secondary font-semibold mb-2">
+                  <label className="block text-primary font-semibold mb-2">
                     تأكيد كلمة المرور
                   </label>
                   <div className="relative">
@@ -246,7 +247,7 @@ function SignupPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full px-6 py-3 bg-primary text-secondary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? 'جاري إنشاء الحساب...' : 'إنشاء حساب'}
                 </button>
@@ -272,7 +273,7 @@ function SignupPage() {
                 )}
 
                 <div>
-                  <label className="block text-secondary font-semibold mb-2">
+                  <label className="block text-primary font-semibold mb-2">
                     رمز التحقق
                   </label>
                   <input
@@ -299,7 +300,7 @@ function SignupPage() {
                   type="button"
                   onClick={handleResendCode}
                   disabled={loading}
-                  className="w-full px-6 py-3 border-2 border-secondary text-secondary font-semibold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-6 py-3 border-2 border-secondary text-primary font-semibold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   إعادة إرسال رمز التحقق
                 </button>
@@ -312,7 +313,7 @@ function SignupPage() {
                 لديك حساب بالفعل؟{' '}
                 <Link
                   to="/login"
-                  className="text-secondary hover:text-accent hover:underline font-semibold transition-colors"
+                  className="text-primary hover:text-accent hover:underline font-semibold transition-colors"
                 >
                   سجل دخول
                 </Link>
@@ -323,7 +324,7 @@ function SignupPage() {
             <div className="text-center mt-12">
             <a
               href="/"
-              className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+              className="inline-block px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
             >
               العودة للصفحة الرئيسية
             </a>

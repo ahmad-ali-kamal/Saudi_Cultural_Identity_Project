@@ -18,7 +18,7 @@ public class User {
   @Indexed(unique = true)
   String cognitoId;
 
-  @Indexed(unique = true)
+  @Indexed(unique = true, sparse = true)
   String email;
   String username;
 

@@ -1,12 +1,16 @@
 package com.saudiculture.repositories;
 
 import com.saudiculture.models.Question;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 public interface QuestionRepository extends MongoRepository<Question, String> {
+
+    // Batch fetch questions by IDs (for stats aggregation)
+    List<Question> findAllByIdIn(List<String> ids);
 
     // Legacy methods (kept for backward compatibility if needed)
     Page<Question> findByCategoryAndRegion(String category, String region, Pageable pageable);

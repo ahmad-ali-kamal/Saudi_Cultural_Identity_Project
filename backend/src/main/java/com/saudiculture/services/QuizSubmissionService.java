@@ -26,7 +26,7 @@ public class QuizSubmissionService {
   private final QuizSubmissionRepository quizSubmissionRepository;
   private final QuestionRepository questionRepository;
   private final List<String> FALSE_VARIANTS = new ArrayList<>(
-      Arrays.asList("false", "خطأ", "حطا", "خاطئ"));
+      Arrays.asList("false", "خطأ", "حطا", "خاطئ", "خاطئة"));
 
 
   public QuizSubmissionResponse submitQuiz(QuizSubmissionRequest quizSubmissionRequest,
@@ -54,7 +54,8 @@ public class QuizSubmissionService {
         throw new RuntimeException("Question not found: " + answer.questionId());
       }
 
-      boolean isCorrect = isCorrectAnswer(answer.userAnswer(), question.getAnswer(), question.getType(), question.getContentLanguage());
+      boolean isCorrect = isCorrectAnswer(answer.userAnswer(), question.getAnswer(),
+          question.getType(), question.getContentLanguage());
       if (isCorrect) {
         score++;
       }
@@ -87,21 +88,40 @@ public class QuizSubmissionService {
     return quizSubmissions.stream().map(this::convertToQuizSubmissionResponse).toList();
   }
 
-  private boolean isCorrectAnswer(String userAnswer, String correctAnswer, String questionType, String contentLanguage) {
+  private boolean isCorrectAnswer(String userAnswer, String correctAnswer, String questionType,
+      String contentLanguage) {
+    // Trim both answers for consistent comparison
     correctAnswer = correctAnswer.trim();
+    userAnswer = (userAnswer != null) ? userAnswer.trim() : "";
+
     if (contentLanguage.equalsIgnoreCase("arabic")) {
       if (userAnswer.equalsIgnoreCase("False")) {
         userAnswer = "خطأ";
       }
     }
     if (questionType.equalsIgnoreCase("open_ended")) {
-      return correctAnswer.equalsIgnoreCase(userAnswer) || correctAnswer.contains(userAnswer);
-    } else if (questionType.equalsIgnoreCase("multiple_choice") || questionType.equalsIgnoreCase(
+      // Accept exact match OR if user answer is contained within correct answer
+      return correctAnswer.equalsIgnoreCase(userAnswer)
+          || correctAnswer.toLowerCase().contains(userAnswer.toLowerCase());
+    } else if (questionType.equalsIgnoreCase(
         "single_choice")) {
       if (userAnswer == null || userAnswer.trim().isEmpty()) {
         return false;
       }
       return correctAnswer.equalsIgnoreCase(userAnswer) || correctAnswer.contains(userAnswer);
+    } else if (questionType.equalsIgnoreCase("multiple_choice")) {
+      // Split by comma, trim whitespace, lowercase, and sort for order-independent comparison
+      String[] userOptions = Arrays.stream(userAnswer.split(","))
+          .map(String::trim)
+          .map(String::toLowerCase)
+          .sorted()
+          .toArray(String[]::new);
+      String[] correctOptions = Arrays.stream(correctAnswer.split(","))
+          .map(String::trim)
+          .map(String::toLowerCase)
+          .sorted()
+          .toArray(String[]::new);
+      return Arrays.equals(userOptions, correctOptions);
     } else if (questionType.equalsIgnoreCase("true_false")) {
       log.info("correctAnswer: {}", correctAnswer);
       log.info("userAnswer: {}", userAnswer);

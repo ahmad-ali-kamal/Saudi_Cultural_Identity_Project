@@ -6,7 +6,7 @@ import { apiService } from '../services/api';
 import { authService } from '../services/auth';
 
 // FALSE answer variants (mirrors backend logic)
-const FALSE_VARIANTS = ['false', 'خطأ', 'حطا', 'خاطئ'];
+const FALSE_VARIANTS = ['false', 'خطأ', 'حطا', 'خاطئ', 'خاطئة'];
 
 function QuizResultsPage() {
   const location = useLocation();
@@ -16,6 +16,7 @@ function QuizResultsPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submissionError, setSubmissionError] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Ref to prevent duplicate submissions (StrictMode-safe)
   const hasSubmitted = useRef(false);
@@ -27,10 +28,17 @@ function QuizResultsPage() {
     }
 
     // Auto-submit if user is authenticated (only once)
-    if (authService.isAuthenticated() && !hasSubmitted.current) {
-      hasSubmitted.current = true; // Set immediately (synchronous)
-      submitToBackend();
-    }
+    const checkAuthAndSubmit = async () => {
+      const isAuth = await authService.isAuthenticated();
+      setIsAuthenticated(isAuth); // Store auth status in state
+
+      if (isAuth && !hasSubmitted.current) {
+        hasSubmitted.current = true; // Set immediately (synchronous)
+        submitToBackend();
+      }
+    };
+
+    checkAuthAndSubmit();
   }, [questions, answers, navigate]);
 
   const submitToBackend = async () => {
@@ -70,12 +78,16 @@ function QuizResultsPage() {
 
     // Handle different answer types
     if (Array.isArray(userAnswer)) {
-      // Multi-select: compare arrays
-      const sortedUser = [...userAnswer].sort().join(',');
-      const sortedCorrect = Array.isArray(correctAnswer)
-        ? [...correctAnswer].sort().join(',')
-        : correctAnswer;
-      isCorrect = sortedUser === sortedCorrect;
+      // Multi-select: normalize, trim, lowercase, and sort (matches backend logic)
+      const normalizeArray = (arr) =>
+        arr.map(item => String(item).trim().toLowerCase()).sort();
+
+      const userNormalized = normalizeArray(userAnswer);
+      const correctNormalized = Array.isArray(correctAnswer)
+        ? normalizeArray(correctAnswer)
+        : correctAnswer.split(',').map(item => item.trim().toLowerCase()).sort();
+
+      isCorrect = JSON.stringify(userNormalized) === JSON.stringify(correctNormalized);
     } else if (question.type === 'true_false') {
       // TRUE/FALSE: Use same logic as backend
       let normalizedUser = String(userAnswer).trim();
@@ -89,8 +101,13 @@ function QuizResultsPage() {
       const userInFalse = FALSE_VARIANTS.includes(normalizedUser.toLowerCase());
       const correctInFalse = FALSE_VARIANTS.includes(String(correctAnswer).trim().toLowerCase());
       isCorrect = userInFalse === correctInFalse;
+    } else if (question.type === 'open_ended') {
+      // Open-ended: exact match OR user answer is within correct answer
+      const userLower = String(userAnswer).trim().toLowerCase();
+      const correctLower = String(correctAnswer).trim().toLowerCase();
+      isCorrect = correctLower === userLower || correctLower.includes(userLower);
     } else {
-      // Other question types: case-insensitive comparison
+      // Other question types (single_choice, etc.): case-insensitive comparison
       isCorrect =
         String(userAnswer).trim().toLowerCase() ===
         String(correctAnswer).trim().toLowerCase();
@@ -132,8 +149,8 @@ function QuizResultsPage() {
       <div className="container mx-auto px-6 py-24">
         <div className="max-w-5xl mx-auto">
           {/* Score Card */}
-          <div className="bg-light rounded-2xl shadow-2xl p-8 md:p-12 mb-8 text-center">
-            <h1 className="text-4xl font-bold text-secondary mb-6">نتيجتك</h1>
+          <div className="bg-secondary rounded-2xl shadow-2xl p-8 md:p-12 mb-8 text-center">
+            <h1 className="text-4xl font-bold text-primary mb-6">نتيجتك</h1>
 
             {/* Score Circle */}
             <div className="relative w-48 h-48 mx-auto mb-8">
@@ -158,7 +175,7 @@ function QuizResultsPage() {
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-5xl font-bold text-secondary">
+                <span className="text-5xl font-bold text-primary">
                   {percentage}%
                 </span>
                 <span className="text-primary mt-2">
@@ -173,7 +190,7 @@ function QuizResultsPage() {
             </h2>
 
             {/* Submission Status */}
-            {authService.isAuthenticated() ? (
+            {isAuthenticated ? (
               submitting ? (
                 <p className="text-primary">جاري حفظ النتيجة...</p>
               ) : submitted ? (
@@ -193,13 +210,13 @@ function QuizResultsPage() {
             <div className="flex flex-wrap justify-center gap-4 mt-8">
               <button
                 onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg"
+                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 حاول مرة أخرى
               </button>
               <button
                 onClick={() => navigate('/')}
-                className="px-8 py-3 bg-accent text-primary font-bold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300"
+                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 الصفحة الرئيسية
               </button>
@@ -207,8 +224,8 @@ function QuizResultsPage() {
           </div>
 
           {/* Review Answers */}
-          <div className="bg-light rounded-2xl shadow-xl p-8 md:p-12">
-            <h2 className="text-3xl font-bold text-secondary mb-8 text-center">
+          <div className="bg-secondary rounded-2xl shadow-xl p-8 md:p-12">
+            <h2 className="text-3xl font-bold text-primary mb-8 text-center">
               مراجعة الإجابات
             </h2>
 
@@ -237,7 +254,7 @@ function QuizResultsPage() {
                   </div>
 
                   {/* Question Text */}
-                  <p className="text-xl font-semibold text-secondary mb-4">
+                  <p className="text-xl font-semibold text-primary mb-4">
                     {result.question.questionText}
                   </p>
 

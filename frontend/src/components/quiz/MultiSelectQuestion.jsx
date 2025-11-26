@@ -23,11 +23,17 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
 
   const imageSrc = getImageSrc();
 
+  // Determine text direction based on language
+  const isEnglish = question.contentLanguage?.toLowerCase() === 'english' ||
+                    question.language?.toLowerCase() === 'english';
+  const textDir = isEnglish ? 'ltr' : 'rtl';
+  const textAlign = isEnglish ? 'text-left' : 'text-right';
+
   return (
     <div className="space-y-6">
       {/* Question Image (if exists) */}
       {showImage && imageSrc && (
-        <div className="rounded-lg overflow-hidden shadow-lg mb-6 bg-gray-50">
+        <div className="rounded-lg overflow-hidden mb-6 bg-light-50">
           <img
             src={imageSrc}
             alt="Question visual"
@@ -37,12 +43,12 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
       )}
 
       {/* Question Text */}
-      <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">
+      <h2 className={`text-2xl md:text-3xl font-bold text-primary mb-4 ${textAlign}`} dir={textDir}>
         {question.questionText}
       </h2>
 
       {/* Instruction */}
-      <p className="text-primary/70 text-lg mb-6">
+      <p className={`text-primary/70 text-lg mb-6 ${textAlign}`}>
         اختر جميع الإجابات الصحيحة ({selectedAnswers.length} محددة)
       </p>
 
@@ -54,26 +60,26 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
             <button
               key={index}
               onClick={() => handleToggle(option)}
-              className={`w-full p-5 text-right rounded-xl border-2 transition-all duration-300 ${
+              className={`w-full p-5 ${textAlign} rounded-xl border-2 transition-all duration-300 ${
                 isSelected
-                  ? 'bg-secondary/10 border-secondary shadow-md'
-                  : 'bg-white border-accent hover:border-secondary hover:shadow-sm'
+                  ? 'bg-secondary text-primary border border-primary shadow-lg scale-102'
+                  : 'bg-first text-primary border-accent hover:border-primary hover:shadow-md'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className={`text-lg font-semibold ${isSelected ? 'text-secondary' : 'text-primary'}`}>
+                <span className={`text-lg font-semibold ${isSelected ? 'text-primary' : 'text-primary'}`}>
                   {option}
                 </span>
                 <div
                   className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-all ${
                     isSelected
-                      ? 'bg-secondary border-secondary'
-                      : 'border-accent bg-white'
+                      ? 'bg-primary border-primary'
+                      : 'border-accent bg-first'
                   }`}
                 >
                   {isSelected && (
                     <svg
-                      className="w-4 h-4 text-light"
+                      className="w-4 h-4 text-primary"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"

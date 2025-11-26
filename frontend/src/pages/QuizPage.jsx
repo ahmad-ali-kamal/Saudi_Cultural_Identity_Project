@@ -3,42 +3,39 @@ import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CustomSelect from '../components/CustomSelect';
+import HomeButton from '../components/HomeButton';
 
 function QuizPage() {
   const navigate = useNavigate();
   const [config, setConfig] = useState({
-    category: '',
+    language: '',
     region: '',
     type: 'all',
     size: 10,
   });
 
-  const categoryOptions = [
-    { value: '', label: 'جميع الفئات' },
-    { value: 'Traditional Food', label: 'Traditional Food' },
-    { value: 'Clothing', label: 'Clothing' },
-    { value: 'Festivals', label: 'Festivals' },
-    { value: 'Music & Dance', label: 'Music & Dance' },
-    { value: 'Architecture', label: 'Architecture' },
-    { value: 'Customs & Traditions', label: 'Customs & Traditions' },
-    { value: 'History', label: 'History' },
-    { value: 'Geography', label: 'Geography' },
+  const languageOptions = [
+    { value: '', label: 'جميع اللغات' },
+    { value: 'Arabic', label: 'العربية' },
+    { value: 'English', label: 'English' },
   ];
 
   const regionOptions = [
     { value: '', label: 'جميع المناطق' },
-    { value: 'GENERAL', label: 'عام' },
-    { value: 'WEST', label: 'الغربية' },
-    { value: 'EAST', label: 'الشرقية' },
-    { value: 'NORTH', label: 'الشمالية' },
-    { value: 'SOUTH', label: 'الجنوبية' },
-    { value: 'CENTRAL', label: 'الوسطى' },
+    { value: 'general', label: 'عام' },
+    { value: 'west', label: 'الغربية' },
+    { value: 'east', label: 'الشرقية' },
+    { value: 'north', label: 'الشمالية' },
+    { value: 'south', label: 'الجنوبية' },
+    { value: 'centeral', label: 'الوسطى' },
   ];
 
   const questionTypes = [
     { value: 'all', label: 'مختلط (كل الأنواع)' },
-    { value: 'MCQ', label: 'اختيار متعدد' },
-    { value: 'True/False', label: 'صح أو خطأ' },
+    { value: 'single_choice', label: 'اختيار من متعدد' },
+    { value: 'multiple_choice', label: 'اختيارات متعددة' },
+    { value: 'true_false', label: 'صح أو خطأ' },
+    { value: 'open_ended', label: 'سؤال مفتوح' },
   ];
 
   const handleStart = () => {
@@ -57,10 +54,13 @@ function QuizPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold text-light mb-4">
+             <br></br><br></br>
               اختبر معرفتك بالثقافة السعودية
             </h1>
             <p className="text-3xl text-light">
               اختر تفضيلاتك وابدأ التحدي
+              
+              
             </p>
           </div>
 
@@ -70,12 +70,17 @@ function QuizPage() {
             <div className="mb-6">
               <label className="block text-primary font-bold mb-3 text-lg">
                 الفئة (اختياري)
+          <div className="bg-light rounded-2xl shadow-xl p-8 mb-8">
+            {/* Language Selection */}
+            <div className="mb-6">
+              <label className="block text-secondary font-bold mb-3 text-lg">
+                اللغة (اختياري)
               </label>
               <CustomSelect
-                value={config.category}
-                onChange={(value) => setConfig({ ...config, category: value })}
-                options={categoryOptions}
-                placeholder="جميع الفئات"
+                value={config.language}
+                onChange={(value) => setConfig({ ...config, language: value })}
+                options={languageOptions}
+                placeholder="جميع اللغات"
               />
             </div>
 
@@ -97,7 +102,7 @@ function QuizPage() {
               <label className="block text-primary font-bold mb-3 text-lg">
                 نوع الأسئلة
               </label>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
                 {questionTypes.map((type) => (
                   <button
                     key={type.value}
@@ -143,20 +148,12 @@ function QuizPage() {
             </button>
           </div>
 
-          {/* Back Link */}
-          <div className="text-center mt-12">
-            <a
-              href="/"
-              className="inline-block px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              العودة للصفحة الرئيسية
-            </a>
-          </div>
+          <HomeButton />
         </div>
       </div>
-
       <Footer/>
     </div>
+    
   );
 }
 

@@ -12,11 +12,18 @@ function MCQQuestion({ question, selectedAnswer, onAnswerSelect, showImage = tru
 
   const imageSrc = getImageSrc();
 
+  // Determine text direction based on language
+  const isEnglish = question.contentLanguage?.toLowerCase() === 'english' ||
+                    question.language?.toLowerCase() === 'english';
+  const textDir = isEnglish ? 'ltr' : 'rtl';
+  const textAlign = isEnglish ? 'text-left' : 'text-right';
+
   return (
     <div className="space-y-6">
       {/* Question Image (if exists) */}
       {showImage && imageSrc && (
-        <div className="rounded-lg overflow-hidden shadow-lg mb-6 bg-gray-50">
+
+        <div className="rounded-lg overflow-hidden  mb-6 bg-light-50">
           <img
             src={imageSrc}
             alt="Question visual"
@@ -26,7 +33,7 @@ function MCQQuestion({ question, selectedAnswer, onAnswerSelect, showImage = tru
       )}
 
       {/* Question Text */}
-      <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6">
+      <h2 className={`text-2xl md:text-3xl font-bold text-primary mb-6 ${textAlign}`} dir={textDir}>
         {question.questionText}
       </h2>
 
@@ -38,21 +45,21 @@ function MCQQuestion({ question, selectedAnswer, onAnswerSelect, showImage = tru
             <button
               key={index}
               onClick={() => onAnswerSelect(option)}
-              className={`w-full p-5 text-right rounded-xl border-2 transition-all duration-300 transform hover:scale-102 ${
+              className={`w-full p-5 ${textAlign} rounded-xl border-2 transition-all duration-300 transform hover:scale-102 ${
                 isSelected
-                  ? 'bg-secondary text-light border-secondary shadow-lg scale-102'
-                  : 'bg-white text-primary border-accent hover:border-secondary hover:shadow-md'
+                  ? 'bg-secondary text-primary border border-primary shadow-lg scale-102'
+                  : 'bg-first text-primary border-accent hover:border-primary hover:shadow-md'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-lg font-semibold">{option}</span>
+                <span className="text-2xl font-semibold" data-aos="fade-right" data-aos-duration="2000">{option}</span>
                 <div
                   className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                    isSelected ? 'border-light' : 'border-accent'
+                    isSelected ? 'border-primary' : 'border-accent'
                   }`}
                 >
                   {isSelected && (
-                    <div className="w-3 h-3 rounded-full bg-light"></div>
+                    <div className="w-3 h-3 rounded-full bg-primary"></div>
                   )}
                 </div>
               </div>
