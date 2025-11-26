@@ -66,7 +66,7 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
                   : 'bg-first text-primary border-accent hover:border-primary hover:shadow-md'
               }`}
             >
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between" dir={textDir}>
                 <span className={`text-lg font-semibold ${isSelected ? 'text-primary' : 'text-primary'}`}>
                   {option}
                 </span>

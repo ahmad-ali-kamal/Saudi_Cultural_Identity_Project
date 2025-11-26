@@ -51,7 +51,7 @@ function MCQQuestion({ question, selectedAnswer, onAnswerSelect, showImage = tru
                   : 'bg-first text-primary border-accent hover:border-primary hover:shadow-md'
               }`}
             >
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between" dir={textDir}>
                 <span className="text-2xl font-semibold" data-aos="fade-right" data-aos-duration="2000">{option}</span>
                 <div
                   className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
