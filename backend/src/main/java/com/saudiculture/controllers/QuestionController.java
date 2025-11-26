@@ -82,6 +82,8 @@ public class QuestionController {
   public ResponseEntity<List<QuizQuestionDTO>> getQuizzes(
       @Parameter(description = "Filter by category")
       @RequestParam(required = false) String category,
+      @Parameter(description = "Filter by language")
+      @RequestParam(required = false) String language,
       @Parameter(description = "Filter by region")
       @RequestParam(required = false) String region,
       @Parameter(description = "Filter by question type (MCQ, True/False, or 'all' for mixed)")
@@ -89,7 +91,7 @@ public class QuestionController {
       @Parameter(description = "Number of random questions to retrieve")
       @RequestParam(defaultValue = "20") int size
   ) {
-    List<QuizQuestionDTO> quizList = questionService.getQuizzes(category, region, type, size);
+    List<QuizQuestionDTO> quizList = questionService.getQuizzes(category, language, region, type, size);
     return ResponseEntity.ok(quizList);
   }
 

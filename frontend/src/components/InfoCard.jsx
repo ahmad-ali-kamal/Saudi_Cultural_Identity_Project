@@ -14,6 +14,11 @@ function InfoCard({ info }) {
   const imageSrc = getImageSrc();
   const hasLongAnswer = info.answer && info.answer.length > 200;
 
+  // Determine text direction based on language
+  const isEnglish = info.language?.toLowerCase() === 'english';
+  const textDir = isEnglish ? 'ltr' : 'rtl';
+  const textAlign = isEnglish ? 'text-left' : 'text-right';
+
   return (
     <div className="bg-light rounded-2xl shadow-xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-102" 
          data-aos="fade-up">
@@ -34,15 +39,19 @@ function InfoCard({ info }) {
           <span className="inline-block bg-secondary text-primary px-3 py-1 rounded-full text-sm font-bold mb-2">
             مصطلح
           </span>
-          <h3 className="text-xl font-bold text-primary">{info.term}</h3>
+          <h3 className={`text-xl font-bold text-primary ${textAlign}`} dir={textDir}>
+            {info.term}
+          </h3>
           {info.termMeaning && (
-            <p className="text-primary/70 mt-1">{info.termMeaning}</p>
+            <p className={`text-primary/70 mt-1 ${textAlign}`} dir={textDir}>
+              {info.termMeaning}
+            </p>
           )}
         </div>
       )}
 
       {info.questionText && (
-        <h3 className="text-xl font-bold text-primary mb-3">
+        <h3 className={`text-xl font-bold text-primary mb-3 ${textAlign}`} dir={textDir}>
           {info.questionText}
         </h3>
       )}
@@ -50,7 +59,7 @@ function InfoCard({ info }) {
       {/* Answer */}
       {info.answer && (
         <div className="mb-4">
-          <p className={`text-primary leading-relaxed ${!isExpanded && hasLongAnswer ? 'line-clamp-4' : ''}`}>
+          <p className={`text-primary leading-relaxed ${textAlign} ${!isExpanded && hasLongAnswer ? 'line-clamp-4' : ''}`} dir={textDir}>
             {info.answer}
           </p>
           {hasLongAnswer && (

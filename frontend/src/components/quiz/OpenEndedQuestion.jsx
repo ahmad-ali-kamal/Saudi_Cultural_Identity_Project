@@ -12,6 +12,12 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
 
   const imageSrc = getImageSrc();
 
+  // Determine text direction based on language
+  const isEnglish = question.contentLanguage?.toLowerCase() === 'english' ||
+                    question.language?.toLowerCase() === 'english';
+  const textDir = isEnglish ? 'ltr' : 'rtl';
+  const textAlign = isEnglish ? 'text-left' : 'text-right';
+
   return (
     <div className="space-y-6">
       {/* Question Image (if exists) */}
@@ -26,7 +32,7 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
       )}
 
       {/* Question Text */}
-      <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6">
+      <h2 className={`text-2xl md:text-3xl font-bold text-primary mb-6 ${textAlign}`} dir={textDir}>
         {question.questionText}
       </h2>
 

@@ -23,6 +23,12 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
 
   const imageSrc = getImageSrc();
 
+  // Determine text direction based on language
+  const isEnglish = question.contentLanguage?.toLowerCase() === 'english' ||
+                    question.language?.toLowerCase() === 'english';
+  const textDir = isEnglish ? 'ltr' : 'rtl';
+  const textAlign = isEnglish ? 'text-left' : 'text-right';
+
   return (
     <div className="space-y-6">
       {/* Question Image (if exists) */}
@@ -37,12 +43,12 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
       )}
 
       {/* Question Text */}
-      <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">
+      <h2 className={`text-2xl md:text-3xl font-bold text-primary mb-4 ${textAlign}`} dir={textDir}>
         {question.questionText}
       </h2>
 
       {/* Instruction */}
-      <p className="text-primary/70 text-lg mb-6">
+      <p className={`text-primary/70 text-lg mb-6 ${textAlign}`}>
         اختر جميع الإجابات الصحيحة ({selectedAnswers.length} محددة)
       </p>
 
@@ -54,7 +60,7 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
             <button
               key={index}
               onClick={() => handleToggle(option)}
-              className={`w-full p-5 text-right rounded-xl border-2 transition-all duration-300 ${
+              className={`w-full p-5 ${textAlign} rounded-xl border-2 transition-all duration-300 ${
                 isSelected
                   ? 'bg-secondary text-primary border border-primary shadow-lg scale-102'
                   : 'bg-first text-primary border-accent hover:border-primary hover:shadow-md'

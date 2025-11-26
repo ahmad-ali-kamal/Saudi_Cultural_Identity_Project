@@ -80,7 +80,7 @@ spring:
     mongodb:
       # If MONGO_URI is set (e.g., for MongoDB Atlas), use it. Otherwise, construct from individual variables
       uri: ${MONGO_URI:mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD:admin123}@${MONGO_HOST:localhost}:${MONGO_PORT:27017}/${MONGO_DATABASE:saudiculture}?authSource=admin}
-      auto-index-creation: false
+      auto-index-creation: true
 
 logging:
   level:
@@ -103,7 +103,7 @@ spring:
     mongodb:
       # Test database - use MONGO_URI if set, otherwise construct from individual variables
       uri: ${MONGO_URI:mongodb://${MONGO_USERNAME:admin}:${MONGO_PASSWORD:admin123}@${MONGO_HOST:localhost}:${MONGO_PORT:27017}/${MONGO_DATABASE:saudiculture_test}?authSource=admin}
-      auto-index-creation: false
+      auto-index-creation: true
 
 csv:
   loading:
