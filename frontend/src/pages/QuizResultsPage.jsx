@@ -167,7 +167,7 @@ function QuizResultsPage() {
                   cx="96"
                   cy="96"
                   r="88"
-                  stroke="#623F1F"
+                  stroke="#FFDBBA"
                   strokeWidth="12"
                   fill="none"
                   strokeDasharray={`${(percentage / 100) * 553} 553`}
@@ -241,7 +241,7 @@ function QuizResultsPage() {
                 >
                   {/* Question Number & Status */}
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-lg font-bold text-primary">
+                    <span className="text-lg font-bold text-first">
                       السؤال {index + 1}
                     </span>
                     <span
@@ -254,13 +254,13 @@ function QuizResultsPage() {
                   </div>
 
                   {/* Question Text */}
-                  <p className="text-xl font-semibold text-primary mb-4">
+                  <p className="text-xl font-semibold text-first mb-4">
                     {result.question.questionText}
                   </p>
 
                   {/* User's Answer */}
                   <div className="mb-3">
-                    <span className="font-bold text-primary">إجابتك: </span>
+                    <span className="font-bold text-secondary">إجابتك: </span>
                     <span
                       className={
                         result.isCorrect ? 'text-green-700 font-semibold' : 'text-red-700 font-semibold'
@@ -275,7 +275,7 @@ function QuizResultsPage() {
                   {/* Correct Answer (if wrong) */}
                   {!result.isCorrect && (
                     <div>
-                      <span className="font-bold text-primary">
+                      <span className="font-bold text-secondary">
                         الإجابة الصحيحة:{' '}
                       </span>
                       <span className="text-green-700 font-semibold">

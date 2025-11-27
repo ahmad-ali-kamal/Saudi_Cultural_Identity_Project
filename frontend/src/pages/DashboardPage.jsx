@@ -81,13 +81,13 @@ function DashboardPage() {
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-6xl mx-auto">
-            <div className="bg-light border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
+            <div className="bg-secondary border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
               <div className="text-6xl mb-6">❌</div>
               <h2 className="text-2xl font-bold text-red-900 mb-4">حدث خطأ</h2>
               <p className="text-lg text-red-700 mb-8">{error}</p>
               <button
                 onClick={fetchStats}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300"
+                className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300"
               >
                 حاول مرة أخرى
               </button>
@@ -142,7 +142,7 @@ function DashboardPage() {
           </div>
 
           {/* Summary Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 text-primary">
             <StatCard
               value={stats.overall.totalSubmissions}
               label="عدد الاختبارات"
@@ -164,7 +164,7 @@ function DashboardPage() {
           {/* Strengths & Weaknesses Badges */}
           {(stats.strengths.length > 0 || stats.weaknesses.length > 0) && (
             <div className="bg-light rounded-2xl shadow-xl p-8 mb-12">
-              <h2 className="text-2xl font-bold text-secondary mb-6 text-center">نقاط القوة والضعف</h2>
+              <h2 className="text-2xl font-bold text-primary mb-6 text-center">نقاط القوة والضعف</h2>
 
               <div className="flex flex-wrap gap-4 justify-center mb-6">
                 {stats.strengths.map((strength, index) => (
@@ -200,7 +200,7 @@ function DashboardPage() {
             {/* Score Trend Chart */}
             {scoreTrendData.length > 0 && (
               <div className="bg-light rounded-2xl shadow-xl p-8">
-                <h2 className="text-2xl font-bold text-secondary mb-6">تطور النتائج</h2>
+                <h2 className="text-2xl font-bold text-primary mb-6">تطور النتائج</h2>
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={scoreTrendData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#C2B09F" />
@@ -229,7 +229,7 @@ function DashboardPage() {
             {/* Question Type Performance */}
             {stats.byQuestionType.length > 0 && (
               <div className="bg-light rounded-2xl shadow-xl p-8">
-                <h2 className="text-2xl font-bold text-secondary mb-6">الأداء حسب نوع السؤال</h2>
+                <h2 className="text-2xl font-bold text-primary mb-6">الأداء حسب نوع السؤال</h2>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={stats.byQuestionType}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#C2B09F" />
@@ -251,7 +251,7 @@ function DashboardPage() {
             {/* Region Performance */}
             {stats.byRegion.length > 0 && (
               <div className="bg-light rounded-2xl shadow-xl p-8">
-                <h2 className="text-2xl font-bold text-secondary mb-6">الأداء حسب المنطقة</h2>
+                <h2 className="text-2xl font-bold text-primary mb-6">الأداء حسب المنطقة</h2>
                 <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie
@@ -291,7 +291,7 @@ function DashboardPage() {
             {/* Language Performance */}
             {stats.byLanguage.length > 0 && (
               <div className="bg-light rounded-2xl shadow-xl p-8">
-                <h2 className="text-2xl font-bold text-secondary mb-6">الأداء حسب اللغة</h2>
+                <h2 className="text-2xl font-bold text-primary mb-6">الأداء حسب اللغة</h2>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={stats.byLanguage}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#C2B09F" />
@@ -314,7 +314,7 @@ function DashboardPage() {
           {/* Recent Activity */}
           {stats.recentSubmissions.length > 0 && (
             <div className="bg-light rounded-2xl shadow-xl p-8">
-              <h2 className="text-2xl font-bold text-secondary mb-6">النشاط الأخير</h2>
+              <h2 className="text-2xl font-bold text-primary mb-6">النشاط الأخير</h2>
               <div className="space-y-4">
                 {stats.recentSubmissions.map((submission) => (
                   <div

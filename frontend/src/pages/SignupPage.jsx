@@ -291,7 +291,7 @@ function SignupPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full px-6 py-3 bg-first text-primary font-bold rounded-lg  transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? 'جاري التحقق...' : 'تأكيد الحساب'}
                 </button>
@@ -300,7 +300,7 @@ function SignupPage() {
                   type="button"
                   onClick={handleResendCode}
                   disabled={loading}
-                  className="w-full px-6 py-3 border-2 border-secondary text-primary font-semibold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-6 py-3 border-2 border-first text-primary font-semibold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   إعادة إرسال رمز التحقق
                 </button>

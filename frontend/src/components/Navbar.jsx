@@ -68,21 +68,27 @@ function Navbar() {
           {/* Auth Section */}
           <div>
             {loading ? (
-              <div className="text-light text-xs md:text-sm ">جاري التحميل...</div>
+              <div className="text-primary text-xs md:text-sm ">جاري التحميل...</div>
             ) : isAuthenticated ? (
               <div className="flex items-center gap-2 md:gap-4 ">
-                <span className="text-light text-xs md:text-base">
+                <span className="text-primary text-xs md:text-base">
                   مرحباً، {user?.name || user?.email?.split('@')[0] || 'مستخدم'}
                 </span>
                 <Link
                   to="/dashboard"
-                  className="px-6 py-2 border-2 border-light text-light rounded-lg hover:bg-accent hover:border-accent transition-all duration-300"
+                  className="px-6 py-2 border-2 text-primary border-2 border-primary rounded-lg
+                  duration-300 ease-out hover:scale-110 hover:shadow-slate-300 hover:shadow-md
+                  whitespace-nowrap inline-block bg-transparent
+                  min-w-[110px] shrink-0"
                 >
                   الملف الشخصي
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="px-3 py-1 md:px-6 md:py-2 border-2 border-light text-light rounded-lg hover:bg-accent hover:border-accent transition-all duration-300 text-xs md:text-base"
+                  className="px-6 py-2 border-2 text-primary border-2 border-primary rounded-lg
+                  duration-300 ease-out hover:scale-110 hover:shadow-slate-300 hover:shadow-md
+                  whitespace-nowrap inline-block bg-transparent
+                  min-w-[110px] shrink-0"
                 >
                   تسجيل خروج
                 </button>

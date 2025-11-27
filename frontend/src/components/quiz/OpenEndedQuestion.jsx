@@ -42,7 +42,7 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
           value={answer}
           onChange={(e) => onAnswerSelect(e.target.value)}
           placeholder="اكتب إجابتك هنا..."
-          className="w-full p-5 border-2 border-primary rounded-xl focus:border-secondary focus:outline-none transition-colors text-lg min-h-[150px] resize-none text-primary"
+          className="w-full p-5 border-2 border-primary rounded-xl focus:border-secondary focus:outline-none transition-colors text-lg min-h-[150px] resize-none text-first"
           dir="auto"
         />
         <div className="flex justify-between items-center mt-2 text-sm text-primary/60">

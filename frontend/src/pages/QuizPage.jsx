@@ -32,7 +32,7 @@ function QuizPage() {
 
   const questionTypes = [
     { value: 'all', label: 'مختلط (كل الأنواع)' },
-    { value: 'single_choice', label: 'اختيار من متعدد' },
+    { value: 'single_choice', label: 'اختيار  متعدد' },
     { value: 'multiple_choice', label: 'اختيارات متعددة' },
     { value: 'true_false', label: 'صح أو خطأ' },
     { value: 'open_ended', label: 'سؤال مفتوح' },
