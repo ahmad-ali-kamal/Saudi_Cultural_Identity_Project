@@ -8,7 +8,7 @@ import { apiService } from '../services/api';
 import { authService } from '../services/auth';
 
 // Chart colors matching heritage theme
-const CHART_COLORS = ['#623F1F', '#C2B09F', '#8B5A3C', '#D4C4B0', '#422B15', '#FFDBBA'];
+const CHART_COLORS = ['#8B5A3C', '#CD9B6D', '#D4A574', '#A67C52', '#6B4423', '#D9BFA0'];
 
 function DashboardPage() {
   const [stats, setStats] = useState(null);
@@ -82,8 +82,8 @@ function DashboardPage() {
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-6xl mx-auto">
             <div className="bg-secondary border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
-              <div className="text-6xl mb-6">❌</div>
-              <h2 className="text-2xl font-bold text-red-900 mb-4">حدث خطأ</h2>
+              <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
+              <h2 className="text-2xl font-bold text-primary mb-4">حدث خطأ</h2>
               <p className="text-lg text-red-700 mb-8">{error}</p>
               <button
                 onClick={fetchStats}
@@ -107,11 +107,11 @@ function DashboardPage() {
           <div className="max-w-6xl mx-auto">
             <div className="bg-light rounded-2xl shadow-xl p-12 text-center">
               <div className="text-8xl mb-6">📊</div>
-              <h2 className="text-3xl font-bold text-secondary mb-4">لا توجد بيانات بعد</h2>
+              <h2 className="text-3xl font-bold text-primary mb-4">لا توجد بيانات بعد</h2>
               <p className="text-xl text-primary mb-8">ابدأ بحل الاختبارات لرؤية إحصائياتك هنا</p>
               <Link
                 to="/quiz"
-                className="inline-block px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+                className="inline-block px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 ابدأ اختباراً
               </Link>
@@ -203,22 +203,22 @@ function DashboardPage() {
                 <h2 className="text-2xl font-bold text-primary mb-6">تطور النتائج</h2>
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={scoreTrendData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#C2B09F" />
-                    <XAxis dataKey="date" stroke="#422B15" style={{ fontSize: '14px' }} />
-                    <YAxis stroke="#422B15" domain={[0, 100]} style={{ fontSize: '14px' }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#FFDBBA" />
+                    <XAxis dataKey="date" stroke="#FFDBBA" style={{ fontSize: '14px' }} />
+                    <YAxis stroke="#FFDBBA" domain={[0, 100]} style={{ fontSize: '14px' }} />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#FFDBBA',
-                        border: '2px solid #623F1F',
+                        border: '2px solid #FFDBBA',
                         borderRadius: '8px',
                       }}
                     />
                     <Line
                       type="monotone"
                       dataKey="score"
-                      stroke="#623F1F"
+                      stroke="#FFDBBA"
                       strokeWidth={3}
-                      dot={{ fill: '#623F1F', r: 5 }}
+                      dot={{ fill: '#FFDBBA', r: 5 }}
                       activeDot={{ r: 7 }}
                     />
                   </LineChart>
@@ -232,17 +232,17 @@ function DashboardPage() {
                 <h2 className="text-2xl font-bold text-primary mb-6">الأداء حسب نوع السؤال</h2>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={stats.byQuestionType}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#C2B09F" />
-                    <XAxis dataKey="type" stroke="#422B15" style={{ fontSize: '12px' }} />
-                    <YAxis stroke="#422B15" domain={[0, 100]} style={{ fontSize: '14px' }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#FFDBBA" />
+                    <XAxis dataKey="type" stroke="#FFDBBA" style={{ fontSize: '12px' }} />
+                    <YAxis stroke="#FFDBBA" domain={[0, 100]} style={{ fontSize: '14px' }} />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#FFDBBA',
-                        border: '2px solid #623F1F',
+                        border: '2px solid #FFDBBA',
                         borderRadius: '8px',
                       }}
                     />
-                    <Bar dataKey="accuracy" fill="#623F1F" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="accuracy" fill="#FFDBBA" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -270,7 +270,7 @@ function DashboardPage() {
                       verticalAlign="bottom"
                       height={36}
                       formatter={(value, entry) => (
-                        <span style={{ color: '#422B15' }}>
+                        <span style={{ color: '#FFDBBA' }}>
                           {value} ({entry.payload.accuracy.toFixed(0)}%)
                         </span>
                       )}
@@ -279,7 +279,7 @@ function DashboardPage() {
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#FFDBBA',
-                        border: '2px solid #623F1F',
+                        border: '2px solid #FFDBBA',
                         borderRadius: '8px',
                       }}
                     />
@@ -294,17 +294,17 @@ function DashboardPage() {
                 <h2 className="text-2xl font-bold text-primary mb-6">الأداء حسب اللغة</h2>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={stats.byLanguage}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#C2B09F" />
-                    <XAxis dataKey="language" stroke="#422B15" style={{ fontSize: '14px' }} />
-                    <YAxis stroke="#422B15" domain={[0, 100]} style={{ fontSize: '14px' }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#FFDBBA" />
+                    <XAxis dataKey="language" stroke="#FFDBBA" style={{ fontSize: '14px' }} />
+                    <YAxis stroke="#FFDBBA" domain={[0, 100]} style={{ fontSize: '14px' }} />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#FFDBBA',
-                        border: '2px solid #623F1F',
+                        border: '2px solid #FFDBBA',
                         borderRadius: '8px',
                       }}
                     />
-                    <Bar dataKey="accuracy" fill="#C2B09F" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="accuracy" fill="#FFDBBA" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -326,7 +326,7 @@ function DashboardPage() {
                         <span className="font-bold text-primary">
                           {submission.score} / {submission.totalQuestions}
                         </span>
-                        <span className="text-secondary font-semibold mr-4">
+                        <span className="text-primary font-semibold mr-4">
                           ({submission.percentage.toFixed(1)}%)
                         </span>
                       </div>

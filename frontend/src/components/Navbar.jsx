@@ -76,7 +76,7 @@ function Navbar() {
                 </span>
                 <Link
                   to="/dashboard"
-                  className="px-6 py-2 border-2 text-primary border-2 border-primary rounded-lg
+                  className="px-6 py-2 border-2 text-primary border-primary rounded-lg
                   duration-300 ease-out hover:scale-110 hover:shadow-slate-300 hover:shadow-md
                   whitespace-nowrap inline-block bg-transparent
                   min-w-[110px] shrink-0"
@@ -85,7 +85,7 @@ function Navbar() {
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="px-6 py-2 border-2 text-primary border-2 border-primary rounded-lg
+                  className="px-6 py-2 border-2 text-primary border-primary rounded-lg
                   duration-300 ease-out hover:scale-110 hover:shadow-slate-300 hover:shadow-md
                   whitespace-nowrap inline-block bg-transparent
                   min-w-[110px] shrink-0"
