@@ -13,13 +13,13 @@ function QuizPage() {
     type: 'all',
     size: 10,
   });
-
+{/* Options for selects in language */}
   const languageOptions = [
     { value: '', label: 'جميع اللغات' },
     { value: 'Arabic', label: 'العربية' },
     { value: 'English', label: 'English' },
   ];
-
+{/* Options for selects in region */}
   const regionOptions = [
     { value: '', label: 'جميع المناطق' },
     { value: 'general', label: 'عام' },
@@ -29,7 +29,7 @@ function QuizPage() {
     { value: 'south', label: 'الجنوبية' },
     { value: 'centeral', label: 'الوسطى' },
   ];
-
+{/* Options for selects in question types */}
   const questionTypes = [
     { value: 'all', label: 'مختلط (كل الأنواع)' },
     { value: 'single_choice', label: 'اختيار  متعدد' },
@@ -42,7 +42,7 @@ function QuizPage() {
     // Navigate to quiz taking page with config
     navigate('/quiz/take', { state: { config } });
   };
-
+{/* Validation for number of questions */}
   const isValid = config.size >= 5 && config.size <= 30;
 
   return (

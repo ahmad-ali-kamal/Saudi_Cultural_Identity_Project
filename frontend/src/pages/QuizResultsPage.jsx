@@ -13,10 +13,10 @@ function QuizResultsPage() {
   const navigate = useNavigate();
   const { questions, answers } = location.state || {};
 
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [submissionError, setSubmissionError] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [submitting, setSubmitting] = useState(false); // Sending state
+  const [submitted, setSubmitted] = useState(false);   // Submission completed state
+  const [submissionError, setSubmissionError] = useState(null);  // Submission error state
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Logged in status
 
   // Ref to prevent duplicate submissions (StrictMode-safe)
   const hasSubmitted = useRef(false);

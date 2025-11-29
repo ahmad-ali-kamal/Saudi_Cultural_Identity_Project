@@ -7,6 +7,7 @@ function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // ============ LIFECYCLE ============
   useEffect(() => {
@@ -45,50 +46,46 @@ function Navbar() {
 
   // ============ RENDER ============
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-secondary shadow-lg"> {/*make the nav stick up*/}
-      <div className="container mx-auto -my-4 px-6 py-6">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-secondary shadow-lg">
+      <div className="container mx-auto px-4 md:px-6 py-4">
         <div className="flex items-center justify-between">
 
-          {/* Navigation Links */}
-          <div className="flex items-center gap-3 md:gap-6 lg:gap-8 ">
-            <Link to="/" className="pl-7 text-primary text-sm md:text-lg lg:text-2xl font-bold transition-transform duration-300 ease-out hover:scale-125 hover:text-glow ">
-              هوية المملكة الثقافية
-            </Link>
-            <Link to="/learn" className="pl-7 text-primary text-sm md:text-lg lg:text-2xl font-bold transition-transform duration-300 ease-out hover:scale-125 hover:text-glow ">
+          {/* Logo/Brand */}
+          <Link to="/" className="text-primary text-base md:text-xl lg:text-2xl font-bold hover:text-accent transition-colors duration-300 flex-shrink-0">
+            هوية المملكة الثقافية
+          </Link>
+
+          {/* Desktop Navigation Links */}
+          <div className="hidden lg:flex items-center gap-6">
+            <Link to="/learn" className="text-primary text-lg font-semibold hover:text-accent transition-all duration-300 hover:scale-105">
               تعلم
             </Link>
-            <Link to="/quiz" className="pl-7 text-primary text-sm md:text-lg lg:text-2xl font-bold transition-transform duration-300 ease-out hover:scale-125 hover:text-glow ">
+            <Link to="/quiz" className="text-primary text-lg font-semibold hover:text-accent transition-all duration-300 hover:scale-105">
               اختبر نفسك
             </Link>
-            <Link to="/about" className="pl-7 text-primary text-sm md:text-lg lg:text-2xl font-bold transition-transform duration-300 ease-out hover:scale-125 hover:text-glow ">
+            <Link to="/about" className="text-primary text-lg font-semibold hover:text-accent transition-all duration-300 hover:scale-105">
               فريق التطوير
             </Link>
           </div>
 
-          {/* Auth Section */}
-          <div>
+          {/* Desktop Auth Section */}
+          <div className="hidden lg:flex items-center">
             {loading ? (
-              <div className="text-primary text-xs md:text-sm ">جاري التحميل...</div>
+              <div className="text-primary text-sm">جاري التحميل...</div>
             ) : isAuthenticated ? (
-              <div className="flex items-center gap-2 md:gap-4 ">
-                <span className="text-primary text-xs md:text-base">
+              <div className="flex items-center gap-3">
+                <span className="text-primary text-sm">
                   مرحباً، {user?.name || user?.email?.split('@')[0] || 'مستخدم'}
                 </span>
                 <Link
                   to="/dashboard"
-                  className="px-6 py-2 border-2 text-primary border-primary rounded-lg
-                  duration-300 ease-out hover:scale-110 hover:shadow-slate-300 hover:shadow-md
-                  whitespace-nowrap inline-block bg-transparent
-                  min-w-[110px] shrink-0"
+                  className="px-4 py-2 text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
                 >
                   الملف الشخصي
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="px-6 py-2 border-2 text-primary border-primary rounded-lg
-                  duration-300 ease-out hover:scale-110 hover:shadow-slate-300 hover:shadow-md
-                  whitespace-nowrap inline-block bg-transparent
-                  min-w-[110px] shrink-0"
+                  className="px-4 py-2 text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
                 >
                   تسجيل خروج
                 </button>
@@ -96,21 +93,102 @@ function Navbar() {
             ) : (
               <Link
                 to="/login"
-                className="
-                  py-1 md:px-8 md:py-2 text-sm md:text-2xl
-                  text-primary border-2 border-primary rounded-lg
-                  duration-300 ease-out hover:scale-110 hover:shadow-slate-300 hover:shadow-md
-                  whitespace-nowrap inline-block bg-transparent
-                  min-w-[110px] shrink-0">
+                className="px-6 py-2 text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
+              >
                 تسجيل دخول
               </Link>
-
-
-
             )}
           </div>
 
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden text-primary p-2 hover:bg-primary/10 rounded-lg transition-colors duration-300"
+            aria-label="قائمة"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              {mobileMenuOpen ? (
+                <path d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden mt-4 pb-4 border-t border-primary/20">
+            <div className="flex flex-col gap-3 mt-4">
+              <Link
+                to="/learn"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-primary text-base font-semibold hover:text-accent transition-colors duration-300 py-2"
+              >
+                تعلم
+              </Link>
+              <Link
+                to="/quiz"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-primary text-base font-semibold hover:text-accent transition-colors duration-300 py-2"
+              >
+                اختبر نفسك
+              </Link>
+              <Link
+                to="/about"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-primary text-base font-semibold hover:text-accent transition-colors duration-300 py-2"
+              >
+                فريق التطوير
+              </Link>
+
+              {/* Mobile Auth Section */}
+              <div className="border-t border-primary/20 pt-3 mt-2">
+                {loading ? (
+                  <div className="text-primary text-sm">جاري التحميل...</div>
+                ) : isAuthenticated ? (
+                  <div className="flex flex-col gap-3">
+                    <span className="text-primary text-sm">
+                      مرحباً، {user?.name || user?.email?.split('@')[0] || 'مستخدم'}
+                    </span>
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="px-4 py-2 text-center text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
+                    >
+                      الملف الشخصي
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        handleLogout();
+                      }}
+                      className="px-4 py-2 text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
+                    >
+                      تسجيل خروج
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block px-4 py-2 text-center text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
+                  >
+                    تسجيل دخول
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
