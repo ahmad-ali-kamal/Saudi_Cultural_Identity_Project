@@ -81,6 +81,7 @@ public class QuestionService {
 
     public List<QuizQuestionDTO> getQuizzes(String category, String language, String region, String type, int size) {
         log.info("Fetching quiz questions",
+                keyValue("language", language),
                 keyValue("category", category),
                 keyValue("region", region),
                 keyValue("type", type),

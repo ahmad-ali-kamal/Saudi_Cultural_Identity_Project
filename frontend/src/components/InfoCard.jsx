@@ -20,10 +20,11 @@ function InfoCard({ info }) {
   const textAlign = isEnglish ? 'text-left' : 'text-right';
 
   return (
-    <div className="bg-light rounded-2xl shadow-xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-102">
+    <div className="bg-light rounded-2xl shadow-xl p-6 transition-all duration-300 hover:shadow-2xl hover:scale-102" 
+         data-aos="fade-up">
       {/* Image */}
       {imageSrc && (
-        <div className="rounded-lg overflow-hidden shadow-lg mb-4 bg-gray-50">
+        <div className="rounded-lg overflow-hidden mb-4 bg-light-50">
           <img
             src={imageSrc}
             alt="Info visual"
@@ -35,7 +36,7 @@ function InfoCard({ info }) {
       {/* Question/Term */}
       {info.term && (
         <div className="mb-3">
-          <span className="inline-block bg-secondary text-light px-3 py-1 rounded-full text-sm font-bold mb-2">
+          <span className="inline-block bg-secondary text-primary px-3 py-1 rounded-full text-sm font-bold mb-2">
             مصطلح
           </span>
           <h3 className={`text-xl font-bold text-primary ${textAlign}`} dir={textDir}>

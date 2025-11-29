@@ -1,7 +1,7 @@
 function TrueFalseQuestion({ question, selectedAnswer, onAnswerSelect, showImage = true }) {
   const options = [
-    { value: 'True', label: 'صح ✓', color: 'green' },
-    { value: 'False', label: 'خطأ ✗', color: 'red' },
+    { value: 'True', label: 'صح', color: 'green' },
+    { value: 'False', label: 'خطأ', color: 'red' },
   ];
 
   // Decode base64 image if available
@@ -25,7 +25,7 @@ function TrueFalseQuestion({ question, selectedAnswer, onAnswerSelect, showImage
     <div className="space-y-6">
       {/* Question Image (if exists) */}
       {showImage && imageSrc && (
-        <div className="rounded-lg overflow-hidden shadow-lg mb-6 bg-gray-50">
+        <div className="rounded-lg overflow-hidden mb-6 bg-light-50">
           <img
             src={imageSrc}
             alt="Question visual"
@@ -40,22 +40,22 @@ function TrueFalseQuestion({ question, selectedAnswer, onAnswerSelect, showImage
       </h2>
 
       {/* True/False Options */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6" data-aos="zoom-out" data-aos-duration="1500">
         {options.map((option) => {
           const isSelected = selectedAnswer === option.value;
           return (
             <button
               key={option.value}
               onClick={() => onAnswerSelect(option.value)}
-              className={`p-8 rounded-2xl border-3 transition-all duration-300 transform hover:scale-105 ${
+              className={`mx-12 py-6 rounded-2xl  transition-all duration-300 transform hover:scale-105  ${
                 isSelected
                   ? option.color === 'green'
-                    ? 'bg-secondary text-light border-secondary shadow-2xl scale-105'
-                    : 'bg-accent text-primary border-accent shadow-2xl scale-105'
-                  : 'bg-white text-primary border-accent hover:border-secondary hover:shadow-lg'
+                    ? 'bg-secondary text-primary border border-primary shadow-2xl scale-105'
+                    : 'bg-secondary text-primary border border-primary shadow-2xl scale-105'
+                  : 'bg-first text-primary border border-accent hover:shadow-lg'
               }`}
             >
-              <div className="text-3xl font-bold">{option.label}</div>
+              <div className="text-4xl font-bold" >{option.label}</div>
             </button>
           );
         })}

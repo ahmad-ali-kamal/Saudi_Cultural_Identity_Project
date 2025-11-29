@@ -102,10 +102,10 @@ function LoginPage() {
           <div className="bg-light rounded-2xl shadow-2xl p-8">
             {/* Header */}
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-secondary mb-2">
+              <h1 className="text-4xl font-bold text-primary mb-2">
                 تسجيل الدخول
               </h1>
-              <p className="text-primary">
+              <p className="text-primary text-1xl">
                 سجل دخولك للوصول إلى جميع المميزات
               </p>
             </div>
@@ -120,14 +120,14 @@ function LoginPage() {
                 )}
 
                 <div>
-                  <label className="block text-secondary font-semibold mb-2">
+                  <label className="block text-primary font-semibold mb-2">
                     البريد الإلكتروني أو اسم المستخدم
                   </label>
                   <input
                     type="text"
                     value={usernameOrEmail}
                     onChange={(e) => setUsernameOrEmail(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
+                    className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-primary"
                     placeholder="example@email.com أو اسم المستخدم"
                     required
                     disabled={loading}
@@ -137,12 +137,12 @@ function LoginPage() {
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <label className="text-secondary font-semibold">
+                    <label className="text-primary font-semibold">
                       كلمة المرور
                     </label>
                     <Link
                       to="/forgot-password"
-                      className="text-sm text-secondary hover:text-accent hover:underline transition-colors"
+                      className="text-sm text-primary hover:text-accent hover:underline transition-colors"
                     >
                       هل نسيت كلمة المرور؟
                     </Link>
@@ -152,7 +152,7 @@ function LoginPage() {
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full px-4 py-3 pr-12 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
+                      className="placeholder-secondary w-full px-4 py-3 pr-12 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-primary"
                       placeholder="••••••••"
                       required
                       disabled={loading}
@@ -161,7 +161,7 @@ function LoginPage() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-primary/60 hover:text-secondary transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary/80 hover:text-secondary transition-colors"
                       disabled={loading}
                     >
                       {showPassword ? (
@@ -181,7 +181,7 @@ function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full px-6 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}
                 </button>
@@ -207,7 +207,7 @@ function LoginPage() {
                 )}
 
                 <div>
-                  <label className="block text-secondary font-semibold mb-2">
+                  <label className="block text-primary font-semibold mb-2">
                     رمز التحقق
                   </label>
                   <input
@@ -225,7 +225,7 @@ function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full px-6 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? 'جاري التحقق...' : 'تأكيد الحساب'}
                 </button>
@@ -234,7 +234,7 @@ function LoginPage() {
                   type="button"
                   onClick={handleResendCode}
                   disabled={loading}
-                  className="w-full px-6 py-3 border-2 border-secondary text-secondary font-semibold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-6 py-3 border-2 border-secondary text-primary font-semibold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   إعادة إرسال رمز التحقق
                 </button>
@@ -247,7 +247,7 @@ function LoginPage() {
                 ليس لديك حساب؟{' '}
                 <Link
                   to="/signup"
-                  className="text-secondary hover:text-accent hover:underline font-semibold transition-colors"
+                  className="text-primary hover:text-accent hover:underline font-semibold transition-colors"
                 >
                   إنشاء حساب جديد
                 </Link>
@@ -258,7 +258,7 @@ function LoginPage() {
             <div className="mt-4 text-center">
               <Link
                 to="/"
-                className="text-secondary hover:text-accent hover:underline font-semibold transition-colors"
+                className="text-primary hover:text-accent hover:underline font-semibold transition-colors"
               >
                 العودة للصفحة الرئيسية
               </Link>

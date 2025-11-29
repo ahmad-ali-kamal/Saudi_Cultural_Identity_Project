@@ -8,10 +8,12 @@ export default {
     extend: {
       colors: {
         // 4-color palette - Dark heritage theme
-        'primary': '#422B15',      // Dark brown (backgrounds, main color)
+        'primary': '#FFDBBA',      // Dark brown (backgrounds, main color)
         'secondary': '#623F1F',    // Medium brown (buttons, CTAs)
-        'accent': '#C2B09F',       // Taupe (hover states, borders)
-        'light': '#FFDBBA',        // Peach/sand (text on dark, light cards)
+        'accent': '#000000ff',       // Taupe (hover states, borders)
+        'light': '#5a3513ff',  
+        // Light brown (cards, text on dark)
+        'first': '#855d38ff',      // Peach/sand (text on dark, light cards)
         // Legacy (for backward compatibility)
         'saudi-green': '#1D2F1F',
       },

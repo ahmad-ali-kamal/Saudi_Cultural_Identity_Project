@@ -3,14 +3,18 @@ import { Link } from 'react-router-dom';
 import { authService } from '../services/auth';
 
 function Navbar() {
+  // ============ STATE ============
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // ============ LIFECYCLE ============
   useEffect(() => {
     checkAuthStatus();
   }, []);
 
+  // ============ METHODS ============
   const checkAuthStatus = async () => {
     try {
       const authenticated = await authService.isAuthenticated();
@@ -40,43 +44,48 @@ function Navbar() {
     }
   };
 
+  // ============ RENDER ============
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-primary shadow-lg">
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-evenly">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-secondary shadow-lg">
+      <div className="container mx-auto px-4 md:px-6 py-4">
+        <div className="flex items-center justify-between">
+
           {/* Logo/Brand */}
-          <Link
-            to="/"
-            className="text-light text-xl font-bold hover:text-accent transition-colors "
-          >
+          <Link to="/" className="text-primary text-base md:text-xl lg:text-2xl font-bold hover:text-accent transition-colors duration-300 flex-shrink-0">
             هوية المملكة الثقافية
           </Link>
-          {/* Logo/Brand */}
-          <Link
-            to="/about"
-            className="text-light text-xl font-bold hover:text-accent transition-colors "
-          >
-          فريق التطوير
-          </Link>
 
-          {/* Login/Profile Button */}
-          <div>
+          {/* Desktop Navigation Links */}
+          <div className="hidden lg:flex items-center gap-6">
+            <Link to="/learn" className="text-primary text-lg font-semibold hover:text-accent transition-all duration-300 hover:scale-105">
+              تعلم
+            </Link>
+            <Link to="/quiz" className="text-primary text-lg font-semibold hover:text-accent transition-all duration-300 hover:scale-105">
+              اختبر نفسك
+            </Link>
+            <Link to="/about" className="text-primary text-lg font-semibold hover:text-accent transition-all duration-300 hover:scale-105">
+              فريق التطوير
+            </Link>
+          </div>
+
+          {/* Desktop Auth Section */}
+          <div className="hidden lg:flex items-center">
             {loading ? (
-              <div className="text-light text-sm">جاري التحميل...</div>
+              <div className="text-primary text-sm">جاري التحميل...</div>
             ) : isAuthenticated ? (
-              <div className="flex items-center gap-4">
-                <span className="text-light">
+              <div className="flex items-center gap-3">
+                <span className="text-primary text-sm">
                   مرحباً، {user?.name || user?.email?.split('@')[0] || 'مستخدم'}
                 </span>
                 <Link
                   to="/dashboard"
-                  className="px-6 py-2 border-2 border-light text-light rounded-lg hover:bg-accent hover:border-accent transition-all duration-300"
+                  className="px-4 py-2 text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
                 >
                   الملف الشخصي
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="px-6 py-2 border-2 border-light text-light rounded-lg hover:bg-accent hover:border-accent transition-all duration-300"
+                  className="px-4 py-2 text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
                 >
                   تسجيل خروج
                 </button>
@@ -84,16 +93,106 @@ function Navbar() {
             ) : (
               <Link
                 to="/login"
-                className="px-6 py-2 border-2 border-light text-light rounded-lg hover:bg-accent hover:border-accent transition-all duration-300"
+                className="px-6 py-2 text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
               >
                 تسجيل دخول
               </Link>
             )}
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden text-primary p-2 hover:bg-primary/10 rounded-lg transition-colors duration-300"
+            aria-label="قائمة"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              {mobileMenuOpen ? (
+                <path d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden mt-4 pb-4 border-t border-primary/20">
+            <div className="flex flex-col gap-3 mt-4">
+              <Link
+                to="/learn"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-primary text-base font-semibold hover:text-accent transition-colors duration-300 py-2"
+              >
+                تعلم
+              </Link>
+              <Link
+                to="/quiz"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-primary text-base font-semibold hover:text-accent transition-colors duration-300 py-2"
+              >
+                اختبر نفسك
+              </Link>
+              <Link
+                to="/about"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-primary text-base font-semibold hover:text-accent transition-colors duration-300 py-2"
+              >
+                فريق التطوير
+              </Link>
+
+              {/* Mobile Auth Section */}
+              <div className="border-t border-primary/20 pt-3 mt-2">
+                {loading ? (
+                  <div className="text-primary text-sm">جاري التحميل...</div>
+                ) : isAuthenticated ? (
+                  <div className="flex flex-col gap-3">
+                    <span className="text-primary text-sm">
+                      مرحباً، {user?.name || user?.email?.split('@')[0] || 'مستخدم'}
+                    </span>
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="px-4 py-2 text-center text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
+                    >
+                      الملف الشخصي
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        handleLogout();
+                      }}
+                      className="px-4 py-2 text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
+                    >
+                      تسجيل خروج
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block px-4 py-2 text-center text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
+                  >
+                    تسجيل دخول
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
+
 }
 
 export default Navbar;

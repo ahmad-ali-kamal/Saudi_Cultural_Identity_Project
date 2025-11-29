@@ -6,7 +6,7 @@ import OpenEndedQuestion from './OpenEndedQuestion';
 function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
   if (!question) {
     return (
-      <div className="text-center text-gray-500 py-12">
+      <div className="text-center text-primary py-12">
         <p className="text-xl">لا توجد أسئلة متاحة</p>
       </div>
     );
@@ -61,7 +61,7 @@ function QuestionRenderer({ question, selectedAnswer, onAnswerSelect }) {
     <div>
       <div className="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-4 mb-6">
         <p className="text-yellow-800">
-          ⚠️ نوع السؤال غير معروف: <strong>{question.type}</strong> - سيتم عرضه كسؤال اختيار من متعدد
+          نوع السؤال غير معروف: <strong>{question.type}</strong> - سيتم عرضه كسؤال اختيار من متعدد
         </p>
       </div>
       <MCQQuestion

@@ -13,10 +13,10 @@ function QuizResultsPage() {
   const navigate = useNavigate();
   const { questions, answers } = location.state || {};
 
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [submissionError, setSubmissionError] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [submitting, setSubmitting] = useState(false); // Sending state
+  const [submitted, setSubmitted] = useState(false);   // Submission completed state
+  const [submissionError, setSubmissionError] = useState(null);  // Submission error state
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Logged in status
 
   // Ref to prevent duplicate submissions (StrictMode-safe)
   const hasSubmitted = useRef(false);
@@ -149,8 +149,8 @@ function QuizResultsPage() {
       <div className="container mx-auto px-6 py-24">
         <div className="max-w-5xl mx-auto">
           {/* Score Card */}
-          <div className="bg-light rounded-2xl shadow-2xl p-8 md:p-12 mb-8 text-center">
-            <h1 className="text-4xl font-bold text-secondary mb-6">نتيجتك</h1>
+          <div className="bg-secondary rounded-2xl shadow-2xl p-8 md:p-12 mb-8 text-center">
+            <h1 className="text-4xl font-bold text-primary mb-6">نتيجتك</h1>
 
             {/* Score Circle */}
             <div className="relative w-48 h-48 mx-auto mb-8">
@@ -167,7 +167,7 @@ function QuizResultsPage() {
                   cx="96"
                   cy="96"
                   r="88"
-                  stroke="#623F1F"
+                  stroke="#FFDBBA"
                   strokeWidth="12"
                   fill="none"
                   strokeDasharray={`${(percentage / 100) * 553} 553`}
@@ -175,7 +175,7 @@ function QuizResultsPage() {
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-5xl font-bold text-secondary">
+                <span className="text-5xl font-bold text-primary">
                   {percentage}%
                 </span>
                 <span className="text-primary mt-2">
@@ -210,13 +210,13 @@ function QuizResultsPage() {
             <div className="flex flex-wrap justify-center gap-4 mt-8">
               <button
                 onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg"
+                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 حاول مرة أخرى
               </button>
               <button
                 onClick={() => navigate('/')}
-                className="px-8 py-3 bg-accent text-primary font-bold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300"
+                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 الصفحة الرئيسية
               </button>
@@ -224,8 +224,8 @@ function QuizResultsPage() {
           </div>
 
           {/* Review Answers */}
-          <div className="bg-light rounded-2xl shadow-xl p-8 md:p-12">
-            <h2 className="text-3xl font-bold text-secondary mb-8 text-center">
+          <div className="bg-secondary rounded-2xl shadow-xl p-8 md:p-12">
+            <h2 className="text-3xl font-bold text-primary mb-8 text-center">
               مراجعة الإجابات
             </h2>
 
@@ -241,7 +241,7 @@ function QuizResultsPage() {
                 >
                   {/* Question Number & Status */}
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-lg font-bold text-primary">
+                    <span className="text-lg font-bold text-first">
                       السؤال {index + 1}
                     </span>
                     <span
@@ -254,13 +254,13 @@ function QuizResultsPage() {
                   </div>
 
                   {/* Question Text */}
-                  <p className="text-xl font-semibold text-secondary mb-4">
+                  <p className="text-xl font-semibold text-first mb-4">
                     {result.question.questionText}
                   </p>
 
                   {/* User's Answer */}
                   <div className="mb-3">
-                    <span className="font-bold text-primary">إجابتك: </span>
+                    <span className="font-bold text-secondary">إجابتك: </span>
                     <span
                       className={
                         result.isCorrect ? 'text-green-700 font-semibold' : 'text-red-700 font-semibold'
@@ -275,7 +275,7 @@ function QuizResultsPage() {
                   {/* Correct Answer (if wrong) */}
                   {!result.isCorrect && (
                     <div>
-                      <span className="font-bold text-primary">
+                      <span className="font-bold text-secondary">
                         الإجابة الصحيحة:{' '}
                       </span>
                       <span className="text-green-700 font-semibold">

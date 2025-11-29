@@ -110,8 +110,8 @@ function QuizTakePage() {
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-light rounded-2xl shadow-xl p-12 text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-secondary mx-auto mb-6"></div>
+            <div className="bg-secondary rounded-2xl shadow-xl p-12 text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-primary mx-auto mb-6"></div>
               <p className="text-xl text-primary">جاري تحميل الأسئلة...</p>
             </div>
           </div>
@@ -126,19 +126,19 @@ function QuizTakePage() {
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-light border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
-              <div className="text-6xl mb-6">❌</div>
+            <div className="bg-secondary border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
+              <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
               <h2 className="text-2xl font-bold text-red-900 mb-4">حدث خطأ</h2>
               <p className="text-lg text-red-700 mb-8">{error}</p>
               <button
                 onClick={fetchQuestions}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 ml-4"
+                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 ml-4"
               >
                 حاول مرة أخرى
               </button>
               <button
                 onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-accent text-primary font-bold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300"
+                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300"
               >
                 العودة للإعدادات
               </button>
@@ -155,15 +155,15 @@ function QuizTakePage() {
         <Navbar />
         <div className="container mx-auto px-6 py-24">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-light border-2 border-accent rounded-2xl shadow-xl p-12 text-center">
-              <div className="text-6xl mb-6">🤔</div>
-              <h2 className="text-2xl font-bold text-secondary mb-4">لا توجد أسئلة متاحة</h2>
+            <div className="bg-secondary border-2 border-accent rounded-2xl shadow-xl p-12 text-center">
+              <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
+              <h2 className="text-2xl font-bold text-primary mb-4">لا توجد أسئلة متاحة</h2>
               <p className="text-lg text-primary mb-8">
                 لم نجد أسئلة تطابق اختيارك. جرب تغيير الفئة أو المنطقة.
               </p>
               <button
                 onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300"
+                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300"
               >
                 العودة للإعدادات
               </button>
@@ -190,16 +190,16 @@ function QuizTakePage() {
                 {Math.round(progress)}%
               </span>
             </div>
-            <div className="w-full bg-accent rounded-full h-3 overflow-hidden">
+            <div className="w-full bg-secondary rounded-full h-3 overflow-hidden">
               <div
-                className="bg-secondary h-full transition-all duration-500 ease-out"
+                className="bg-green-600 h-full transition-all duration-500 ease-out"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
           </div>
 
           {/* Question Card */}
-          <div className="bg-light rounded-2xl shadow-xl p-8 md:p-12 mb-6">
+          <div className="bg-light rounded-2xl shadow-xl p-8 md:p-12 mb-6" data-aos="fade-up">
             <QuestionRenderer
               question={currentQuestion}
               selectedAnswer={currentAnswer}
@@ -212,9 +212,9 @@ function QuizTakePage() {
             <button
               onClick={handlePrevious}
               disabled={isFirstQuestion}
-              className="px-6 py-3 bg-accent text-primary font-bold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              ← السابق
+              السابق →
             </button>
 
             <div className="flex-1"></div>
@@ -223,24 +223,26 @@ function QuizTakePage() {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                {isSubmitting ? 'جاري الإرسال...' : 'إنهاء الاختبار →'}
+                {isSubmitting ? 'جاري الإرسال...' : 'إنهاء الاختبار ←'}
               </button>
             ) : (
               <button
                 onClick={handleNext}
                 disabled={!hasAnswer}
-                className="px-8 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+
+                className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+
               >
-                التالي →
+                التالي ←
               </button>
             )}
           </div>
 
           {!hasAnswer && (
             <p className="text-center text-light mt-4 font-semibold bg-secondary/20 py-3 rounded-lg">
-              ⚠️ الرجاء اختيار إجابة قبل المتابعة
+               الرجاء اختيار إجابة قبل المتابعة
             </p>
           )}
         </div>
