@@ -129,16 +129,16 @@ function QuizResultsPage() {
   let performanceMessage = '';
   let performanceColor = '';
   if (percentage >= 90) {
-    performanceMessage = '🎉 ممتاز! أداء رائع!';
+    performanceMessage = ' ممتاز! أداء رائع!';
     performanceColor = 'text-green-600';
   } else if (percentage >= 70) {
-    performanceMessage = '👍 جيد جداً! استمر!';
+    performanceMessage = ' جيد جداً! استمر!';
     performanceColor = 'text-blue-600';
   } else if (percentage >= 50) {
-    performanceMessage = '😊 جيد! يمكنك التحسن';
+    performanceMessage = ' جيد! يمكنك التحسن';
     performanceColor = 'text-yellow-600';
   } else {
-    performanceMessage = '💪 حاول مرة أخرى!';
+    performanceMessage = ' حاول مرة أخرى!';
     performanceColor = 'text-orange-600';
   }
 

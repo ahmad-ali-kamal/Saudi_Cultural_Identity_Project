@@ -68,7 +68,7 @@ function QuizPage() {
           <div className="bg-secondary rounded-2xl shadow-xl p-8 mb-8">
             {/* Language Selection */}
             <div className="mb-6">
-              <label className="block text-secondary font-bold mb-3 text-lg">
+              <label className="block text-primary font-bold mb-3 text-lg">
                 اللغة (اختياري)
               </label>
               <CustomSelect

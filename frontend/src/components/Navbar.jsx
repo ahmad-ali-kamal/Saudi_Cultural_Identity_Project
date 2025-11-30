@@ -116,9 +116,9 @@ function Navbar() {
               stroke="currentColor"
             >
               {mobileMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
+                <path d="M6 18L18 6M6 6l12 12" /> // Close icon (X)
               ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
+                <path d="M4 6h16M4 12h16M4 18h16" />  // Hamburger icon (three lines)
               )}
             </svg>
           </button>
@@ -130,21 +130,21 @@ function Navbar() {
             <div className="flex flex-col gap-3 mt-4">
               <Link
                 to="/learn"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => setMobileMenuOpen(false)} // Close menu on link click
                 className="text-primary text-base font-semibold hover:text-accent transition-colors duration-300 py-2"
               >
                 تعلم
               </Link>
               <Link
                 to="/quiz"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => setMobileMenuOpen(false)} // Close menu on link click
                 className="text-primary text-base font-semibold hover:text-accent transition-colors duration-300 py-2"
               >
                 اختبر نفسك
               </Link>
               <Link
                 to="/about"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => setMobileMenuOpen(false)} // Close menu on link click
                 className="text-primary text-base font-semibold hover:text-accent transition-colors duration-300 py-2"
               >
                 فريق التطوير
@@ -161,15 +161,15 @@ function Navbar() {
                     </span>
                     <Link
                       to="/dashboard"
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={() => setMobileMenuOpen(false)} // Close menu on link click
                       className="px-4 py-2 text-center text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
                     >
                       الملف الشخصي
                     </Link>
                     <button
                       onClick={() => {
-                        setMobileMenuOpen(false);
-                        handleLogout();
+                        setMobileMenuOpen(false); // Close menu on link click
+                        handleLogout(); // Logout on link click
                       }}
                       className="px-4 py-2 text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
                     >
@@ -179,7 +179,7 @@ function Navbar() {
                 ) : (
                   <Link
                     to="/login"
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={() => setMobileMenuOpen(false)} // Close menu on link click
                     className="block px-4 py-2 text-center text-sm border-2 text-primary border-primary rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300"
                   >
                     تسجيل دخول

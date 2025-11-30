@@ -326,7 +326,7 @@ function LearnPage() {
                           onClick={() => handlePageChange(pageNum)}
                           className={`px-4 py-2.5 font-bold rounded-lg transition-all duration-300 ${
                             currentPage === pageNum
-                              ? 'bg-secondary text-light scale-110 shadow-lg'
+                              ? 'bg-secondary text-primary scale-110 shadow-lg'
                               : 'bg-light/50 text-primary hover:bg-light hover:scale-105'
                           }`}
                         >
