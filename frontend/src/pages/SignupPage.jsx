@@ -142,7 +142,7 @@ function SignupPage() {
                     name="username"
                     value={formData.username}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
+                    className="placeholder-secondary w-full px-4 py-3 border-2 border-primary rounded-lg focus:border-secondary focus:outline-none transition-colors bg-primary"
                     placeholder="مثال: ahmed_123"
                     required
                     disabled={loading}
@@ -161,7 +161,7 @@ function SignupPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
+                    className=" placeholder-secondary w-full px-4 py-3 border-2 border-primary rounded-lg focus:border-secondary focus:outline-none transition-colors bg-primary"
                     placeholder="example@email.com"
                     required
                     disabled={loading}
@@ -179,7 +179,7 @@ function SignupPage() {
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 pr-12 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
+                      className="placeholder-secondary w-full px-4 py-3 pr-12 border-2 border-primary rounded-lg focus:border-secondary focus:outline-none transition-colors bg-primary"
                       placeholder="••••••••"
                       required
                       disabled={loading}
@@ -218,7 +218,7 @@ function SignupPage() {
                       name="confirmPassword"
                       value={formData.confirmPassword}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 pr-12 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
+                      className="placeholder-secondary w-full px-4 py-3 pr-12 border-2 border-primary rounded-lg focus:border-secondary focus:outline-none transition-colors bg-primary"
                       placeholder="••••••••"
                       required
                       disabled={loading}
@@ -247,7 +247,7 @@ function SignupPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-primary text-secondary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full px-6 py-3 bg-primary text-secondary font-bold rounded-lg hover:bg-secondary hover:text-primary border-primary border-2 transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? 'جاري إنشاء الحساب...' : 'إنشاء حساب'}
                 </button>
@@ -313,7 +313,7 @@ function SignupPage() {
                 لديك حساب بالفعل؟{' '}
                 <Link
                   to="/login"
-                  className="text-primary hover:text-accent hover:underline font-semibold transition-colors"
+                  className="text-primary hover:text-white hover:underline font-semibold transition-colors"
                 >
                   سجل دخول
                 </Link>
@@ -324,7 +324,7 @@ function SignupPage() {
             <div className="text-center mt-12">
             <a
               href="/"
-              className="inline-block px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg"
+              className="inline-block px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-primary hover:text-secondary border-first border-4 transition-all duration-300 hover:scale-105 shadow-lg"
             >
               العودة للصفحة الرئيسية
             </a>

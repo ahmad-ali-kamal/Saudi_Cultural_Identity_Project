@@ -16,7 +16,7 @@ export default {
         'first': '#855d38ff',      // Peach/sand (text on dark, light cards)
         // Legacy (for backward compatibility)
         'saudi-green': '#1D2F1F',
-        'Footer': '#580E0D',
+    
       },
       fontFamily: {
         'arabic': ['Cairo', 'sans-serif'],

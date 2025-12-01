@@ -127,7 +127,7 @@ function LoginPage() {
                     type="text"
                     value={usernameOrEmail}
                     onChange={(e) => setUsernameOrEmail(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-primary"
+                    className="placeholder-secondary w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-primary"
                     placeholder="example@email.com أو اسم المستخدم"
                     required
                     disabled={loading}
@@ -142,7 +142,7 @@ function LoginPage() {
                     </label>
                     <Link
                       to="/forgot-password"
-                      className="text-sm text-primary hover:text-accent hover:underline transition-colors"
+                      className="text-sm text-primary hover:text-white hover:underline transition-colors"
                     >
                       هل نسيت كلمة المرور؟
                     </Link>
@@ -181,7 +181,7 @@ function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full px-6 py-3 bg-first text-primary font-bold rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}
                 </button>
@@ -247,7 +247,7 @@ function LoginPage() {
                 ليس لديك حساب؟{' '}
                 <Link
                   to="/signup"
-                  className="text-primary hover:text-accent hover:underline font-semibold transition-colors"
+                  className="text-primary hover:text-white hover:underline font-semibold transition-colors"
                 >
                   إنشاء حساب جديد
                 </Link>
@@ -258,7 +258,7 @@ function LoginPage() {
             <div className="mt-4 text-center">
               <Link
                 to="/"
-                className="text-primary hover:text-accent hover:underline font-semibold transition-colors"
+                className="text-primary hover:text-white hover:underline font-semibold transition-colors"
               >
                 العودة للصفحة الرئيسية
               </Link>
@@ -266,7 +266,9 @@ function LoginPage() {
           </div>
         </div>
       </div>
+     
     </div>
+   
   );
 }
 

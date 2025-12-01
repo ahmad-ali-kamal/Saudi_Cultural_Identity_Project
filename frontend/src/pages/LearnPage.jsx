@@ -269,7 +269,7 @@ function LearnPage() {
                   value={searchInput}
                   onChange={handleSearchChange}
                   placeholder="ابحث في المحتوى..."
-                  className="w-full px-4 py-4 border-2 border-secondary rounded-xl focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 transition-all duration-300 text-lg bg-gradient-to-l from-white to-accent/10 text-secondary font-bold"
+                  className="placeholder-secondary w-full px-4 py-4 border-2 border-secondary rounded-xl focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 transition-all duration-300 text-lg bg-primary text-secondary font-bold"
                   dir="auto"
                 />
               </div>

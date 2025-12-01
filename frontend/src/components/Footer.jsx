@@ -3,21 +3,22 @@ function Footer() {
 
   return (
     
-    <footer className="bg-black text-light ">
+    <footer className="bg-secondary text-light ">
       <div className=" ">
-         <div className="scroll-py-7 overflow-hidden" >
-                <img
-                  src="/images/FooterBg.jpg"
-                  alt="Saudi Cultural Learning"
-                  className="
-                    object-cover
-                  lg:w-full lg:h-full "
-                />
-               
-              </div>
+         <div className="scroll-py-10 overflow-hidden">
+          <div
+            style={{
+              backgroundImage: "url('/images/Camelss.jpg')",
+              backgroundRepeat: 'repeat-x',
+              backgroundSize: 'contain',
+              height: '9rem',
+            }}
+            aria-label="Saudi Cultural Learning"
+          />
+        </div>
 
         {/* Divider Line */}
-        <div className="w-full h-px bg-accent mb-8"></div>
+        <div className="w-full h-px bg-accent mt-5"></div>
 
         {/* Social Icons */}
         <div className="flex justify-center gap-4">
@@ -34,7 +35,7 @@ function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="text-center mt-8 text-primary text-sm">
+        <div className="text-center mt-1 py-5 text-primary text-sm">
           <p>© 2025 هوية المملكة الثقافية. جميع الحقوق محفوظة.</p>
         </div>
       </div>

@@ -51,8 +51,12 @@ function LandingPage() {
 
   {/* Decorative Divider */}
   <div
-  className=" h-20 bg-sadu-pattern bg-repeat-x "
-  style={{ backgroundImage: "url('/images/Sadu_decoration.jpg')" }}
+  style={{ backgroundImage: "url('/images/Camelss.jpg')",
+           backgroundRepeat: 'repeat-x',
+           backgroundSize: 'contain',
+           height: '9rem',
+           boxShadow: 'inset 0 20px 15px -10px rgba(0, 0, 0, 1)',
+   }}
 >  </div>
 
       <section className="py-0 px-20 bg-primary" >
@@ -75,7 +79,7 @@ function LandingPage() {
         <div className="container mx-auto max-w-9xl" >
           <div className="grid md:grid-cols-2 gap-32">
             {/* Quiz Card */}
-            <div className="group relative bg-secondary rounded-2xl  overflow-hidden shadow-xl " data-aos="flip-left" data-aos-duration="1000">
+            <div className="group relative bg-secondary rounded-2xl  overflow-hidden shadow-2xl " data-aos="flip-left" data-aos-duration="1000">
               {/* Card Image */}
 
               <div className="relative h-96 overflow-hidden">
@@ -105,7 +109,7 @@ function LandingPage() {
                   to="/quiz"
 
 
-                  className="inline-block px-12 py-5 bg-primary text-secondary text-3xl font-bold rounded-lg hover:bg-glow hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:shadow-white transition-all duration-300"
+                  className="inline-block px-12 py-5 bg-primary text-secondary text-3xl font-bold rounded-lg hover:bg-glow hover:text-secondary hover:scale-110 shadow-2xl hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:shadow-primary transition-all duration-300"
 
                 >
                   تحدى نفسك!
@@ -117,7 +121,7 @@ function LandingPage() {
             </div>
 
             {/* Learn Card */}
-            <div className="group relative bg-secondary rounded-2xl overflow-hidden shadow-xl"  data-aos="flip-right" data-aos-duration="1000" >
+            <div className="group relative bg-secondary rounded-2xl overflow-hidden shadow-2xl"  data-aos="flip-right" data-aos-duration="1000" >
               {/* Card Image */}
               <div className="relative h-96 overflow-hidden" >
                 <img
@@ -144,7 +148,7 @@ function LandingPage() {
                 {/* CTA Button */}
                 <Link
                   to="/learn"
-                  className="inline-block px-12 py-5 bg-primary text-secondary text-3xl font-bold rounded-lg hover:bg-glow hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:shadow-white transition-all duration-300"
+                  className="inline-block px-12 py-5 bg-primary text-secondary text-3xl font-bold rounded-lg hover:bg-glow hover:text-secondary hover:scale-110 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:shadow-primary transition-all duration-300"
                 >
                   تعلم الأن
                 </Link>

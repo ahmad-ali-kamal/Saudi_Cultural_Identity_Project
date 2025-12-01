@@ -30,7 +30,7 @@ function CustomSelect({ value, onChange, options, placeholder }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-4 pr-12 border-2 border-first rounded-xl focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 transition-all duration-300 text-lg bg-gradient-to-l from-primary to-secondary/10 text-secondary font-bold cursor-pointer hover:shadow-lg hover:scale-[1.02] text-right"
+        className="w-full px-4 py-4 pr-12 border-2 border-secondary rounded-xl focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 transition-all duration-300 text-lg bg-primary   font-bold cursor-pointer hover:shadow-lg hover:scale-[1.02] text-right"
       >
         <span className={value ? 'text-secondary' : 'text-secondary'}>
           {displayText}

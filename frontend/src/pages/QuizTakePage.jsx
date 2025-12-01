@@ -223,7 +223,7 @@ function QuizTakePage() {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-lime-900 hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {isSubmitting ? 'جاري الإرسال...' : 'إنهاء الاختبار ←'}
               </button>
