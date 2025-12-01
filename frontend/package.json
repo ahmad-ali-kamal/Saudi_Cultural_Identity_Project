@@ -11,14 +11,22 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.13.1",
+    "@hookform/resolvers": "^5.2.2",
     "aos": "^2.3.4",
     "aws-amplify": "^6.15.8",
     "axios": "^1.13.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.25",
+    "lucide-react": "^0.555.0",
     "prop-types": "^15.8.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-hook-form": "^7.67.0",
+    "react-is": "^19.2.0",
     "react-router-dom": "^7.9.5",
-    "recharts": "^3.4.1"
+    "recharts": "^3.4.1",
+    "tailwind-merge": "^3.4.0",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

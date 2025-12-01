@@ -1,3 +1,5 @@
+import { PenTool } from 'lucide-react';
+
 function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage = true }) {
   const answer = selectedAnswer || '';
 
@@ -6,58 +8,63 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
     if (question.imageBase64 && question.imageMimeType) {
       return `data:${question.imageMimeType};base64,${question.imageBase64}`;
     }
-    // Fallback to imageUrl for backward compatibility
     return question.imageUrl;
   };
 
   const imageSrc = getImageSrc();
 
-  // Determine text direction based on language
   const isEnglish = question.contentLanguage?.toLowerCase() === 'english' ||
                     question.language?.toLowerCase() === 'english';
   const textDir = isEnglish ? 'ltr' : 'rtl';
   const textAlign = isEnglish ? 'text-left' : 'text-right';
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 h-full flex flex-col">
       {/* Question Image (if exists) */}
       {showImage && imageSrc && (
-        <div className="rounded-lg overflow-hidden mb-6 bg-light-50">
+        <div className="rounded-2xl overflow-hidden mb-4 bg-sand/20 border border-sand">
           <img
             src={imageSrc}
             alt="Question visual"
-            className="w-full max-h-96 object-contain"
+            className="w-full max-h-64 object-contain mx-auto"
           />
         </div>
       )}
 
       {/* Question Text */}
-      <h2 className={`text-2xl md:text-3xl font-bold text-primary mb-6 ${textAlign}`} dir={textDir}>
+      <h2 className={`text-2xl md:text-3xl font-extrabold text-coffee leading-relaxed ${textAlign}`} dir={textDir}>
         {question.questionText}
       </h2>
 
-      {/* Text Input */}
-      <div>
-        <textarea
-          value={answer}
-          onChange={(e) => onAnswerSelect(e.target.value)}
-          placeholder="اكتب إجابتك هنا..."
-          className="w-full p-5 border-2 border-primary rounded-xl focus:border-secondary focus:outline-none transition-colors text-lg min-h-[150px] resize-none text-first"
-          dir="auto"
-        />
-        <div className="flex justify-between items-center mt-2 text-sm text-primary/60">
-          <span>{answer.length} حرف</span>
+      {/* Text Input Area */}
+      <div className="mt-auto">
+        <div className="relative">
+          <textarea
+            value={answer}
+            onChange={(e) => onAnswerSelect(e.target.value)}
+            placeholder="اكتب إجابتك هنا..."
+            className="w-full p-6 border-2 border-sand rounded-2xl focus:border-clay focus:ring-4 focus:ring-clay/10 focus:outline-none transition-all text-lg min-h-[200px] resize-none text-coffee bg-white placeholder:text-olive/40"
+            dir="auto"
+          />
+          <div className="absolute top-4 left-4 text-olive/30 pointer-events-none">
+            <PenTool className="w-6 h-6" />
+          </div>
+        </div>
+        
+        <div className="flex justify-between items-center mt-3 text-sm font-medium">
+          <span className="text-olive">{answer.length} حرف</span>
           {answer.length === 0 && (
-            <span className="text-amber-600">⚠️ الرجاء كتابة إجابة</span>
+            <span className="text-amber-600 flex items-center gap-1">
+              ⚠️ الرجاء كتابة إجابة
+            </span>
           )}
         </div>
-      </div>
 
-      {/* Helper Text */}
-      <div className="bg-light/30 border-r-4 border-secondary p-4 rounded-lg">
-        <p className="text-primary">
-          💡 اكتب إجابتك بشكل واضح. سيتم مقارنتها بالإجابة الصحيحة.
-        </p>
+        <div className="bg-sand/20 border-r-4 border-clay p-4 rounded-lg mt-6">
+          <p className="text-coffee text-sm">
+            💡 اكتب إجابتك بشكل واضح. سيتم مقارنتها بالإجابة الصحيحة تلقائياً.
+          </p>
+        </div>
       </div>
     </div>
   );

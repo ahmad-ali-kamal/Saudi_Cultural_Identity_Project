@@ -7,15 +7,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        // 4-color palette - Dark heritage theme
-        'primary': '#FFDBBA',      // Dark brown (backgrounds, main color)
-        'secondary': '#623F1F',    // Medium brown (buttons, CTAs)
-        'accent': '#000000ff',       // Taupe (hover states, borders)
-        'light': '#5a3513ff',  
-        // Light brown (cards, text on dark)
-        'first': '#855d38ff',      // Peach/sand (text on dark, light cards)
-        // Legacy (for backward compatibility)
-        'saudi-green': '#1D2F1F',
+        // Modern Heritage Palette
+        cream: '#F9F5F0',      // Main Background
+        sand: '#EFE5D5',       // Secondary Background / Cards
+        clay: '#855D38',       // Primary Brand Color / Buttons
+        coffee: '#3E2B1D',     // Primary Text
+        olive: '#5A614E',      // Muted Text / Secondary Text
+        gold: '#D4AF37',       // Premium Accents
+        'saudi-green': '#1D2F1F', // Deep Accents
+
+        // Retaining legacy names but mapping them to new palette where appropriate to prevent immediate breakage
+        // Ideally these should be replaced in the code
+        'primary': '#F9F5F0',    // Mapped to Cream (Backgrounds)
+        'secondary': '#855D38',  // Mapped to Clay (Buttons/Highlights)
+        'accent': '#1D2F1F',     // Mapped to Saudi Green
       },
       fontFamily: {
         'arabic': ['Cairo', 'sans-serif'],
@@ -23,9 +28,6 @@ export default {
       animation: {
         'fade-in': 'fadeIn 1s ease-in-out',
         'slide-up': 'slideUp 0.8s ease-out',
-        'slide-in-right': 'slideInRight 0.8s ease-out',
-        'slide-in-left': 'slideInLeft 0.8s ease-out',
-        'bounce': 'bounce 2s infinite',
       },
       keyframes: {
         fadeIn: {
@@ -35,14 +37,6 @@ export default {
         slideUp: {
           '0%': { opacity: '0', transform: 'translateY(40px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        slideInRight: {
-          '0%': { opacity: '0', transform: 'translateX(-40px)' },
-          '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
-        slideInLeft: {
-          '0%': { opacity: '0', transform: 'translateX(40px)' },
-          '100%': { opacity: '1', transform: 'translateX(0)' },
         },
       },
     },

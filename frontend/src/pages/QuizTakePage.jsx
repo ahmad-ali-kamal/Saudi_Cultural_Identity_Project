@@ -1,8 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, ArrowLeft, AlertCircle, CheckCircle2 } from 'lucide-react';
+
 import Navbar from '../components/Navbar';
 import QuestionRenderer from '../components/quiz/QuestionRenderer';
 import { apiService } from '../services/api';
+import { Button } from '../components/ui/Button';
+import { Card } from '../components/ui/Card';
 
 function QuizTakePage() {
   const location = useLocation();
@@ -15,22 +20,19 @@ function QuizTakePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [direction, setDirection] = useState(0); // -1 for prev, 1 for next
 
-  // Prevent multiple fetches (especially in React Strict Mode)
   const hasFetchedRef = useRef(false);
   const configRef = useRef(null);
 
   useEffect(() => {
     if (!config) {
-      // No config, redirect to quiz setup
       navigate('/quiz');
       return;
     }
 
-    // Check if config actually changed (allow re-fetch on new config)
     const configChanged = JSON.stringify(configRef.current) !== JSON.stringify(config);
 
-    // Only fetch once per config
     if (!hasFetchedRef.current || configChanged) {
       hasFetchedRef.current = true;
       configRef.current = config;
@@ -77,6 +79,7 @@ function QuizTakePage() {
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
+      setDirection(1);
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -84,6 +87,7 @@ function QuizTakePage() {
 
   const handlePrevious = () => {
     if (currentQuestionIndex > 0) {
+      setDirection(-1);
       setCurrentQuestionIndex(currentQuestionIndex - 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -91,7 +95,6 @@ function QuizTakePage() {
 
   const handleSubmit = () => {
     setIsSubmitting(true);
-    // Navigate to results page with questions and answers
     navigate('/quiz/results', {
       state: {
         questions,
@@ -104,146 +107,135 @@ function QuizTakePage() {
   const hasAnswer = currentAnswer !== undefined && currentAnswer !== null && currentAnswer !== '' &&
     (Array.isArray(currentAnswer) ? currentAnswer.length > 0 : true);
 
+  // Framer Motion Variants
+  const variants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 50 : -50,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      x: direction > 0 ? -50 : 50,
+      opacity: 0,
+    }),
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-primary">
-        <Navbar />
-        <div className="container mx-auto px-6 py-24">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-secondary rounded-2xl shadow-xl p-12 text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-primary mx-auto mb-6"></div>
-              <p className="text-xl text-primary">جاري تحميل الأسئلة...</p>
-            </div>
-          </div>
+      <div className="min-h-screen bg-cream font-arabic flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-clay border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-coffee font-bold text-lg">جاري تحضير الاختبار...</p>
         </div>
       </div>
     );
   }
 
-  if (error) {
+  if (error || questions.length === 0) {
     return (
-      <div className="min-h-screen bg-primary">
+      <div className="min-h-screen bg-cream font-arabic">
         <Navbar />
-        <div className="container mx-auto px-6 py-24">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-secondary border-2 border-red-400 rounded-2xl shadow-xl p-12 text-center">
-              <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
-              <h2 className="text-2xl font-bold text-red-900 mb-4">حدث خطأ</h2>
-              <p className="text-lg text-red-700 mb-8">{error}</p>
-              <button
-                onClick={fetchQuestions}
-                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 ml-4"
-              >
-                حاول مرة أخرى
-              </button>
-              <button
-                onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300"
-              >
-                العودة للإعدادات
-              </button>
+        <div className="container mx-auto px-4 py-32 text-center">
+          <Card className="max-w-lg mx-auto p-10">
+            <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-coffee mb-2">
+              {error ? 'حدث خطأ' : 'لا توجد أسئلة متاحة'}
+            </h2>
+            <p className="text-olive mb-6">
+              {error || 'لم نجد أسئلة تطابق اختيارك. جرب تغيير الفئة أو المنطقة.'}
+            </p>
+            <div className="flex gap-4 justify-center">
+              {error && <Button onClick={fetchQuestions} variant="outline">حاول مرة أخرى</Button>}
+              <Button onClick={() => navigate('/quiz')}>العودة للإعدادات</Button>
             </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (questions.length === 0) {
-    return (
-      <div className="min-h-screen bg-primary">
-        <Navbar />
-        <div className="container mx-auto px-6 py-24">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-secondary border-2 border-accent rounded-2xl shadow-xl p-12 text-center">
-              <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
-              <h2 className="text-2xl font-bold text-primary mb-4">لا توجد أسئلة متاحة</h2>
-              <p className="text-lg text-primary mb-8">
-                لم نجد أسئلة تطابق اختيارك. جرب تغيير الفئة أو المنطقة.
-              </p>
-              <button
-                onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300"
-              >
-                العودة للإعدادات
-              </button>
-            </div>
-          </div>
+          </Card>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-primary">
+    <div className="min-h-screen bg-cream font-arabic overflow-hidden flex flex-col">
       <Navbar />
 
-      <div className="container mx-auto px-6 py-24">
-        <div className="max-w-4xl mx-auto">
-          {/* Progress Bar */}
-          <div className="mb-8">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-lg font-semibold text-light">
-                السؤال {currentQuestionIndex + 1} من {questions.length}
-              </span>
-              <span className="text-lg font-semibold text-light">
-                {Math.round(progress)}%
-              </span>
-            </div>
-            <div className="w-full bg-secondary rounded-full h-3 overflow-hidden">
-              <div
-                className="bg-green-600 h-full transition-all duration-500 ease-out"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-          </div>
-
-          {/* Question Card */}
-          <div className="bg-light rounded-2xl shadow-xl p-8 md:p-12 mb-6" data-aos="fade-up">
-            <QuestionRenderer
-              question={currentQuestion}
-              selectedAnswer={currentAnswer}
-              onAnswerSelect={handleAnswerSelect}
+      {/* Progress Bar (Fixed Top) */}
+      <div className="fixed top-[72px] left-0 right-0 z-40 bg-white border-b border-sand">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <span className="text-sm font-bold text-coffee">
+             سؤال <span className="text-clay text-lg">{currentQuestionIndex + 1}</span> من {questions.length}
+          </span>
+          <div className="flex-1 mx-6 h-2 bg-sand rounded-full overflow-hidden">
+            <motion.div 
+              className="h-full bg-saudi-green"
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.5 }}
             />
           </div>
+          <span className="text-sm font-bold text-olive">{Math.round(progress)}%</span>
+        </div>
+      </div>
 
-          {/* Navigation Buttons */}
-          <div className="flex justify-between items-center gap-4">
-            <button
-              onClick={handlePrevious}
-              disabled={isFirstQuestion}
-              className="px-6 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      {/* Main Quiz Area */}
+      <div className="flex-grow container mx-auto px-4 py-32 md:py-40 flex flex-col justify-center max-w-4xl">
+        <AnimatePresence mode='wait' custom={direction}>
+          <motion.div
+            key={currentQuestionIndex}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3 }}
+            className="w-full"
+          >
+            <Card className="p-6 md:p-10 shadow-xl border-sand min-h-[400px] flex flex-col">
+              <QuestionRenderer
+                question={currentQuestion}
+                selectedAnswer={currentAnswer}
+                onAnswerSelect={handleAnswerSelect}
+              />
+            </Card>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-sand p-4 z-40">
+        <div className="container mx-auto max-w-4xl flex justify-between items-center gap-4">
+          <Button
+            variant="ghost"
+            onClick={handlePrevious}
+            disabled={isFirstQuestion}
+            className="text-olive hover:text-coffee"
+          >
+            <ArrowRight className="w-5 h-5 ml-2 rtl:rotate-180" /> السابق
+          </Button>
+
+          {isLastQuestion ? (
+            <Button
+              onClick={handleSubmit}
+              disabled={isSubmitting || !hasAnswer}
+              size="lg"
+              className="px-8"
+              variant="secondary"
             >
-              السابق →
-            </button>
-
-            <div className="flex-1"></div>
-
-            {isLastQuestion ? (
-              <button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-              >
-                {isSubmitting ? 'جاري الإرسال...' : 'إنهاء الاختبار ←'}
-              </button>
-            ) : (
-              <button
-                onClick={handleNext}
-                disabled={!hasAnswer}
-
-                className="px-8 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-
-              >
-                التالي ←
-              </button>
-            )}
-          </div>
-
-          {!hasAnswer && (
-            <p className="text-center text-light mt-4 font-semibold bg-secondary/20 py-3 rounded-lg">
-               الرجاء اختيار إجابة قبل المتابعة
-            </p>
+              {isSubmitting ? 'جاري الإرسال...' : 'إنهاء الاختبار'}
+              <CheckCircle2 className="w-5 h-5 mr-2" />
+            </Button>
+          ) : (
+            <Button
+              onClick={handleNext}
+              disabled={!hasAnswer}
+              size="lg"
+              className="px-8"
+            >
+              التالي
+              <ArrowLeft className="w-5 h-5 mr-2 rtl:rotate-180" />
+            </Button>
           )}
         </div>
       </div>

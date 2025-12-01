@@ -1,3 +1,5 @@
+import { Check } from 'lucide-react';
+
 function MCQQuestion({ question, selectedAnswer, onAnswerSelect, showImage = true }) {
   const options = question.options || [];
 
@@ -6,7 +8,6 @@ function MCQQuestion({ question, selectedAnswer, onAnswerSelect, showImage = tru
     if (question.imageBase64 && question.imageMimeType) {
       return `data:${question.imageMimeType};base64,${question.imageBase64}`;
     }
-    // Fallback to imageUrl for backward compatibility
     return question.imageUrl;
   };
 
@@ -19,49 +20,48 @@ function MCQQuestion({ question, selectedAnswer, onAnswerSelect, showImage = tru
   const textAlign = isEnglish ? 'text-left' : 'text-right';
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 h-full flex flex-col">
       {/* Question Image (if exists) */}
       {showImage && imageSrc && (
-
-        <div className="rounded-lg overflow-hidden  mb-6 bg-light-50">
+        <div className="rounded-2xl overflow-hidden mb-4 bg-sand/20 border border-sand">
           <img
             src={imageSrc}
             alt="Question visual"
-            className="w-full max-h-96 object-contain"
+            className="w-full max-h-64 object-contain mx-auto"
           />
         </div>
       )}
 
       {/* Question Text */}
-      <h2 className={`text-2xl md:text-3xl font-bold text-primary mb-6 ${textAlign}`} dir={textDir}>
+      <h2 className={`text-2xl md:text-3xl font-extrabold text-coffee leading-relaxed ${textAlign}`} dir={textDir}>
         {question.questionText}
       </h2>
 
-      {/* Options */}
-      <div className="space-y-3">
+      {/* Options Grid */}
+      <div className="grid gap-4 mt-auto">
         {options.map((option, index) => {
           const isSelected = selectedAnswer === option;
           return (
             <button
               key={index}
               onClick={() => onAnswerSelect(option)}
-              className={`w-full p-5 ${textAlign} rounded-xl border-2 transition-all duration-300 transform hover:scale-102 ${
+              className={`group w-full p-5 rounded-xl border-2 transition-all duration-200 flex items-center justify-between ${textAlign} ${
                 isSelected
-                  ? 'bg-secondary text-primary border border-primary shadow-lg scale-102'
-                  : 'bg-first text-primary border-accent hover:border-primary hover:shadow-md'
+                  ? 'bg-clay border-clay text-white shadow-lg translate-x-[-4px]'
+                  : 'bg-white border-sand text-coffee hover:border-clay/50 hover:bg-sand/10'
               }`}
+              dir={textDir}
             >
-              <div className="flex items-center justify-between" dir={textDir}>
-                <span className="text-2xl font-semibold" data-aos="fade-right" data-aos-duration="2000">{option}</span>
-                <div
-                  className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                    isSelected ? 'border-primary' : 'border-accent'
-                  }`}
-                >
-                  {isSelected && (
-                    <div className="w-3 h-3 rounded-full bg-primary"></div>
-                  )}
-                </div>
+              <span className={`text-xl font-semibold ${isSelected ? 'text-white' : 'text-coffee'}`}>
+                {option}
+              </span>
+              
+              <div
+                className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ml-3 transition-colors ${
+                  isSelected ? 'border-white bg-white/20' : 'border-olive/30 group-hover:border-clay'
+                }`}
+              >
+                {isSelected && <Check className="w-4 h-4 text-white" />}
               </div>
             </button>
           );

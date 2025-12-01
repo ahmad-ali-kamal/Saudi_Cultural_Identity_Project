@@ -1,13 +1,13 @@
+import { CheckSquare, Square } from 'lucide-react';
+
 function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showImage = true }) {
   const options = question.options || [];
   const selectedAnswers = selectedAnswer || [];
 
   const handleToggle = (option) => {
     if (selectedAnswers.includes(option)) {
-      // Remove if already selected
       onAnswerSelect(selectedAnswers.filter((ans) => ans !== option));
     } else {
-      // Add if not selected
       onAnswerSelect([...selectedAnswers, option]);
     }
   };
@@ -17,80 +17,64 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
     if (question.imageBase64 && question.imageMimeType) {
       return `data:${question.imageMimeType};base64,${question.imageBase64}`;
     }
-    // Fallback to imageUrl for backward compatibility
     return question.imageUrl;
   };
 
   const imageSrc = getImageSrc();
 
-  // Determine text direction based on language
   const isEnglish = question.contentLanguage?.toLowerCase() === 'english' ||
                     question.language?.toLowerCase() === 'english';
   const textDir = isEnglish ? 'ltr' : 'rtl';
   const textAlign = isEnglish ? 'text-left' : 'text-right';
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 h-full flex flex-col">
       {/* Question Image (if exists) */}
       {showImage && imageSrc && (
-        <div className="rounded-lg overflow-hidden mb-6 bg-light-50">
+        <div className="rounded-2xl overflow-hidden mb-4 bg-sand/20 border border-sand">
           <img
             src={imageSrc}
             alt="Question visual"
-            className="w-full max-h-96 object-contain"
+            className="w-full max-h-64 object-contain mx-auto"
           />
         </div>
       )}
 
       {/* Question Text */}
-      <h2 className={`text-2xl md:text-3xl font-bold text-primary mb-4 ${textAlign}`} dir={textDir}>
-        {question.questionText}
-      </h2>
+      <div>
+        <h2 className={`text-2xl md:text-3xl font-extrabold text-coffee leading-relaxed ${textAlign}`} dir={textDir}>
+          {question.questionText}
+        </h2>
+        <p className={`text-olive mt-2 ${textAlign}`}>
+          اختر جميع الإجابات الصحيحة ({selectedAnswers.length} محددة)
+        </p>
+      </div>
 
-      {/* Instruction */}
-      <p className={`text-primary/70 text-lg mb-6 ${textAlign}`}>
-        اختر جميع الإجابات الصحيحة ({selectedAnswers.length} محددة)
-      </p>
-
-      {/* Options */}
-      <div className="space-y-3">
+      {/* Options Grid */}
+      <div className="grid gap-4 mt-auto">
         {options.map((option, index) => {
           const isSelected = selectedAnswers.includes(option);
           return (
             <button
               key={index}
               onClick={() => handleToggle(option)}
-              className={`w-full p-5 ${textAlign} rounded-xl border-2 transition-all duration-300 ${
+              className={`group w-full p-5 rounded-xl border-2 transition-all duration-200 flex items-center justify-between ${textAlign} ${
                 isSelected
-                  ? 'bg-secondary text-primary border border-primary shadow-lg scale-102'
-                  : 'bg-first text-primary border-accent hover:border-primary hover:shadow-md'
+                  ? 'bg-clay border-clay text-white shadow-lg translate-x-[-4px]'
+                  : 'bg-white border-sand text-coffee hover:border-clay/50 hover:bg-sand/10'
               }`}
+              dir={textDir}
             >
-              <div className="flex items-center justify-between" dir={textDir}>
-                <span className={`text-lg font-semibold ${isSelected ? 'text-primary' : 'text-primary'}`}>
-                  {option}
-                </span>
-                <div
-                  className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-all ${
-                    isSelected
-                      ? 'bg-primary border-primary'
-                      : 'border-accent bg-first'
-                  }`}
-                >
-                  {isSelected && (
-                    <svg
-                      className="w-4 h-4 text-primary"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path d="M5 13l4 4L19 7"></path>
-                    </svg>
-                  )}
-                </div>
+              <span className={`text-xl font-semibold ${isSelected ? 'text-white' : 'text-coffee'}`}>
+                {option}
+              </span>
+              
+              <div className="flex-shrink-0 ml-3">
+                {isSelected ? (
+                  <CheckSquare className="w-6 h-6 text-white" />
+                ) : (
+                  <Square className="w-6 h-6 text-olive/40 group-hover:text-clay" />
+                )}
               </div>
             </button>
           );

@@ -1,10 +1,14 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Filter, RefreshCw, AlertCircle, ChevronLeft, ChevronRight, MapPin, Globe, Tag } from 'lucide-react';
+
 import Navbar from '../components/Navbar';
-import HomeButton from '../components/HomeButton';
 import Footer from '../components/Footer';
-import CustomSelect from '../components/CustomSelect';
-import InfoCard from '../components/InfoCard';
 import { apiService } from '../services/api';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+import { Select } from '../components/ui/Select';
+import { Card } from '../components/ui/Card';
 
 function LearnPage() {
   const [filters, setFilters] = useState({
@@ -13,7 +17,7 @@ function LearnPage() {
     search: '',
   });
 
-  const [searchInput, setSearchInput] = useState(''); // Local search input state
+  const [searchInput, setSearchInput] = useState('');
   const [infoItems, setInfoItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +29,7 @@ function LearnPage() {
   const filtersRef = useRef(null);
   const searchTimeoutRef = useRef(null);
 
-  const pageSize = 21; // Multiple of 3 for 3-column grid (7 rows)
+  const pageSize = 21;
 
   const languageOptions = [
     { value: 'Arabic', label: 'العربية' },
@@ -43,7 +47,6 @@ function LearnPage() {
   ];
 
   useEffect(() => {
-    // Check if filters actually changed
     const filtersChanged = JSON.stringify(filtersRef.current) !== JSON.stringify({ ...filters, page: currentPage });
 
     if (!hasFetchedRef.current || filtersChanged) {
@@ -54,7 +57,6 @@ function LearnPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, currentPage]);
 
-  // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
       if (searchTimeoutRef.current) {
@@ -63,30 +65,22 @@ function LearnPage() {
     };
   }, []);
 
-  // Helper function to generate page numbers with ellipsis (must be before early returns)
   const getPageNumbers = useCallback(() => {
     const pages = [];
-    const maxVisible = 7; // Show max 7 page numbers
+    const maxVisible = 7;
 
     if (totalPages <= maxVisible) {
-      // Show all pages if total is small
-      for (let i = 0; i < totalPages; i++) {
-        pages.push(i);
-      }
+      for (let i = 0; i < totalPages; i++) pages.push(i);
     } else {
-      // Show first, last, current, and nearby pages with ellipsis
       if (currentPage < 3) {
-        // Near beginning: [0, 1, 2, 3, ..., last]
         for (let i = 0; i < 4; i++) pages.push(i);
         pages.push('...');
         pages.push(totalPages - 1);
       } else if (currentPage > totalPages - 4) {
-        // Near end: [0, ..., last-3, last-2, last-1, last]
         pages.push(0);
         pages.push('...');
         for (let i = totalPages - 4; i < totalPages; i++) pages.push(i);
       } else {
-        // Middle: [0, ..., current-1, current, current+1, ..., last]
         pages.push(0);
         pages.push('...');
         pages.push(currentPage - 1);
@@ -96,12 +90,13 @@ function LearnPage() {
         pages.push(totalPages - 1);
       }
     }
-
     return pages;
   }, [currentPage, totalPages]);
 
   const fetchInfo = async () => {
     try {
+      // Clear items immediately to prevent ghost content and force skeleton
+      setInfoItems([]); 
       setLoading(true);
       setError(null);
 
@@ -117,9 +112,13 @@ function LearnPage() {
       const data = await apiService.getInfo(params);
 
       setInfoItems(data.content || []);
-      // Fix: Parse pagination from nested 'page' object
-      setTotalPages(data.page?.totalPages || 0);
-      setTotalElements(data.page?.totalElements || 0);
+      
+      // Handle different Spring Page serialization formats (standard vs HATEOAS)
+      const totalElements = data.totalElements ?? data.page?.totalElements ?? 0;
+      setTotalElements(totalElements);
+
+      // Calculate total pages manually to ensure consistency with frontend pageSize
+      setTotalPages(Math.ceil(totalElements / pageSize));
     } catch (err) {
       console.error('Failed to fetch info:', err);
       setError('فشل في تحميل المعلومات. حاول مرة أخرى.');
@@ -130,20 +129,18 @@ function LearnPage() {
 
   const handleFilterChange = (field, value) => {
     setFilters({ ...filters, [field]: value });
-    setCurrentPage(0); // Reset to first page when filters change
-    hasFetchedRef.current = false; // Allow new fetch
+    setCurrentPage(0);
+    hasFetchedRef.current = false;
   };
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchInput(value);
 
-    // Clear existing timeout
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
     }
 
-    // Set new timeout for debounced search (800ms after user stops typing)
     searchTimeoutRef.current = setTimeout(() => {
       setFilters((prevFilters) => ({ ...prevFilters, search: value }));
       setCurrentPage(0);
@@ -162,202 +159,275 @@ function LearnPage() {
     fetchInfo();
   };
 
-  // Initial loading state (first load)
-  if (loading && infoItems.length === 0) {
+  // Item Card Component (Inline)
+  const InfoItem = ({ info }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const getImageSrc = () => {
+      if (info.imageBase64 && info.imageMimeType) {
+        return `data:${info.imageMimeType};base64,${info.imageBase64}`;
+      }
+      return null;
+    };
+    const imageSrc = getImageSrc();
+    const hasLongAnswer = info.answer && info.answer.length > 200;
+    const isEnglish = info.language?.toLowerCase() === 'english';
+    const textDir = isEnglish ? 'ltr' : 'rtl';
+    const textAlign = isEnglish ? 'text-left' : 'text-right';
+
     return (
-      <div className="min-h-screen bg-primary">
-        <Navbar />
-        <div className="container mx-auto px-6 py-24">
-          <div className="max-w-6xl mx-auto">
-            <div className="bg-secondary rounded-2xl shadow-xl p-12 text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-secondary mx-auto mb-6"></div>
-              <p className="text-xl text-primary">جاري تحميل المعلومات...</p>
-            </div>
+      <Card className="h-full flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+        {imageSrc && (
+          <div className="relative h-48 w-full overflow-hidden bg-sand/20 border-b border-sand/50">
+            <img
+              src={imageSrc}
+              alt="Visual"
+              className="w-full h-full object-contain"
+              loading="lazy"
+            />
+          </div>
+        )}
+        
+        <div className="p-6 flex flex-col flex-grow">
+          {/* Meta Tags */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {info.term && (
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-clay/10 text-clay border border-clay/20">
+                مصطلح
+              </span>
+            )}
+            {info.region && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-sand text-olive">
+                <MapPin className="w-3 h-3" />
+                {info.region}
+              </span>
+            )}
+            {info.category && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-sand text-olive">
+                <Tag className="w-3 h-3" />
+                {info.category}
+              </span>
+            )}
+          </div>
+
+          {/* Content */}
+          <div className="flex-grow">
+            {info.term && (
+              <div className="mb-3">
+                <h3 className={`text-2xl font-bold text-coffee mb-1 ${textAlign}`} dir={textDir}>
+                  {info.term}
+                </h3>
+                {info.termMeaning && (
+                  <p className={`text-olive text-sm ${textAlign}`} dir={textDir}>
+                    {info.termMeaning}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {info.questionText && (
+              <h3 className={`text-xl font-bold text-coffee mb-3 ${textAlign}`} dir={textDir}>
+                {info.questionText}
+              </h3>
+            )}
+
+            {info.answer && (
+              <div className={`text-olive/80 leading-relaxed ${textAlign}`} dir={textDir}>
+                <p className={!isExpanded && hasLongAnswer ? 'line-clamp-4' : ''}>
+                  {info.answer}
+                </p>
+                {hasLongAnswer && (
+                  <button
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className="text-clay hover:text-saudi-green text-sm font-bold mt-2 transition-colors"
+                  >
+                    {isExpanded ? (isEnglish ? 'Show Less' : 'عرض أقل') : (isEnglish ? 'Read More' : 'اقرأ المزيد')}
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      </Card>
     );
-  }
+  };
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-primary">
-        <Navbar />
-        <div className="container mx-auto px-6 py-24">
-          <div className="max-w-6xl mx-auto">
-            <div className="bg-secondary border-2 border-primary-400 rounded-2xl shadow-xl p-12 text-center">
-              <div className="flex justify-center items-center -my-11"><img className="size-72" src="/images/error.png" alt="Error" /></div>
-              <h2 className="text-2xl font-bold text-primary mb-4 ">حدث خطأ</h2>
-              <p className="text-lg text-red-700 mb-8">{error}</p>
+  // Animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  return (
+    <div className="min-h-screen bg-cream font-arabic">
+      <Navbar />
+
+      {/* Header Section with Pattern */}
+      <div className="relative bg-white border-b border-sand pt-28 pb-12 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('/images/Sadu_decoration.jpg')] bg-repeat-x bg-contain"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-5xl font-extrabold text-coffee mb-4"
+          >
+            تعلم عن الثقافة السعودية
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-lg text-olive max-w-2xl mx-auto"
+          >
+            اكتشف التراث الغني والعادات والتقاليد السعودية من خلال مكتبتنا المتنامية
+          </motion.p>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-12">
+        
+        {/* Filters & Search */}
+        <div className="mb-10 bg-white rounded-2xl p-6 shadow-sm border border-sand">
+          <div className="flex items-center gap-2 mb-6 text-coffee font-bold text-lg border-b border-sand pb-4">
+            <Filter className="w-5 h-5 text-clay" />
+            تصفية المحتوى
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Input
+              label="البحث"
+              placeholder="ابحث عن مصطلح، سؤال..."
+              value={searchInput}
+              onChange={handleSearchChange}
+              startIcon={<Search className="w-5 h-5" />}
+            />
+
+            <Select
+              label="المنطقة"
+              options={regionOptions}
+              value={filters.region}
+              onChange={(e) => handleFilterChange('region', e.target.value)}
+            />
+
+            <Select
+              label="اللغة"
+              options={languageOptions}
+              value={filters.language}
+              onChange={(e) => handleFilterChange('language', e.target.value)}
+            />
+          </div>
+          
+          <div className="mt-4 flex justify-between items-center text-sm text-olive">
+             <span>عرض {infoItems.length} من أصل {totalElements} نتيجة</span>
+             {loading && <span className="flex items-center gap-2 text-clay"><RefreshCw className="w-4 h-4 animate-spin"/> جاري التحديث...</span>}
+          </div>
+        </div>
+
+        {/* Main Content */}
+        {loading ? (
+          // Loading Skeleton Grid - Always show when loading to prevent flash
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: pageSize }).map((_, n) => (
+              <div key={n} className="h-80 bg-white rounded-[2rem] border border-sand animate-pulse flex flex-col p-6">
+                <div className="w-full h-48 bg-sand/30 rounded-xl mb-4"></div>
+                <div className="w-24 h-6 bg-sand/50 rounded-full mb-4"></div>
+                <div className="w-3/4 h-8 bg-sand/50 rounded-xl mb-4"></div>
+                <div className="space-y-2 flex-grow">
+                  <div className="w-full h-4 bg-sand/30 rounded"></div>
+                  <div className="w-2/3 h-4 bg-sand/30 rounded"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : error ? (
+          // Error State
+          <div className="text-center py-20 bg-white rounded-[2rem] border border-sand">
+            <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-coffee mb-2">حدث خطأ في تحميل البيانات</h2>
+            <p className="text-olive mb-6">{error}</p>
+            <Button onClick={handleRetry} variant="outline">
+              <RefreshCw className="w-4 h-4 ml-2" />
+              حاول مرة أخرى
+            </Button>
+          </div>
+        ) : infoItems.length === 0 ? (
+          // Empty State
+          <div className="text-center py-20 bg-white rounded-[2rem] border border-sand">
+            <div className="w-20 h-20 bg-sand/30 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Search className="w-10 h-10 text-olive" />
+            </div>
+            <h2 className="text-2xl font-bold text-coffee mb-2">لا توجد نتائج</h2>
+            <p className="text-olive max-w-md mx-auto">
+              لم نجد أي معلومات تطابق بحثك. جرب تغيير كلمات البحث أو الفلاتر.
+            </p>
+          </div>
+        ) : (
+          // Results Grid
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {infoItems.map((info, index) => (
+              <motion.div key={info.id || index} variants={itemVariants}>
+                <InfoItem info={info} />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+
+        {/* Pagination */}
+        {!loading && totalPages > 1 && (
+          <div className="mt-12 flex justify-center">
+            <div className="bg-white p-2 rounded-2xl border border-sand shadow-sm flex items-center gap-2">
               <button
-                onClick={handleRetry}
-                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent hover:text-primary transition-all duration-300"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 0}
+                className="p-2 rounded-xl hover:bg-sand/50 text-coffee disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
-                حاول مرة أخرى
+                <ChevronRight className="w-6 h-6" /> {/* RTL Flip */}
+              </button>
+
+              {getPageNumbers().map((pageNum, idx) => (
+                pageNum === '...' ? (
+                  <span key={`ellipsis-${idx}`} className="px-3 text-olive font-bold">...</span>
+                ) : (
+                  <button
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`w-10 h-10 rounded-xl font-bold flex items-center justify-center transition-all ${
+                      currentPage === pageNum
+                        ? 'bg-clay text-white shadow-md'
+                        : 'text-coffee hover:bg-sand/50'
+                    }`}
+                  >
+                    {pageNum + 1}
+                  </button>
+                )
+              ))}
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage >= totalPages - 1}
+                className="p-2 rounded-xl hover:bg-sand/50 text-coffee disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              >
+                <ChevronLeft className="w-6 h-6" /> {/* RTL Flip */}
               </button>
             </div>
           </div>
-        </div>
+        )}
+
       </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-primary relative">
-      <Navbar />
-
-      {/* Loading Overlay - only shows during data fetch, not initial load */}
-      {loading && infoItems.length > 0 && (
-        <div className="fixed inset-0 bg-primary/80 backdrop-blur-sm z-40 flex items-center justify-center">
-          <div className="bg-secondary rounded-2xl shadow-2xl p-8 text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-secondary mx-auto mb-4"></div>
-            <p className="text-lg text-primary font-bold">جاري التحميل...</p>
-          </div>
-        </div>
-      )}
-
-      <div className="container mx-auto px-6 py-24">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-light mb-4">
-              تعلم عن الثقافة السعودية
-            </h1>
-            <p className="text-xl text-accent">
-              اكتشف التراث الغني والعادات والتقاليد السعودية
-            </p>
-          </div>
-
-          {/* Filters Section */}
-          <div className="bg-secondary rounded-2xl shadow-xl p-6 mb-8">
-            <h2 className="text-2xl font-bold text-primary mb-6">فلترة المحتوى</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-              {/* Language Filter */}
-              <div>
-                <label className="block text-sm font-semibold text-primary mb-2">
-                  اللغة
-                </label>
-                <CustomSelect
-                  value={filters.language}
-                  onChange={(value) => handleFilterChange('language', value)}
-                  options={languageOptions}
-                  placeholder="اختر اللغة"
-                />
-              </div>
-
-              {/* Region Filter */}
-              <div>
-                <label className="block text-sm font-semibold text-primary mb-2">
-                  المنطقة
-                </label>
-                <CustomSelect
-                  value={filters.region}
-                  onChange={(value) => handleFilterChange('region', value)}
-                  options={regionOptions}
-                  placeholder="اختر المنطقة"
-                />
-              </div>
-
-              {/* Search Input */}
-              <div>
-                <label className="block text-sm font-semibold text-primary mb-2">
-                  البحث
-                </label>
-                <input
-                  type="text"
-                  value={searchInput}
-                  onChange={handleSearchChange}
-                  placeholder="ابحث في المحتوى..."
-                  className="w-full px-4 py-4 border-2 border-secondary rounded-xl focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 transition-all duration-300 text-lg bg-gradient-to-l from-white to-accent/10 text-secondary font-bold"
-                  dir="auto"
-                />
-              </div>
-            </div>
-
-            {/* Results Count */}
-            <div className="text-sm text-primary/70">
-              عرض {infoItems.length} من أصل {totalElements} نتيجة
-            </div>
-          </div>
-
-          {/* Content Grid */}
-          {infoItems.length === 0 ? (
-            <div className="bg-secondary border-2 border-accent rounded-2xl shadow-xl p-12 text-center">
-              <div className="text-6xl mb-6">🔍</div>
-              <h2 className="text-2xl font-bold text-secondary mb-4">لا توجد نتائج</h2>
-              <p className="text-lg text-primary">
-                لم نجد أي معلومات تطابق البحث. جرب تغيير الفلاتر أو مصطلح البحث.
-              </p>
-            </div>
-          ) : (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {infoItems.map((info, index) => (
-                  <InfoCard
-                    key={info.id || info._id || `${info.questionText || info.term}-${info.region}-${info.language}-${index}`}
-                    info={info}
-                  />
-                ))}
-              </div>
-
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <div className="bg-light/10 rounded-xl p-6">
-                  <div className="flex justify-center items-center gap-2 flex-wrap">
-                    {/* Previous Button */}
-                    <button
-                      onClick={() => handlePageChange(currentPage - 1)}
-                      disabled={currentPage === 0}
-                      className="px-5 py-2.5 bg-light text-primary font-bold rounded-lg hover:bg-accent hover:scale-105 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
-                    >
-                      ← السابق
-                    </button>
-
-                    {/* Page Numbers */}
-                    {getPageNumbers().map((pageNum, idx) => (
-                      pageNum === '...' ? (
-                        <span key={`ellipsis-${idx}`} className="px-3 text-light font-bold">
-                          ...
-                        </span>
-                      ) : (
-                        <button
-                          key={pageNum}
-                          onClick={() => handlePageChange(pageNum)}
-                          className={`px-4 py-2.5 font-bold rounded-lg transition-all duration-300 ${
-                            currentPage === pageNum
-                              ? 'bg-secondary text-primary scale-110 shadow-lg'
-                              : 'bg-light/50 text-primary hover:bg-light hover:scale-105'
-                          }`}
-                        >
-                          {pageNum + 1}
-                        </button>
-                      )
-                    ))}
-
-                    {/* Next Button */}
-                    <button
-                      onClick={() => handlePageChange(currentPage + 1)}
-                      disabled={currentPage >= totalPages - 1}
-                      className="px-5 py-2.5 bg-light text-primary font-bold rounded-lg hover:bg-accent hover:scale-105 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
-                    >
-                      التالي →
-                    </button>
-                  </div>
-
-                  {/* Page Info */}
-                  <div className="text-center mt-3 text-light/70 text-sm">
-                    صفحة {currentPage + 1} من {totalPages} ({totalElements} نتيجة)
-                  </div>
-                </div>
-              )}
-
-              <HomeButton />
-            </>
-          )}
-        </div>
-      </div>
-
       <Footer />
     </div>
   );

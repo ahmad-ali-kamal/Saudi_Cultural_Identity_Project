@@ -1,270 +1,273 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { motion } from 'framer-motion';
+import { Eye, EyeOff, AlertCircle, CheckCircle2 } from 'lucide-react';
+
 import Navbar from '../components/Navbar';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+import { Card } from '../components/ui/Card';
 import { authService } from '../services/auth';
 
+// Validation Schemas
+const loginSchema = z.object({
+  usernameOrEmail: z.string().min(1, 'البريد الإلكتروني أو اسم المستخدم مطلوب'),
+  password: z.string().min(1, 'كلمة المرور مطلوبة'),
+});
+
+const confirmationSchema = z.object({
+  code: z.string().min(1, 'رمز التحقق مطلوب'),
+});
+
 function LoginPage() {
-  const [usernameOrEmail, setUsernameOrEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [needsConfirmation, setNeedsConfirmation] = useState(false);
-  const [confirmationCode, setConfirmationCode] = useState('');
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [needsConfirmation, setNeedsConfirmation] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  
+  // Store username/password for auto-login after confirmation
+  const [credentials, setCredentials] = useState({ username: '', password: '' });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+  // Forms
+  const loginForm = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { usernameOrEmail: '', password: '' }
+  });
 
+  const confirmationForm = useForm({
+    resolver: zodResolver(confirmationSchema),
+    defaultValues: { code: '' }
+  });
+
+  // Handlers
+  const onLoginSubmit = async (data) => {
+    setIsLoading(true);
+    setServerError('');
+    
     try {
-      const result = await authService.login(usernameOrEmail, password);
-      console.log('Login result:', result);
-
+      const result = await authService.login(data.usernameOrEmail, data.password);
+      
       // Check if user needs confirmation
       if (result?.nextStep?.signInStep === 'CONFIRM_SIGN_UP') {
-        console.log('User needs confirmation, showing verification form');
         setNeedsConfirmation(true);
-        setError('');
-        setLoading(false);
+        setCredentials({ username: data.usernameOrEmail, password: data.password });
         return;
       }
 
       // Sync user to MongoDB backend
       await authService.syncUser();
-
-      // Redirect to home on successful login
       navigate('/');
     } catch (error) {
-      console.error('Login error caught:', error);
-      console.error('Error __type:', error.__type);
-      console.error('Error name:', error.name);
-
-      // Handle unverified user - show verification form
+      console.error('Login error:', error);
       const errorType = error.__type || error.name;
+      
       if (errorType === 'UserNotConfirmedException') {
-        console.log('UserNotConfirmedException detected, showing verification form');
         setNeedsConfirmation(true);
-        setError('');
+        setCredentials({ username: data.usernameOrEmail, password: data.password });
+        setServerError('');
       } else {
-        setError(error.message || 'حدث خطأ في تسجيل الدخول. حاول مرة أخرى.');
+        setServerError(error.message || 'حدث خطأ في تسجيل الدخول. حاول مرة أخرى.');
       }
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  const handleConfirmation = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+  const onConfirmationSubmit = async (data) => {
+    setIsLoading(true);
+    setServerError('');
     setSuccessMessage('');
 
     try {
-      await authService.confirmSignUp(usernameOrEmail, confirmationCode);
+      await authService.confirmSignUp(credentials.username, data.code);
       // Auto-login after confirmation
-      await authService.login(usernameOrEmail, password);
+      await authService.login(credentials.username, credentials.password);
       // Sync user to MongoDB backend
       await authService.syncUser();
       navigate('/');
     } catch (error) {
       console.error('Confirmation error:', error);
-      setError(error.message || 'رمز التحقق غير صحيح. حاول مرة أخرى.');
+      setServerError(error.message || 'رمز التحقق غير صحيح. حاول مرة أخرى.');
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   const handleResendCode = async () => {
-    setLoading(true);
-    setError('');
+    setIsLoading(true);
+    setServerError('');
     setSuccessMessage('');
 
     try {
-      await authService.resendConfirmationCode(usernameOrEmail);
+      await authService.resendConfirmationCode(credentials.username);
       setSuccessMessage('تم إرسال رمز التحقق الجديد إلى بريدك الإلكتروني');
     } catch (error) {
       console.error('Resend code error:', error);
-      setError(error.message || 'حدث خطأ في إعادة إرسال الرمز.');
+      setServerError(error.message || 'حدث خطأ في إعادة إرسال الرمز.');
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-primary">
+    <div className="min-h-screen bg-cream font-arabic relative overflow-hidden">
       <Navbar />
 
-      <div className="container mx-auto px-6 py-24">
-        <div className="max-w-md mx-auto">
-          <div className="bg-light rounded-2xl shadow-2xl p-8">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-sand/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-clay/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 -z-10" />
+
+      <div className="container mx-auto px-4 py-24 md:py-32 min-h-[calc(100vh-80px)] flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="w-full max-w-md"
+        >
+          <Card className="p-8 md:p-10 bg-white/80 backdrop-blur-sm border-sand/50">
             {/* Header */}
-            <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-primary mb-2">
-                تسجيل الدخول
+            <div className="text-center mb-10">
+              <h1 className="text-3xl md:text-4xl font-bold text-coffee mb-3">
+                {needsConfirmation ? 'تأكيد الحساب' : 'تسجيل الدخول'}
               </h1>
-              <p className="text-primary text-1xl">
-                سجل دخولك للوصول إلى جميع المميزات
+              <p className="text-olive text-lg">
+                {needsConfirmation 
+                  ? 'أدخل رمز التحقق المرسل إلى بريدك الإلكتروني' 
+                  : 'سجل دخولك للوصول إلى جميع المميزات'}
               </p>
             </div>
 
-            {/* Login Form or Confirmation Form */}
+            {/* Alerts */}
+            {serverError && (
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 text-red-700"
+              >
+                <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                <p className="text-sm font-medium">{serverError}</p>
+              </motion.div>
+            )}
+
+            {successMessage && (
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3 text-green-700"
+              >
+                <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
+                <p className="text-sm font-medium">{successMessage}</p>
+              </motion.div>
+            )}
+
+            {/* Forms */}
             {!needsConfirmation ? (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {error && (
-                  <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                    {error}
-                  </div>
-                )}
+              <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-6">
+                <Input
+                  label="البريد الإلكتروني أو اسم المستخدم"
+                  placeholder="example@email.com أو اسم المستخدم"
+                  dir="ltr"
+                  error={loginForm.formState.errors.usernameOrEmail?.message}
+                  {...loginForm.register('usernameOrEmail')}
+                />
 
-                <div>
-                  <label className="block text-primary font-semibold mb-2">
-                    البريد الإلكتروني أو اسم المستخدم
-                  </label>
-                  <input
-                    type="text"
-                    value={usernameOrEmail}
-                    onChange={(e) => setUsernameOrEmail(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-primary"
-                    placeholder="example@email.com أو اسم المستخدم"
-                    required
-                    disabled={loading}
-                    dir="ltr"
-                  />
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <label className="text-primary font-semibold">
-                      كلمة المرور
-                    </label>
-                    <Link
-                      to="/forgot-password"
-                      className="text-sm text-primary hover:text-accent hover:underline transition-colors"
-                    >
-                      هل نسيت كلمة المرور؟
-                    </Link>
-                  </div>
-                  <div className="relative">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="placeholder-secondary w-full px-4 py-3 pr-12 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-primary"
-                      placeholder="••••••••"
-                      required
-                      disabled={loading}
-                      dir="ltr"
-                    />
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  label="كلمة المرور"
+                  placeholder="••••••••"
+                  dir="ltr"
+                  error={loginForm.formState.errors.password?.message}
+                  {...loginForm.register('password')}
+                  endIcon={
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary/80 hover:text-secondary transition-colors"
-                      disabled={loading}
+                      className="text-olive/60 hover:text-clay transition-colors flex items-center justify-center"
                     >
-                      {showPassword ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                        </svg>
-                      ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                      )}
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
-                  </div>
+                  }
+                />
+
+                <div className="flex justify-end">
+                  <Link
+                    to="/forgot-password"
+                    className="text-sm text-clay hover:text-saudi-green font-semibold transition-colors"
+                  >
+                    هل نسيت كلمة المرور؟
+                  </Link>
                 </div>
 
-                <button
+                <Button
                   type="submit"
-                  disabled={loading}
-                  className="w-full px-6 py-3 bg-first text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full"
+                  size="lg"
+                  isLoading={isLoading}
                 >
-                  {loading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}
-                </button>
+                  تسجيل الدخول
+                </Button>
               </form>
             ) : (
-              <form onSubmit={handleConfirmation} className="space-y-6">
-                {error && (
-                  <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                    {error}
-                  </div>
-                )}
+              <form onSubmit={confirmationForm.handleSubmit(onConfirmationSubmit)} className="space-y-6">
+                <Input
+                  label="رمز التحقق"
+                  placeholder="123456"
+                  dir="ltr"
+                  error={confirmationForm.formState.errors.code?.message}
+                  {...confirmationForm.register('code')}
+                />
 
-                {successMessage && (
-                  <div className="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                    {successMessage}
-                  </div>
-                )}
-
-                {!successMessage && (
-                  <div className="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                    حسابك غير مؤكد. تم إرسال رمز التحقق إلى بريدك الإلكتروني
-                  </div>
-                )}
-
-                <div>
-                  <label className="block text-primary font-semibold mb-2">
-                    رمز التحقق
-                  </label>
-                  <input
-                    type="text"
-                    value={confirmationCode}
-                    onChange={(e) => setConfirmationCode(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
-                    placeholder="123456"
-                    required
-                    disabled={loading}
-                    dir="ltr"
-                  />
-                </div>
-
-                <button
+                <Button
                   type="submit"
-                  disabled={loading}
-                  className="w-full px-6 py-3 bg-secondary text-primary font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full"
+                  size="lg"
+                  isLoading={isLoading}
                 >
-                  {loading ? 'جاري التحقق...' : 'تأكيد الحساب'}
-                </button>
+                  تأكيد الحساب
+                </Button>
 
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
+                  className="w-full"
                   onClick={handleResendCode}
-                  disabled={loading}
-                  className="w-full px-6 py-3 border-2 border-secondary text-primary font-semibold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={isLoading}
                 >
                   إعادة إرسال رمز التحقق
-                </button>
+                </Button>
               </form>
             )}
 
-            {/* Signup Link */}
-            <div className="mt-6 text-center">
-              <p className="text-primary">
-                ليس لديك حساب؟{' '}
-                <Link
-                  to="/signup"
-                  className="text-primary hover:text-accent hover:underline font-semibold transition-colors"
-                >
-                  إنشاء حساب جديد
-                </Link>
-              </p>
-            </div>
-
-            {/* Back Link */}
-            <div className="mt-4 text-center">
-              <Link
-                to="/"
-                className="text-primary hover:text-accent hover:underline font-semibold transition-colors"
-              >
-                العودة للصفحة الرئيسية
-              </Link>
-            </div>
-          </div>
-        </div>
+            {/* Footer Links */}
+            {!needsConfirmation && (
+              <div className="mt-8 text-center space-y-4">
+                <p className="text-coffee">
+                  ليس لديك حساب؟{' '}
+                  <Link
+                    to="/signup"
+                    className="text-clay hover:text-saudi-green font-bold transition-colors"
+                  >
+                    إنشاء حساب جديد
+                  </Link>
+                </p>
+                
+                <div className="pt-4 border-t border-sand/50">
+                  <Link
+                    to="/"
+                    className="text-olive hover:text-clay text-sm font-medium transition-colors"
+                  >
+                    العودة للصفحة الرئيسية
+                  </Link>
+                </div>
+              </div>
+            )}
+          </Card>
+        </motion.div>
       </div>
     </div>
   );

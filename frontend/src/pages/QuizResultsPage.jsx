@@ -1,9 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { CheckCircle, XCircle, AlertTriangle, Home, RotateCcw, Save } from 'lucide-react';
+
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { apiService } from '../services/api';
 import { authService } from '../services/auth';
+import { Button } from '../components/ui/Button';
+import { Card } from '../components/ui/Card';
 
 // FALSE answer variants (mirrors backend logic)
 const FALSE_VARIANTS = ['false', 'خطأ', 'حطا', 'خاطئ', 'خاطئة'];
@@ -13,12 +18,11 @@ function QuizResultsPage() {
   const navigate = useNavigate();
   const { questions, answers } = location.state || {};
 
-  const [submitting, setSubmitting] = useState(false); // Sending state
-  const [submitted, setSubmitted] = useState(false);   // Submission completed state
-  const [submissionError, setSubmissionError] = useState(null);  // Submission error state
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Logged in status
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [submissionError, setSubmissionError] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Ref to prevent duplicate submissions (StrictMode-safe)
   const hasSubmitted = useRef(false);
 
   useEffect(() => {
@@ -27,13 +31,12 @@ function QuizResultsPage() {
       return;
     }
 
-    // Auto-submit if user is authenticated (only once)
     const checkAuthAndSubmit = async () => {
       const isAuth = await authService.isAuthenticated();
-      setIsAuthenticated(isAuth); // Store auth status in state
+      setIsAuthenticated(isAuth);
 
       if (isAuth && !hasSubmitted.current) {
-        hasSubmitted.current = true; // Set immediately (synchronous)
+        hasSubmitted.current = true;
         submitToBackend();
       }
     };
@@ -46,7 +49,6 @@ function QuizResultsPage() {
       setSubmitting(true);
       setSubmissionError(null);
 
-      // Convert answers to backend format
       const formattedAnswers = Object.keys(answers).map((questionId) => ({
         questionId,
         userAnswer: Array.isArray(answers[questionId])
@@ -59,7 +61,7 @@ function QuizResultsPage() {
     } catch (err) {
       console.error('Failed to submit quiz:', err);
       setSubmissionError(err.response?.data?.message || 'فشل في حفظ النتيجة');
-      hasSubmitted.current = false; // Reset ref to allow retry on error
+      hasSubmitted.current = false;
     } finally {
       setSubmitting(false);
     }
@@ -69,19 +71,14 @@ function QuizResultsPage() {
     return null;
   }
 
-  // Calculate score
+  // Calculate score logic (preserved)
   const results = questions.map((question) => {
     const userAnswer = answers[question.id];
     const correctAnswer = question.answer;
-
     let isCorrect = false;
 
-    // Handle different answer types
     if (Array.isArray(userAnswer)) {
-      // Multi-select: normalize, trim, lowercase, and sort (matches backend logic)
-      const normalizeArray = (arr) =>
-        arr.map(item => String(item).trim().toLowerCase()).sort();
-
+      const normalizeArray = (arr) => arr.map(item => String(item).trim().toLowerCase()).sort();
       const userNormalized = normalizeArray(userAnswer);
       const correctNormalized = Array.isArray(correctAnswer)
         ? normalizeArray(correctAnswer)
@@ -89,96 +86,92 @@ function QuizResultsPage() {
 
       isCorrect = JSON.stringify(userNormalized) === JSON.stringify(correctNormalized);
     } else if (question.type === 'true_false') {
-      // TRUE/FALSE: Use same logic as backend
       let normalizedUser = String(userAnswer).trim();
-
-      // Convert "False" to "خطأ" for Arabic questions (mirrors backend)
       if (question.contentLanguage === 'arabic' && normalizedUser.toLowerCase() === 'false') {
         normalizedUser = 'خطأ';
       }
-
-      // Check if both have same "falseness" status
       const userInFalse = FALSE_VARIANTS.includes(normalizedUser.toLowerCase());
       const correctInFalse = FALSE_VARIANTS.includes(String(correctAnswer).trim().toLowerCase());
       isCorrect = userInFalse === correctInFalse;
     } else if (question.type === 'open_ended') {
-      // Open-ended: exact match OR user answer is within correct answer
       const userLower = String(userAnswer).trim().toLowerCase();
       const correctLower = String(correctAnswer).trim().toLowerCase();
       isCorrect = correctLower === userLower || correctLower.includes(userLower);
     } else {
-      // Other question types (single_choice, etc.): case-insensitive comparison
-      isCorrect =
-        String(userAnswer).trim().toLowerCase() ===
-        String(correctAnswer).trim().toLowerCase();
+      isCorrect = String(userAnswer).trim().toLowerCase() === String(correctAnswer).trim().toLowerCase();
     }
 
-    return {
-      question,
-      userAnswer,
-      correctAnswer,
-      isCorrect,
-    };
+    return { question, userAnswer, correctAnswer, isCorrect };
   });
 
   const score = results.filter((r) => r.isCorrect).length;
   const totalQuestions = questions.length;
   const percentage = Math.round((score / totalQuestions) * 100);
 
-  // Determine performance message
   let performanceMessage = '';
   let performanceColor = '';
   if (percentage >= 90) {
-    performanceMessage = ' ممتاز! أداء رائع!';
-    performanceColor = 'text-green-600';
+    performanceMessage = 'ممتاز! أداء رائع!';
+    performanceColor = 'text-saudi-green';
   } else if (percentage >= 70) {
-    performanceMessage = ' جيد جداً! استمر!';
-    performanceColor = 'text-blue-600';
+    performanceMessage = 'جيد جداً! استمر!';
+    performanceColor = 'text-clay';
   } else if (percentage >= 50) {
-    performanceMessage = ' جيد! يمكنك التحسن';
-    performanceColor = 'text-yellow-600';
+    performanceMessage = 'جيد! يمكنك التحسن';
+    performanceColor = 'text-olive';
   } else {
-    performanceMessage = ' حاول مرة أخرى!';
-    performanceColor = 'text-orange-600';
+    performanceMessage = 'حاول مرة أخرى!';
+    performanceColor = 'text-red-600';
   }
 
   return (
-    <div className="min-h-screen bg-primary">
+    <div className="min-h-screen bg-cream font-arabic">
       <Navbar />
 
-      <div className="container mx-auto px-6 py-24">
-        <div className="max-w-5xl mx-auto">
+      <div className="container mx-auto px-4 py-32">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-4xl mx-auto space-y-8"
+        >
           {/* Score Card */}
-          <div className="bg-secondary rounded-2xl shadow-2xl p-8 md:p-12 mb-8 text-center">
-            <h1 className="text-4xl font-bold text-primary mb-6">نتيجتك</h1>
+          <Card className="p-8 md:p-12 text-center relative overflow-hidden">
+             {/* Background Decoration */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-sand/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10"></div>
+
+            <h1 className="text-3xl md:text-4xl font-bold text-coffee mb-8">نتيجة الاختبار</h1>
 
             {/* Score Circle */}
-            <div className="relative w-48 h-48 mx-auto mb-8">
-              <svg className="transform -rotate-90 w-48 h-48">
+            <div className="relative w-56 h-56 mx-auto mb-8">
+              <svg className="transform -rotate-90 w-full h-full">
                 <circle
-                  cx="96"
-                  cy="96"
-                  r="88"
-                  stroke="#C2B09F"
-                  strokeWidth="12"
+                  cx="112"
+                  cy="112"
+                  r="100"
+                  stroke="#EFE5D5"
+                  strokeWidth="16"
                   fill="none"
                 />
-                <circle
-                  cx="96"
-                  cy="96"
-                  r="88"
-                  stroke="#FFDBBA"
-                  strokeWidth="12"
+                <motion.circle
+                  cx="112"
+                  cy="112"
+                  r="100"
+                  stroke={percentage >= 70 ? '#1D2F1F' : percentage >= 50 ? '#D4AF37' : '#855D38'}
+                  strokeWidth="16"
                   fill="none"
-                  strokeDasharray={`${(percentage / 100) * 553} 553`}
-                  className="transition-all duration-1000 ease-out"
+                  strokeDasharray="628"
+                  strokeDashoffset="628"
+                  initial={{ strokeDashoffset: 628 }}
+                  animate={{ strokeDashoffset: 628 - (percentage / 100) * 628 }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  strokeLinecap="round"
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-5xl font-bold text-primary">
+                <span className="text-6xl font-extrabold text-coffee">
                   {percentage}%
                 </span>
-                <span className="text-primary mt-2">
+                <span className="text-olive font-medium mt-2">
                   {score} من {totalQuestions}
                 </span>
               </div>
@@ -192,104 +185,120 @@ function QuizResultsPage() {
             {/* Submission Status */}
             {isAuthenticated ? (
               submitting ? (
-                <p className="text-primary">جاري حفظ النتيجة...</p>
+                <div className="flex items-center justify-center gap-2 text-olive mb-6">
+                  <div className="w-4 h-4 border-2 border-olive border-t-transparent rounded-full animate-spin"></div>
+                  جاري حفظ النتيجة...
+                </div>
               ) : submitted ? (
-                <p className="text-green-600 font-semibold">✓ تم حفظ النتيجة بنجاح</p>
+                <div className="flex items-center justify-center gap-2 text-saudi-green font-bold mb-6 bg-green-50 py-2 px-4 rounded-lg inline-flex">
+                  <CheckCircle className="w-5 h-5" />
+                  تم حفظ النتيجة بنجاح
+                </div>
               ) : submissionError ? (
-                <p className="text-red-600">{submissionError}</p>
+                <div className="flex items-center justify-center gap-2 text-red-600 mb-6 bg-red-50 py-2 px-4 rounded-lg inline-flex">
+                  <AlertTriangle className="w-5 h-5" />
+                  {submissionError}
+                </div>
               ) : null
             ) : (
-              <div className="bg-accent/30 border-2 border-accent rounded-lg p-4">
-                <p className="text-primary font-semibold">
-                  ⚠️ سجل دخولك لحفظ نتائجك ومتابعة تقدمك
+              <div className="bg-sand/30 border border-sand rounded-xl p-4 mb-8 inline-block">
+                <p className="text-coffee font-semibold flex items-center gap-2">
+                  <Save className="w-5 h-5 text-clay" />
+                  سجل دخولك لحفظ نتائجك ومتابعة تقدمك
                 </p>
               </div>
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <button
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button
                 onClick={() => navigate('/quiz')}
-                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300 hover:scale-105 shadow-lg"
+                variant="primary"
+                size="lg"
               >
+                <RotateCcw className="w-5 h-5 ml-2" />
                 حاول مرة أخرى
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={() => navigate('/')}
-                className="px-8 py-3 bg-first text-primary font-bold rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300 hover:scale-105 shadow-lg"
+                variant="outline"
+                size="lg"
               >
+                <Home className="w-5 h-5 ml-2" />
                 الصفحة الرئيسية
-              </button>
+              </Button>
             </div>
-          </div>
+          </Card>
 
           {/* Review Answers */}
-          <div className="bg-secondary rounded-2xl shadow-xl p-8 md:p-12">
-            <h2 className="text-3xl font-bold text-primary mb-8 text-center">
+          <Card className="p-8 md:p-12">
+            <h2 className="text-2xl font-bold text-coffee mb-8 text-center border-b border-sand pb-4">
               مراجعة الإجابات
             </h2>
 
             <div className="space-y-6">
               {results.map((result, index) => (
-                <div
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
                   key={result.question.id}
-                  className={`p-6 rounded-xl border-2 ${
+                  className={`p-6 rounded-2xl border-2 ${
                     result.isCorrect
-                      ? 'bg-green-50 border-green-400'
-                      : 'bg-red-50 border-red-400'
+                      ? 'bg-green-50/50 border-green-200'
+                      : 'bg-red-50/50 border-red-200'
                   }`}
                 >
-                  {/* Question Number & Status */}
+                  {/* Question Header */}
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-lg font-bold text-first">
+                    <span className="text-sm font-bold text-olive bg-white px-3 py-1 rounded-full border border-sand">
                       السؤال {index + 1}
                     </span>
-                    <span
-                      className={`text-2xl ${
-                        result.isCorrect ? 'text-green-600' : 'text-red-600'
-                      }`}
-                    >
-                      {result.isCorrect ? '✓' : '✗'}
-                    </span>
+                    {result.isCorrect ? (
+                      <div className="flex items-center gap-1 text-green-600 font-bold">
+                        <CheckCircle className="w-6 h-6" />
+                        <span>صحيح</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1 text-red-600 font-bold">
+                        <XCircle className="w-6 h-6" />
+                        <span>خاطئ</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Question Text */}
-                  <p className="text-xl font-semibold text-first mb-4">
+                  <p className="text-lg md:text-xl font-bold text-coffee mb-6 leading-relaxed">
                     {result.question.questionText}
                   </p>
 
-                  {/* User's Answer */}
-                  <div className="mb-3">
-                    <span className="font-bold text-secondary">إجابتك: </span>
-                    <span
-                      className={
-                        result.isCorrect ? 'text-green-700 font-semibold' : 'text-red-700 font-semibold'
-                      }
-                    >
-                      {Array.isArray(result.userAnswer)
-                        ? result.userAnswer.join(', ')
-                        : result.userAnswer || 'لم تجب'}
-                    </span>
-                  </div>
-
-                  {/* Correct Answer (if wrong) */}
-                  {!result.isCorrect && (
-                    <div>
-                      <span className="font-bold text-secondary">
-                        الإجابة الصحيحة:{' '}
-                      </span>
-                      <span className="text-green-700 font-semibold">
-                        {Array.isArray(result.correctAnswer)
-                          ? result.correctAnswer.join(', ')
-                          : result.correctAnswer}
-                      </span>
+                  {/* Answers Comparison */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-white p-4 rounded-xl border border-sand/50">
+                      <span className="text-xs font-bold text-olive uppercase tracking-wider mb-1 block">إجابتك</span>
+                      <p className={`font-bold text-lg ${result.isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+                         {Array.isArray(result.userAnswer)
+                          ? result.userAnswer.join(', ')
+                          : result.userAnswer || 'لم تجب'}
+                      </p>
                     </div>
-                  )}
-                </div>
+
+                    {!result.isCorrect && (
+                      <div className="bg-white p-4 rounded-xl border border-sand/50">
+                        <span className="text-xs font-bold text-olive uppercase tracking-wider mb-1 block">الإجابة الصحيحة</span>
+                        <p className="font-bold text-lg text-green-700">
+                          {Array.isArray(result.correctAnswer)
+                            ? result.correctAnswer.join(', ')
+                            : result.correctAnswer}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
               ))}
             </div>
-          </div>
-        </div>
+          </Card>
+        </motion.div>
       </div>
 
       <Footer />

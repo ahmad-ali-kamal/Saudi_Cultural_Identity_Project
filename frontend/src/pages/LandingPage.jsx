@@ -1,158 +1,197 @@
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Trophy, BookOpen, ArrowLeft } from 'lucide-react';
 
 function LandingPage() {
-  useEffect(() => {
-    AOS.init({ duration: 1000 }); // fade duration
-  }, []);
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-primary">
+    <div className="min-h-screen bg-cream font-arabic overflow-x-hidden">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden ">
-        {/* Background Image */}
-        <div className="absolute inset-0">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image with Parallax-like feel */}
+        <div className="absolute inset-0 z-0">
           <img
             src="/images/home-bg.jpg"
             alt="Saudi Cultural Heritage"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover scale-105"
           />
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60"></div>
+          {/* Elegant Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-cream"></div>
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 text-center px-6 max-w-7xl mx-auto" data-aos="fade-up">
-          <h1 className="text-7xl md:text-9xl py-10 font-extrabold mb-6 bg-gradient-to-t from-green-400 to-green-1000 bg-clip-text drop-shadow-2xl text-white">
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto mt-16">
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="text-6xl md:text-8xl lg:text-9xl font-extrabold mb-6 text-white drop-shadow-xl tracking-wide"
+          >
             عزنا بطبعنا
-          </h1>
+          </motion.h1>
 
-          <p className="text-2xl md:text-4xl text-primary mb-12 font-semibold  drop-shadow-lg"
-            data-aos="fade-up">
-            تبي تشوف مستواك في الثقافة السعودية ؟
-          </p>
-          <div data-aos="zoom-in">
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="text-2xl md:text-4xl text-white/90 mb-12 font-medium drop-shadow-md max-w-3xl mx-auto leading-relaxed"
+          >
+            تبي تشوف مستواك في الثقافة السعودية؟
+          </motion.p>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <Link
               to="/quiz"
-              className="inline-block px-10 py-8 bg-secondary text-primary text-4xl font-bold rounded-xl hover:bg-green-600 hover:text-white hover:scale-125 hover:ease-out hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:text-5xl hover:shadow-white transition-all duration-300">
-              جرب مستواك
+              className="group inline-flex items-center gap-3 px-10 py-6 bg-clay text-white text-2xl md:text-3xl font-bold rounded-2xl shadow-lg hover:bg-saudi-green transition-all duration-300 ring-4 ring-white/20 hover:ring-saudi-green/40"
+            >
+              <span>جرب مستواك</span>
+              <ArrowLeft className="w-8 h-8 transition-transform group-hover:-translate-x-2" />
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
       
+      {/* Decorative Sadu Divider */}
+      <div className="relative h-24 bg-cream overflow-hidden">
+        <div 
+          className="absolute inset-0 opacity-20 mix-blend-multiply"
+          style={{ 
+            backgroundImage: "url('/images/Sadu_decoration.jpg')",
+            backgroundSize: "contain",
+            backgroundRepeat: "repeat-x"
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-cream via-transparent to-cream"></div>
+      </div>
+
       {/* About Section */}
-      
-
-  {/* Decorative Divider */}
-  <div
-  className=" h-20 bg-sadu-pattern bg-repeat-x "
-  style={{ backgroundImage: "url('/images/Sadu_decoration.jpg')" }}
->  </div>
-
-      <section className="py-0 px-20 bg-primary" >
-      
-        <div className="max-w-7xl mx-auto text-light text-4xl leading-relaxed text-right font-semibold">
-         <br/><br/>
-          <p className="" data-aos="fade-left">
-          انغمس في عمق التراث السعودي العريق، وتجول بين أصالته وروعة تنوعه. اكتشف العادات والتقاليد التي توارثتها الأجيال، وتعرّف على القيم التي شكّلت هوية المجتمع السعودي عبر التاريخ. عِش تجربة المأكولات الشعبية بنكهاتها الفريدة التي تحمل في كل لقمة حكاية من أرض الخير والكرم.         </p>
-         <p className="mt-14" data-aos="fade-left">
-       واستمتع بالمهرجانات والاحتفالات الضخمة التي تملأ المدن والقرى حياةً وحيوية، حيث تمتزج الموسيقى الشعبية بالفنون الحرفية والرقصات الفلكلورية في مشهد يجسد الفخر والانتماء.
-       </p>
-       <p className="mt-14" data-aos="fade-left">
-        من خلال تجارب تفاعلية مبتكرة، وقصص مرئية نابضة بالحياة، وتحديات ثقافية ممتعة، سنأخذك في رحلة لا تُنسى عبر الزمن، رحلة يتلاقى فيها الماضي مع الحاضر، ويُلهِم فيها التراث مستقبل الوطن. فهنا، يلتقي التاريخ بالإبداع، ويزدهر الشغف بالهوية، ويولد الإلهام ليصنع غدًا أجمل.
-        </p>
-        </div>
+      <section className="relative py-20 px-6 bg-cream">
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <motion.div variants={fadeInUp} className="space-y-12 text-coffee text-xl md:text-2xl lg:text-3xl leading-loose font-medium">
+            <p>
+              انغمس في عمق التراث السعودي العريق، وتجول بين أصالته وروعة تنوعه. اكتشف العادات والتقاليد التي توارثتها الأجيال، وتعرّف على القيم التي شكّلت هوية المجتمع السعودي عبر التاريخ.
+            </p>
+            <p>
+              عِش تجربة المأكولات الشعبية بنكهاتها الفريدة التي تحمل في كل لقمة حكاية من أرض الخير والكرم. واستمتع بالمهرجانات والاحتفالات الضخمة التي تملأ المدن والقرى حياةً وحيوية.
+            </p>
+            <p className="font-bold text-clay">
+              هنا، يلتقي التاريخ بالإبداع، ويزدهر الشغف بالهوية، ويولد الإلهام ليصنع غدًا أجمل.
+            </p>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Feature Cards Section */}
-      <section className="py-28 px-6 bg-primary">
-        <div className="container mx-auto max-w-9xl" >
-          <div className="grid md:grid-cols-2 gap-32">
+      <section className="py-24 px-6 bg-cream relative overflow-hidden">
+        {/* Background Blobs */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-sand/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-clay/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 -z-10"></div>
+
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+            
             {/* Quiz Card */}
-            <div className="group relative bg-secondary rounded-2xl  overflow-hidden shadow-xl " data-aos="flip-left" data-aos-duration="1000">
-              {/* Card Image */}
-
-              <div className="relative h-96 overflow-hidden">
-
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="group relative bg-white rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-sand"
+            >
+              <div className="relative h-80 overflow-hidden">
                 <img
                   src="/images/quiz-card-img.jpg"
-                  alt="Saudi Traditional Dance"
-                  className="
-                  sm:obeject-left
-                  w-full h-full object-cover"
+                  alt="Saudi Quiz"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-6 right-6 text-white">
+                  <div className="p-3 bg-clay rounded-xl inline-block mb-3 shadow-lg">
+                    <Trophy className="w-8 h-8" />
+                  </div>
+                  <h2 className="text-4xl font-bold">تحس انك سعودي؟</h2>
+                </div>
               </div>
 
-              {/* Card Content */}
-              <div className="p-8">
-
-
-                <h2 className="text-6xl font-bold text-primary mb-8">تحس انك سعودي؟</h2>
-                <p className="text-primary text-2xl leading-relaxed mb-7">
-
-                  اذا تحس نفسك فاهم في الثقافة السعودية
+              <div className="p-10">
+                <p className="text-coffee/80 text-xl leading-relaxed mb-8 font-medium">
+                  اذا تحس نفسك فاهم في الثقافة السعودية، جرب هذا الاختبار وتحدى نفسك!
                 </p>
-
-                {/* CTA Button */}
                 <Link
                   to="/quiz"
-
-
-                  className="inline-block px-12 py-5 bg-primary text-secondary text-3xl font-bold rounded-lg hover:bg-glow hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:shadow-white transition-all duration-300"
-
+                  className="inline-flex items-center justify-center w-full py-4 bg-clay text-white text-xl font-bold rounded-xl hover:bg-saudi-green transition-colors duration-300"
                 >
-                  تحدى نفسك!
+                  تحدى نفسك
                 </Link>
               </div>
-
-              {/* Decorative Element */}
-              <div className="absolute top-0 left-0  h-full bg-secondary "></div>
-            </div>
+            </motion.div>
 
             {/* Learn Card */}
-            <div className="group relative bg-secondary rounded-2xl overflow-hidden shadow-xl"  data-aos="flip-right" data-aos-duration="1000" >
-              {/* Card Image */}
-              <div className="relative h-96 overflow-hidden" >
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="group relative bg-white rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-sand"
+            >
+              <div className="relative h-80 overflow-hidden">
                 <img
                   src="/images/info-card-img.jpg"
-                  alt="Saudi Cultural Learning"
-                  className="
-                  w-fit h-full object-cover
-                  lg:w-full lg:h-full "
+                  alt="Saudi Learn"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 "></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-6 right-6 text-white">
+                  <div className="p-3 bg-saudi-green rounded-xl inline-block mb-3 shadow-lg">
+                    <BookOpen className="w-8 h-8" />
+                  </div>
+                  <h2 className="text-4xl font-bold">ودك تتعلم؟</h2>
+                </div>
               </div>
 
-              {/* Card Content */}
-              <div className="p-8">
-
-                <h2 className="text-6xl font-bold text-primary mb-8">
-                  منت فاهم لثقافتنا؟
-                </h2>
-
-                <p className=" text-primary text-2xl leading-relaxed mb-7">
-                  بنعلمك كل شي تحتاجه عن ثقافتنا
+              <div className="p-10">
+                <p className="text-coffee/80 text-xl leading-relaxed mb-8 font-medium">
+                  بنعلمك كل شي تحتاجه عن ثقافتنا العريقة، من الأزياء إلى الأمثال الشعبية.
                 </p>
-
-                {/* CTA Button */}
                 <Link
                   to="/learn"
-                  className="inline-block px-12 py-5 bg-primary text-secondary text-3xl font-bold rounded-lg hover:bg-glow hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:shadow-white transition-all duration-300"
+                  className="inline-flex items-center justify-center w-full py-4 bg-saudi-green text-white text-xl font-bold rounded-xl hover:bg-clay transition-colors duration-300"
                 >
-                  تعلم الأن
+                  ابدأ التعلم
                 </Link>
               </div>
+            </motion.div>
 
-              {/* Decorative Element */}
-              <div className="absolute top-0 left-0  h-full bg-secondary"></div>
-            </div>
           </div>
         </div>
       </section>
