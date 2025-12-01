@@ -28,11 +28,11 @@ function LandingPage() {
 
         {/* Hero Content */}
         <div className="relative z-10 text-center px-6 max-w-7xl mx-auto" data-aos="fade-up">
-          <h1 className="text-7xl md:text-9xl py-10 font-extrabold mb-6 bg-gradient-to-t from-green-400 to-green-1000 bg-clip-text drop-shadow-2xl text-white">
+          <h1 className="font-aa-galaxy text-7xl md:text-9xl py-10 font-extrabold mb-6 bg-gradient-to-t from-green-400 to-green-1000 bg-clip-text drop-shadow-2xl shadow-text text-white">
             عزنا بطبعنا
           </h1>
 
-          <p className="text-2xl md:text-4xl text-primary mb-12 font-semibold  drop-shadow-lg"
+          <p className="font-aa-galaxy text-4xl md:text-4xl text-primary mb-12 font-semibold  drop-shadow-lg"
             data-aos="fade-up">
             تبي تشوف مستواك في الثقافة السعودية ؟
           </p>
@@ -59,9 +59,9 @@ function LandingPage() {
    }}
 >  </div>
 
-      <section className="py-0 px-20 bg-primary" >
+      <section className="py-0 px-14 bg-primary" >
       
-        <div className="max-w-7xl mx-auto text-light text-4xl leading-relaxed text-right font-semibold">
+        <div className="max-w-7xl  text-light text-5xl leading-relaxed text-right font-semibold font-aa-galaxy">
          <br/><br/>
           <p className="" data-aos="fade-left">
           انغمس في عمق التراث السعودي العريق، وتجول بين أصالته وروعة تنوعه. اكتشف العادات والتقاليد التي توارثتها الأجيال، وتعرّف على القيم التي شكّلت هوية المجتمع السعودي عبر التاريخ. عِش تجربة المأكولات الشعبية بنكهاتها الفريدة التي تحمل في كل لقمة حكاية من أرض الخير والكرم.         </p>
@@ -98,7 +98,7 @@ function LandingPage() {
               <div className="p-8">
 
 
-                <h2 className="text-6xl font-bold text-primary mb-8">تحس انك سعودي؟</h2>
+                <h2 className="font-aa-galaxy text-6xl font-bold text-primary mb-8">تحس انك سعودي؟</h2>
                 <p className="text-primary text-2xl leading-relaxed mb-7">
 
                   اذا تحس نفسك فاهم في الثقافة السعودية
@@ -137,7 +137,7 @@ function LandingPage() {
               {/* Card Content */}
               <div className="p-8">
 
-                <h2 className="text-6xl font-bold text-primary mb-8">
+                <h2 className="font-aa-galaxy text-6xl font-bold text-primary mb-8">
                   منت فاهم لثقافتنا؟
                 </h2>
 

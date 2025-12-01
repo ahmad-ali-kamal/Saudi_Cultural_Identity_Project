@@ -12,7 +12,7 @@ function AboutPage() {
           
           {/* Page Title and Description */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-light mb-4">مشروع هوية المملكة الثقافة</h1>
+            <h1 className="font-aa-galaxy text-5xl font-bold text-light mb-4">مشروع هوية المملكة الثقافة</h1>
             <p className="text-2xl text-light">
               تعريف الشباب بهويتنا الثقافية السعودية الأصيلة
             </p>

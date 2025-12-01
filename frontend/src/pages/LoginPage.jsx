@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import { authService } from '../services/auth';
 
 function LoginPage() {
@@ -94,10 +95,10 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-primary">
+    <div className="min-h-screen bg-primary flex flex-col">
       <Navbar />
 
-      <div className="container mx-auto px-6 py-24">
+      <div className="container mx-auto px-6 py-24 flex-1">
         <div className="max-w-md mx-auto">
           <div className="bg-light rounded-2xl shadow-2xl p-8">
             {/* Header */}
@@ -266,7 +267,7 @@ function LoginPage() {
           </div>
         </div>
       </div>
-     
+      <Footer />
     </div>
    
   );

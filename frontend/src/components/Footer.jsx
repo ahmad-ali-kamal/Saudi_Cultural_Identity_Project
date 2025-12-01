@@ -35,7 +35,7 @@ function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="text-center mt-1 py-5 text-primary text-sm">
+        <div className="text-center mt-5 py-5 text-primary text-sm">
           <p>© 2025 هوية المملكة الثقافية. جميع الحقوق محفوظة.</p>
         </div>
       </div>

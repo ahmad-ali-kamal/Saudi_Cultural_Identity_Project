@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import HomeButton from '../components/HomeButton';
+import Footer from '../components/Footer';
 import { authService } from '../services/auth';
 
 function SignupPage() {
@@ -108,10 +109,10 @@ function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-primary">
+    <div className="min-h-screen bg-primary flex flex-col">
       <Navbar />
 
-      <div className="container mx-auto px-6 py-24">
+      <div className="container mx-auto px-6 py-24 flex-1">
         <div className="max-w-md mx-auto">
           <div className="bg-light rounded-2xl shadow-2xl p-8">
             {/* Header */}
@@ -280,7 +281,7 @@ function SignupPage() {
                     type="text"
                     value={confirmationCode}
                     onChange={(e) => setConfirmationCode(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
+                    className="w-full px-4 py-3 border-2 border-primary rounded-lg focus:border-secondary focus:outline-none transition-colors bg-primary placeholder-secondary"
                     placeholder="123456"
                     required
                     disabled={loading}
@@ -291,7 +292,7 @@ function SignupPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-first text-primary font-bold rounded-lg  transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full px-6 py-3 bg-first text-primary hover:bg-primary hover:text-secondary border-secondary border-4 font-bold rounded-lg  transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? 'جاري التحقق...' : 'تأكيد الحساب'}
                 </button>
@@ -300,7 +301,7 @@ function SignupPage() {
                   type="button"
                   onClick={handleResendCode}
                   disabled={loading}
-                  className="w-full px-6 py-3 border-2 border-first text-primary font-semibold rounded-lg hover:bg-secondary hover:text-primary transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-6 py-3 border-2 border-first text-primary font-semibold rounded-lg hover:bg-primary hover:text-secondary transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   إعادة إرسال رمز التحقق
                 </button>
@@ -332,6 +333,7 @@ function SignupPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

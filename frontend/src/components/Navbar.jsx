@@ -51,19 +51,19 @@ function Navbar() {
         <div className="flex items-center justify-between">
 
           {/* Logo/Brand */}
-          <Link to="/" className="text-primary text-base md:text-xl lg:text-2xl font-bold hover:text-accent  flex-shrink-0  hover:text-white hover:text-3xl hover:shadow-white transition-all duration-300">
+          <Link to="/" className="font-aa-galaxy text-primary text-base md:text-xl lg:text-2xl font-bold hover:text-accent  flex-shrink-0  hover:text-white hover:text-3xl hover:shadow-white transition-all duration-300">
             هوية المملكة الثقافية
           </Link>
 
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-6">
-            <Link to="/learn" className="text-primary text-lg font-semibold hover:text-accent  hover:scale-105  hover:text-white hover:text-3xl hover:shadow-white transition-all duration-300">
+            <Link to="/learn" className="font-aa-galaxy text-primary text-lg font-semibold hover:text-accent  hover:scale-105  hover:text-white hover:text-3xl hover:shadow-white transition-all duration-300">
               تعلم
             </Link>
-            <Link to="/quiz" className="text-primary text-lg font-semibold hover:text-accent hover:scale-105  hover:text-white hover:text-3xl hover:shadow-white transition-all duration-300">
+            <Link to="/quiz" className="font-aa-galaxy text-primary text-lg font-semibold hover:text-accent hover:scale-105  hover:text-white hover:text-3xl hover:shadow-white transition-all duration-300">
               اختبر نفسك
             </Link>
-            <Link to="/about" className="text-primary text-lg font-semibold hover:text-accent hover:scale-105  hover:text-white hover:text-3xl hover:shadow-white transition-all duration-300">
+            <Link to="/about" className="font-aa-galaxy text-primary text-lg font-semibold hover:text-accent hover:scale-105  hover:text-white hover:text-3xl hover:shadow-white transition-all duration-300">
               فريق التطوير
             </Link>
           </div>

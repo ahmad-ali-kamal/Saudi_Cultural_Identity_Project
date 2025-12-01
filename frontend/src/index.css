@@ -4,6 +4,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Local custom font: place AA-GALAXY.otf in `public/fonts/AA-GALAXY.otf` */
+@font-face {
+  font-family: 'AA Galaxy';
+  src: url('/fonts/AA-GALAXY.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Utility class to apply the AA Galaxy font */
+.font-aa-galaxy {
+  font-family: 'AA Galaxy', 'Cairo', system-ui, -apple-system, sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;

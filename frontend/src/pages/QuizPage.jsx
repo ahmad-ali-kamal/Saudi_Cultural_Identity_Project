@@ -53,7 +53,7 @@ function QuizPage() {
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-light mb-4">
+            <h1 className="font-aa-galaxy text-5xl font-bold text-light mb-4">
              <br></br><br></br>
               اختبر معرفتك بالثقافة السعودية
             </h1>
