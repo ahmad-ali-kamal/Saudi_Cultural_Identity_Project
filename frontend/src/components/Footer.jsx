@@ -2,8 +2,20 @@ function Footer() {
   const socialLinks = [];
 
   return (
-    <footer className="bg-secondary text-light py-12">
-      <div className="container mx-auto px-6">
+    
+    <footer className="bg-black text-light ">
+      <div className=" ">
+         <div className="scroll-py-7 overflow-hidden" >
+                <img
+                  src="/images/FooterBg.jpg"
+                  alt="Saudi Cultural Learning"
+                  className="
+                    object-cover
+                  lg:w-full lg:h-full "
+                />
+               
+              </div>
+
         {/* Divider Line */}
         <div className="w-full h-px bg-accent mb-8"></div>
 
