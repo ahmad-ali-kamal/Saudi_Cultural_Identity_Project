@@ -49,4 +49,7 @@ public class Question {
 
   @Field("image_mime_type")
   private String imageMimeType;
+
+  @Field("image_url")
+  private String imageUrl;
 }

@@ -10,6 +10,5 @@ public class InfoQuestionDTO {
     private String language;
     private String region;
 
-    private String imageBase64;
-    private String imageMimeType;
+    private String imageUrl;
 }

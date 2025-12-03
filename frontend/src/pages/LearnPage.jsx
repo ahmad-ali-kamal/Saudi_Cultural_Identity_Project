@@ -162,13 +162,9 @@ function LearnPage() {
   // Item Card Component (Inline)
   const InfoItem = ({ info }) => {
     const [isExpanded, setIsExpanded] = useState(false);
-    const getImageSrc = () => {
-      if (info.imageBase64 && info.imageMimeType) {
-        return `data:${info.imageMimeType};base64,${info.imageBase64}`;
-      }
-      return null;
-    };
-    const imageSrc = getImageSrc();
+    
+    const imageSrc = info.imageUrl;
+    
     const hasLongAnswer = info.answer && info.answer.length > 200;
     const isEnglish = info.language?.toLowerCase() === 'english';
     const textDir = isEnglish ? 'ltr' : 'rtl';

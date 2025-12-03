@@ -13,6 +13,5 @@ public class QuizQuestionDTO {
     private String type;
     private String category;
 
-    private String imageBase64;
-    private String imageMimeType;
+    private String imageUrl;
 }

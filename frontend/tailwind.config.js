@@ -9,8 +9,8 @@ export default {
     extend: {
       colors: {
         // Modern Heritage Palette
-        cream: '#F9F5F0',      // Main Background
-        sand: '#EFE5D5',       // Secondary Background / Cards
+        cream: '#F0EBE0',      // Main Background (Deeper, warmer off-white)
+        sand: '#E6DCCA',       // Secondary Background / Cards (Slightly deeper beige)
         clay: '#855D38',       // Primary Brand Color / Buttons
         coffee: '#3E2B1D',     // Primary Text
         olive: '#5A614E',      // Muted Text / Secondary Text

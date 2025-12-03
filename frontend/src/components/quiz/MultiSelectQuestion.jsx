@@ -12,15 +12,8 @@ function MultiSelectQuestion({ question, selectedAnswer, onAnswerSelect, showIma
     }
   };
 
-  // Decode base64 image if available
-  const getImageSrc = () => {
-    if (question.imageBase64 && question.imageMimeType) {
-      return `data:${question.imageMimeType};base64,${question.imageBase64}`;
-    }
-    return question.imageUrl;
-  };
-
-  const imageSrc = getImageSrc();
+  // Use image URL directly
+  const imageSrc = question.imageUrl;
 
   const isEnglish = question.contentLanguage?.toLowerCase() === 'english' ||
                     question.language?.toLowerCase() === 'english';
