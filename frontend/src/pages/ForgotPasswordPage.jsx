@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Eye, EyeOff, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { authService } from '../services/auth';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+import { Card } from '../components/ui/Card';
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -128,209 +133,179 @@ function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-primary">
+    <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic relative overflow-hidden transition-colors duration-300">
       <Navbar />
 
-      <div className="container mx-auto px-6 py-24">
-        <div className="max-w-md mx-auto">
-          <div className="bg-light rounded-2xl shadow-2xl p-8">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-sand/30 dark:bg-coffee-light/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10 transition-colors duration-300" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-clay/10 dark:bg-gold/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 -z-10 transition-colors duration-300" />
+
+      <div className="container mx-auto px-4 py-24 md:py-32 min-h-[calc(100vh-80px)] flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="w-full max-w-md"
+        >
+          <Card className="p-8 md:p-10 bg-white/80 dark:bg-coffee-light/80 backdrop-blur-sm border-sand/50 dark:border-coffee-dark transition-colors duration-300">
             {/* Header */}
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-secondary mb-2">
+              <h1 className="text-3xl md:text-4xl font-bold text-coffee dark:text-cream mb-3 transition-colors duration-300">
                 إعادة تعيين كلمة المرور
               </h1>
-              <p className="text-primary">
+              <p className="text-olive dark:text-sand/60 text-lg transition-colors duration-300">
                 {!codeSent
                   ? 'أدخل بريدك الإلكتروني لاستلام رمز التحقق'
                   : 'أدخل رمز التحقق وكلمة المرور الجديدة'}
               </p>
             </div>
 
+            {/* Alerts */}
+            {error && (
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-center gap-3 text-red-700 dark:text-red-400 transition-colors duration-300"
+              >
+                <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                <p className="text-sm font-medium">{error}</p>
+              </motion.div>
+            )}
+
+            {successMessage && (
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-center gap-3 text-green-700 dark:text-green-400 transition-colors duration-300"
+              >
+                <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
+                <p className="text-sm font-medium">{successMessage}</p>
+              </motion.div>
+            )}
+
             {/* Request Code Form or Reset Password Form */}
             {!codeSent ? (
               <form onSubmit={handleSendCode} className="space-y-6">
-                {error && (
-                  <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                    {error}
-                  </div>
-                )}
-
-                <div>
-                  <label className="block text-secondary font-semibold mb-2">
-                    البريد الإلكتروني
-                  </label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
-                    placeholder="example@email.com"
-                    required
-                    disabled={loading}
-                    dir="ltr"
-                  />
-                </div>
-
-                <button
-                  type="submit"
+                <Input
+                  label="البريد الإلكتروني"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="example@email.com"
+                  required
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  dir="ltr"
+                />
+
+                <Button
+                  type="submit"
+                  className="w-full"
+                  size="lg"
+                  isLoading={loading}
                 >
-                  {loading ? 'جاري الإرسال...' : 'إرسال رمز التحقق'}
-                </button>
+                  إرسال رمز التحقق
+                </Button>
               </form>
             ) : (
               <form onSubmit={handleResetPassword} className="space-y-6">
-                {error && (
-                  <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                    {error}
-                  </div>
-                )}
+                <Input
+                  label="رمز التحقق"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  placeholder="123456"
+                  required
+                  disabled={loading}
+                  dir="ltr"
+                />
 
-                {successMessage && (
-                  <div className="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                    {successMessage}
-                  </div>
-                )}
-
-                {!successMessage && (
-                  <div className="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                    تم إرسال رمز التحقق إلى بريدك الإلكتروني
-                  </div>
-                )}
-
-                <div>
-                  <label className="block text-secondary font-semibold mb-2">
-                    رمز التحقق
-                  </label>
-                  <input
-                    type="text"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
-                    placeholder="123456"
-                    required
-                    disabled={loading}
-                    dir="ltr"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-secondary font-semibold mb-2">
-                    كلمة المرور الجديدة
-                  </label>
-                  <div className="relative">
-                    <input
-                      type={showNewPassword ? "text" : "password"}
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full px-4 py-3 pr-12 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
-                      placeholder="••••••••"
-                      required
-                      disabled={loading}
-                      dir="ltr"
-                    />
+                <Input
+                  label="كلمة المرور الجديدة"
+                  type={showNewPassword ? "text" : "password"}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  disabled={loading}
+                  dir="ltr"
+                  endIcon={
                     <button
                       type="button"
                       onClick={() => setShowNewPassword(!showNewPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-primary/60 hover:text-secondary transition-colors"
-                      disabled={loading}
+                      className="text-olive/60 dark:text-sand/60 hover:text-clay dark:hover:text-gold transition-colors flex items-center justify-center"
                     >
-                      {showNewPassword ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                        </svg>
-                      ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                      )}
+                      {showNewPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
-                  </div>
-                  <p className="text-sm text-primary/70 mt-2">
-                    يجب أن تحتوي على: 8 أحرف، حرف كبير، حرف صغير، رقم، رمز خاص
-                  </p>
-                </div>
+                  }
+                />
+                <p className="text-sm text-olive/70 dark:text-sand/50 mt-[-15px] mb-2">
+                  يجب أن تحتوي على: 8 أحرف، حرف كبير، حرف صغير، رقم، رمز خاص
+                </p>
 
-                <div>
-                  <label className="block text-secondary font-semibold mb-2">
-                    تأكيد كلمة المرور
-                  </label>
-                  <div className="relative">
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full px-4 py-3 pr-12 border-2 border-accent rounded-lg focus:border-secondary focus:outline-none transition-colors bg-white"
-                      placeholder="••••••••"
-                      required
-                      disabled={loading}
-                      dir="ltr"
-                    />
+                <Input
+                  label="تأكيد كلمة المرور"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  disabled={loading}
+                  dir="ltr"
+                  endIcon={
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-primary/60 hover:text-secondary transition-colors"
-                      disabled={loading}
+                      className="text-olive/60 dark:text-sand/60 hover:text-clay dark:hover:text-gold transition-colors flex items-center justify-center"
                     >
-                      {showConfirmPassword ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                        </svg>
-                      ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                      )}
+                      {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
-                  </div>
-                </div>
+                  }
+                />
 
-                <button
+                <Button
                   type="submit"
-                  disabled={loading}
-                  className="w-full px-6 py-3 bg-secondary text-light font-bold rounded-lg hover:bg-accent transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full"
+                  size="lg"
+                  isLoading={loading}
                 >
-                  {loading ? 'جاري إعادة التعيين...' : 'إعادة تعيين كلمة المرور'}
-                </button>
+                  إعادة تعيين كلمة المرور
+                </Button>
 
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
+                  className="w-full"
                   onClick={handleResendCode}
                   disabled={loading}
-                  className="w-full px-6 py-3 border-2 border-secondary text-secondary font-semibold rounded-lg hover:bg-secondary hover:text-light transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   إعادة إرسال رمز التحقق
-                </button>
+                </Button>
               </form>
             )}
 
-            {/* Login Link */}
-            <div className="mt-6 text-center">
-              <p className="text-primary">
+            {/* Footer Links */}
+            <div className="mt-8 text-center space-y-4">
+              <p className="text-coffee dark:text-sand transition-colors duration-300">
                 تذكرت كلمة المرور؟{' '}
                 <Link
                   to="/login"
-                  className="text-secondary hover:text-accent hover:underline font-semibold transition-colors"
+                  className="text-clay dark:text-gold hover:text-saudi-green dark:hover:text-cream font-bold transition-colors duration-300"
                 >
                   تسجيل الدخول
                 </Link>
               </p>
+              
+              <div className="pt-4 border-t border-sand/50 dark:border-coffee-dark transition-colors duration-300">
+                <Link
+                  to="/"
+                  className="inline-flex items-center gap-2 text-olive dark:text-sand/60 hover:text-clay dark:hover:text-gold text-sm font-medium transition-colors duration-300"
+                >
+                  <ArrowRight className="w-4 h-4" />
+                  العودة للصفحة الرئيسية
+                </Link>
+              </div>
             </div>
-
-            {/* Back Link */}
-            <div className="mt-4 text-center">
-              <Link
-                to="/"
-                className="text-secondary hover:text-accent hover:underline font-semibold transition-colors"
-              >
-                العودة للصفحة الرئيسية
-              </Link>
-            </div>
-          </div>
-        </div>
+          </Card>
+        </motion.div>
       </div>
     </div>
   );

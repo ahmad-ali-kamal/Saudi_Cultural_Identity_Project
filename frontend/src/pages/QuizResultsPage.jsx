@@ -125,7 +125,7 @@ function QuizResultsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-cream font-arabic">
+    <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic transition-colors duration-300">
       <Navbar />
 
       <div className="container mx-auto px-4 py-32">
@@ -135,11 +135,11 @@ function QuizResultsPage() {
           className="max-w-4xl mx-auto space-y-8"
         >
           {/* Score Card */}
-          <Card className="p-8 md:p-12 text-center relative overflow-hidden">
+          <Card className="p-8 md:p-12 text-center relative overflow-hidden dark:bg-coffee-light dark:border-coffee-dark">
              {/* Background Decoration */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-sand/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-sand/30 dark:bg-sand/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10"></div>
 
-            <h1 className="text-3xl md:text-4xl font-bold text-coffee mb-8">نتيجة الاختبار</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-coffee dark:text-cream mb-8">نتيجة الاختبار</h1>
 
             {/* Score Circle */}
             <div className="relative w-56 h-56 mx-auto mb-8">
@@ -148,7 +148,7 @@ function QuizResultsPage() {
                   cx="112"
                   cy="112"
                   r="100"
-                  stroke="#EFE5D5"
+                  className="stroke-sand dark:stroke-coffee-dark transition-colors duration-300"
                   strokeWidth="16"
                   fill="none"
                 />
@@ -168,10 +168,10 @@ function QuizResultsPage() {
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-6xl font-extrabold text-coffee">
+                <span className="text-6xl font-extrabold text-coffee dark:text-cream transition-colors duration-300">
                   {percentage}%
                 </span>
-                <span className="text-olive font-medium mt-2">
+                <span className="text-olive dark:text-sand/70 font-medium mt-2 transition-colors duration-300">
                   {score} من {totalQuestions}
                 </span>
               </div>
@@ -185,25 +185,25 @@ function QuizResultsPage() {
             {/* Submission Status */}
             {isAuthenticated ? (
               submitting ? (
-                <div className="flex items-center justify-center gap-2 text-olive mb-6">
-                  <div className="w-4 h-4 border-2 border-olive border-t-transparent rounded-full animate-spin"></div>
+                <div className="flex items-center justify-center gap-2 text-olive dark:text-sand mb-6">
+                  <div className="w-4 h-4 border-2 border-olive dark:border-sand border-t-transparent rounded-full animate-spin"></div>
                   جاري حفظ النتيجة...
                 </div>
               ) : submitted ? (
-                <div className="flex items-center justify-center gap-2 text-saudi-green font-bold mb-6 bg-green-50 py-2 px-4 rounded-lg inline-flex">
+                <div className="flex items-center justify-center gap-2 text-saudi-green dark:text-green-400 font-bold mb-6 bg-green-50 dark:bg-green-900/20 py-2 px-4 rounded-lg inline-flex">
                   <CheckCircle className="w-5 h-5" />
                   تم حفظ النتيجة بنجاح
                 </div>
               ) : submissionError ? (
-                <div className="flex items-center justify-center gap-2 text-red-600 mb-6 bg-red-50 py-2 px-4 rounded-lg inline-flex">
+                <div className="flex items-center justify-center gap-2 text-red-600 dark:text-red-400 mb-6 bg-red-50 dark:bg-red-900/20 py-2 px-4 rounded-lg inline-flex">
                   <AlertTriangle className="w-5 h-5" />
                   {submissionError}
                 </div>
               ) : null
             ) : (
-              <div className="bg-sand/30 border border-sand rounded-xl p-4 mb-8 inline-block">
-                <p className="text-coffee font-semibold flex items-center gap-2">
-                  <Save className="w-5 h-5 text-clay" />
+              <div className="bg-sand/30 dark:bg-coffee-dark/50 border border-sand dark:border-coffee-dark rounded-xl p-4 mb-8 inline-block">
+                <p className="text-coffee dark:text-sand font-semibold flex items-center gap-2">
+                  <Save className="w-5 h-5 text-clay dark:text-gold" />
                   سجل دخولك لحفظ نتائجك ومتابعة تقدمك
                 </p>
               </div>
@@ -231,8 +231,8 @@ function QuizResultsPage() {
           </Card>
 
           {/* Review Answers */}
-          <Card className="p-8 md:p-12">
-            <h2 className="text-2xl font-bold text-coffee mb-8 text-center border-b border-sand pb-4">
+          <Card className="p-8 md:p-12 dark:bg-coffee-light dark:border-coffee-dark">
+            <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-8 text-center border-b border-sand dark:border-coffee-dark pb-4 transition-colors duration-300">
               مراجعة الإجابات
             </h2>
 
@@ -243,24 +243,24 @@ function QuizResultsPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   key={result.question.id}
-                  className={`p-6 rounded-2xl border-2 ${
+                  className={`p-6 rounded-2xl border-2 transition-colors duration-300 ${
                     result.isCorrect
-                      ? 'bg-green-50/50 border-green-200'
-                      : 'bg-red-50/50 border-red-200'
+                      ? 'bg-green-50/50 dark:bg-green-900/10 border-green-200 dark:border-green-800'
+                      : 'bg-red-50/50 dark:bg-red-900/10 border-red-200 dark:border-red-800'
                   }`}
                 >
                   {/* Question Header */}
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm font-bold text-olive bg-white px-3 py-1 rounded-full border border-sand">
+                    <span className="text-sm font-bold text-olive dark:text-sand/80 bg-white dark:bg-coffee-dark px-3 py-1 rounded-full border border-sand dark:border-coffee-dark transition-colors duration-300">
                       السؤال {index + 1}
                     </span>
                     {result.isCorrect ? (
-                      <div className="flex items-center gap-1 text-green-600 font-bold">
+                      <div className="flex items-center gap-1 text-green-600 dark:text-green-400 font-bold">
                         <CheckCircle className="w-6 h-6" />
                         <span>صحيح</span>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-1 text-red-600 font-bold">
+                      <div className="flex items-center gap-1 text-red-600 dark:text-red-400 font-bold">
                         <XCircle className="w-6 h-6" />
                         <span>خاطئ</span>
                       </div>
@@ -268,15 +268,15 @@ function QuizResultsPage() {
                   </div>
 
                   {/* Question Text */}
-                  <p className="text-lg md:text-xl font-bold text-coffee mb-6 leading-relaxed">
+                  <p className="text-lg md:text-xl font-bold text-coffee dark:text-cream mb-6 leading-relaxed transition-colors duration-300">
                     {result.question.questionText}
                   </p>
 
                   {/* Answers Comparison */}
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-white p-4 rounded-xl border border-sand/50">
-                      <span className="text-xs font-bold text-olive uppercase tracking-wider mb-1 block">إجابتك</span>
-                      <p className={`font-bold text-lg ${result.isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+                    <div className="bg-white dark:bg-coffee-dark p-4 rounded-xl border border-sand/50 dark:border-coffee-light transition-colors duration-300">
+                      <span className="text-xs font-bold text-olive dark:text-sand/60 uppercase tracking-wider mb-1 block">إجابتك</span>
+                      <p className={`font-bold text-lg ${result.isCorrect ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
                          {Array.isArray(result.userAnswer)
                           ? result.userAnswer.join(', ')
                           : result.userAnswer || 'لم تجب'}
@@ -284,9 +284,9 @@ function QuizResultsPage() {
                     </div>
 
                     {!result.isCorrect && (
-                      <div className="bg-white p-4 rounded-xl border border-sand/50">
-                        <span className="text-xs font-bold text-olive uppercase tracking-wider mb-1 block">الإجابة الصحيحة</span>
-                        <p className="font-bold text-lg text-green-700">
+                      <div className="bg-white dark:bg-coffee-dark p-4 rounded-xl border border-sand/50 dark:border-coffee-light transition-colors duration-300">
+                        <span className="text-xs font-bold text-olive dark:text-sand/60 uppercase tracking-wider mb-1 block">الإجابة الصحيحة</span>
+                        <p className="font-bold text-lg text-green-700 dark:text-green-400">
                           {Array.isArray(result.correctAnswer)
                             ? result.correctAnswer.join(', ')
                             : result.correctAnswer}

@@ -10,16 +10,25 @@ import { apiService } from '../services/api';
 import { authService } from '../services/auth';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
+import { useTheme } from '../context/ThemeContext';
 
 // Modern Heritage Chart Palette
 const CHART_COLORS = ['#855D38', '#D4AF37', '#5A614E', '#1D2F1F', '#EFE5D5', '#3E2B1D'];
 
 function DashboardPage() {
+  const { theme } = useTheme();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
+  // Chart Colors based on theme
+  const axisColor = theme === 'dark' ? '#EFE5D5' : '#5A614E';
+  const gridColor = theme === 'dark' ? '#3E2B1D' : '#EFE5D5';
+  const tooltipBg = theme === 'dark' ? '#2C241E' : '#FFFFFF';
+  const tooltipBorder = theme === 'dark' ? '#855D38' : '#EFE5D5';
+  const tooltipText = theme === 'dark' ? '#EFE5D5' : '#855D38';
 
   useEffect(() => {
     checkAuthAndFetchStats();
@@ -71,13 +80,13 @@ function DashboardPage() {
 
   // Stat Card Component
   const StatItem = ({ label, value, icon: Icon, color }) => (
-    <Card className="p-6 flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+    <Card className="p-6 flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300 dark:bg-coffee-light dark:border-coffee-dark">
       <div className={`p-4 rounded-2xl ${color}`}>
         <Icon className="w-8 h-8 text-white" />
       </div>
       <div>
-        <p className="text-olive text-sm font-medium mb-1">{label}</p>
-        <h3 className="text-3xl font-bold text-coffee">{value}</h3>
+        <p className="text-olive dark:text-sand/70 text-sm font-medium mb-1 transition-colors duration-300">{label}</p>
+        <h3 className="text-3xl font-bold text-coffee dark:text-cream transition-colors duration-300">{value}</h3>
       </div>
     </Card>
   );
@@ -85,16 +94,16 @@ function DashboardPage() {
   // Loading State
   if (loading) {
     return (
-      <div className="min-h-screen bg-cream font-arabic">
+      <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic transition-colors duration-300">
         <Navbar />
         <div className="container mx-auto px-6 py-32">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-32 bg-white rounded-3xl animate-pulse border border-sand"></div>
+                <div key={i} className="h-32 bg-white dark:bg-coffee-light rounded-3xl animate-pulse border border-sand dark:border-coffee-dark transition-colors duration-300"></div>
               ))}
             </div>
-            <div className="h-96 bg-white rounded-3xl animate-pulse border border-sand"></div>
+            <div className="h-96 bg-white dark:bg-coffee-light rounded-3xl animate-pulse border border-sand dark:border-coffee-dark transition-colors duration-300"></div>
           </div>
         </div>
       </div>
@@ -104,13 +113,13 @@ function DashboardPage() {
   // Error State
   if (error) {
     return (
-      <div className="min-h-screen bg-cream font-arabic">
+      <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic transition-colors duration-300">
         <Navbar />
         <div className="container mx-auto px-6 py-32 text-center">
-          <Card className="max-w-lg mx-auto p-10">
+          <Card className="max-w-lg mx-auto p-10 dark:bg-coffee-light dark:border-coffee-dark">
             <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-coffee mb-2">حدث خطأ</h2>
-            <p className="text-olive mb-6">{error}</p>
+            <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-2">حدث خطأ</h2>
+            <p className="text-olive dark:text-sand/60 mb-6">{error}</p>
             <Button onClick={fetchStats}>حاول مرة أخرى</Button>
           </Card>
         </div>
@@ -121,15 +130,15 @@ function DashboardPage() {
   // Empty State
   if (stats && stats.overall.totalQuestionsAnswered === 0) {
     return (
-      <div className="min-h-screen bg-cream font-arabic">
+      <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic transition-colors duration-300">
         <Navbar />
         <div className="container mx-auto px-6 py-32 text-center">
-          <Card className="max-w-2xl mx-auto p-12">
-            <div className="w-24 h-24 bg-sand/30 rounded-full flex items-center justify-center mx-auto mb-6">
-              <BarChart2 className="w-12 h-12 text-clay" />
+          <Card className="max-w-2xl mx-auto p-12 dark:bg-coffee-light dark:border-coffee-dark">
+            <div className="w-24 h-24 bg-sand/30 dark:bg-coffee-dark rounded-full flex items-center justify-center mx-auto mb-6 transition-colors duration-300">
+              <BarChart2 className="w-12 h-12 text-clay dark:text-gold" />
             </div>
-            <h2 className="text-3xl font-bold text-coffee mb-4">لا توجد بيانات بعد</h2>
-            <p className="text-lg text-olive mb-8">
+            <h2 className="text-3xl font-bold text-coffee dark:text-cream mb-4">لا توجد بيانات بعد</h2>
+            <p className="text-lg text-olive dark:text-sand/70 mb-8">
               ابدأ رحلتك في استكشاف الثقافة السعودية. حل الاختبارات لرؤية إحصائياتك وتقدمك هنا.
             </p>
             <Link to="/quiz">
@@ -147,8 +156,21 @@ function DashboardPage() {
     score: sub.percentage,
   })).reverse();
 
+  const formatToRiyadhTime = (dateString) => {
+    if (!dateString) return '';
+    // Ensure string is treated as UTC if lacking offset
+    const date = new Date(dateString.endsWith('Z') ? dateString : `${dateString}Z`);
+    return date.toLocaleDateString('ar-SA', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'Asia/Riyadh'
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-cream font-arabic">
+    <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic transition-colors duration-300">
       <Navbar />
 
       <div className="container mx-auto px-4 py-32">
@@ -161,8 +183,8 @@ function DashboardPage() {
           {/* Header */}
           <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-4xl font-bold text-coffee mb-2">لوحة التحكم</h1>
-              <p className="text-olive text-lg">أهلاً بك، {user?.name || user?.email?.split('@')[0]}</p>
+              <h1 className="text-4xl font-bold text-coffee dark:text-cream mb-2 transition-colors duration-300">لوحة التحكم</h1>
+              <p className="text-olive dark:text-sand/70 text-lg transition-colors duration-300">أهلاً بك، {user?.name || user?.email?.split('@')[0]}</p>
             </div>
             <Link to="/quiz">
               <Button variant="outline" size="sm">اختبار جديد +</Button>
@@ -175,25 +197,25 @@ function DashboardPage() {
               label="عدد الاختبارات" 
               value={stats.overall.totalSubmissions} 
               icon={Activity} 
-              color="bg-clay" 
+              color="bg-clay dark:bg-gold text-white dark:text-coffee-dark" 
             />
             <StatItem 
               label="المعدل العام" 
               value={`${stats.overall.averageScore.toFixed(1)}%`} 
               icon={Trophy} 
-              color="bg-[#D4AF37]" 
+              color="bg-[#D4AF37] dark:bg-coffee-light border dark:border-gold/20 text-white dark:text-gold" 
             />
             <StatItem 
               label="إجابات صحيحة" 
               value={stats.overall.totalCorrect} 
               icon={CheckCircle2} 
-              color="bg-saudi-green" 
+              color="bg-saudi-green dark:bg-green-900/40 text-white dark:text-green-400" 
             />
             <StatItem 
               label="إجمالي الأسئلة" 
               value={stats.overall.totalQuestionsAnswered} 
               icon={HelpCircle} 
-              color="bg-olive" 
+              color="bg-olive dark:bg-coffee-dark border dark:border-sand/10 text-white dark:text-sand" 
             />
           </motion.div>
 
@@ -203,21 +225,22 @@ function DashboardPage() {
             {/* Score Trend */}
             {scoreTrendData.length > 0 && (
               <motion.div variants={itemVariants}>
-                <Card className="p-6 h-full">
-                  <div className="flex items-center gap-3 mb-6 border-b border-sand pb-4">
-                    <div className="p-2 bg-sand/30 rounded-lg">
-                      <TrendingUp className="w-5 h-5 text-clay" />
+                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                  <div className="flex items-center gap-3 mb-6 border-b border-sand dark:border-coffee-dark pb-4">
+                    <div className="p-2 bg-sand/30 dark:bg-coffee-dark rounded-lg">
+                      <TrendingUp className="w-5 h-5 text-clay dark:text-gold" />
                     </div>
-                    <h2 className="text-xl font-bold text-coffee">تطور مستواك</h2>
+                    <h2 className="text-xl font-bold text-coffee dark:text-cream">تطور مستواك</h2>
                   </div>
                   <ResponsiveContainer width="100%" height={300}>
                     <LineChart data={scoreTrendData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#EFE5D5" />
-                      <XAxis dataKey="date" stroke="#5A614E" fontSize={12} tickMargin={10} />
-                      <YAxis stroke="#5A614E" domain={[0, 100]} fontSize={12} />
+                      <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+                      <XAxis dataKey="date" stroke={axisColor} fontSize={12} tickMargin={10} />
+                      <YAxis stroke={axisColor} domain={[0, 100]} fontSize={12} />
                       <Tooltip 
-                        contentStyle={{ backgroundColor: '#FFF', borderRadius: '12px', border: '1px solid #EFE5D5', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
-                        itemStyle={{ color: '#855D38', fontWeight: 'bold' }}
+                        contentStyle={{ backgroundColor: tooltipBg, borderRadius: '12px', border: `1px solid ${tooltipBorder}`, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                        itemStyle={{ color: tooltipText, fontWeight: 'bold' }}
+                        labelStyle={{ color: tooltipText }}
                       />
                       <Line 
                         type="monotone" 
@@ -236,12 +259,12 @@ function DashboardPage() {
             {/* Region Performance */}
             {stats.byRegion.length > 0 && (
               <motion.div variants={itemVariants}>
-                <Card className="p-6 h-full">
-                  <div className="flex items-center gap-3 mb-6 border-b border-sand pb-4">
-                    <div className="p-2 bg-sand/30 rounded-lg">
-                      <BarChart2 className="w-5 h-5 text-clay" />
+                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                  <div className="flex items-center gap-3 mb-6 border-b border-sand dark:border-coffee-dark pb-4">
+                    <div className="p-2 bg-sand/30 dark:bg-coffee-dark rounded-lg">
+                      <BarChart2 className="w-5 h-5 text-clay dark:text-gold" />
                     </div>
-                    <h2 className="text-xl font-bold text-coffee">الأداء حسب المنطقة</h2>
+                    <h2 className="text-xl font-bold text-coffee dark:text-cream">الأداء حسب المنطقة</h2>
                   </div>
                   <ResponsiveContainer width="100%" height={300}>
                     <PieChart>
@@ -263,13 +286,14 @@ function DashboardPage() {
                         verticalAlign="bottom" 
                         iconType="circle"
                         formatter={(value, entry) => (
-                          <span className="text-coffee text-sm font-medium ml-2">
+                          <span className="text-coffee dark:text-sand text-sm font-medium ml-2">
                             {value} ({entry.payload.accuracy.toFixed(0)}%)
                           </span>
                         )}
                       />
                       <Tooltip 
-                        contentStyle={{ backgroundColor: '#FFF', borderRadius: '12px', border: '1px solid #EFE5D5' }}
+                        contentStyle={{ backgroundColor: tooltipBg, borderRadius: '12px', border: `1px solid ${tooltipBorder}` }}
+                        itemStyle={{ color: tooltipText, fontWeight: 'bold' }}
                       />
                     </PieChart>
                   </ResponsiveContainer>
@@ -280,21 +304,22 @@ function DashboardPage() {
             {/* Question Type Performance */}
             {stats.byQuestionType && stats.byQuestionType.length > 0 && (
               <motion.div variants={itemVariants}>
-                <Card className="p-6 h-full">
-                  <div className="flex items-center gap-3 mb-6 border-b border-sand pb-4">
-                    <div className="p-2 bg-sand/30 rounded-lg">
-                      <CheckSquare className="w-5 h-5 text-clay" />
+                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                  <div className="flex items-center gap-3 mb-6 border-b border-sand dark:border-coffee-dark pb-4">
+                    <div className="p-2 bg-sand/30 dark:bg-coffee-dark rounded-lg">
+                      <CheckSquare className="w-5 h-5 text-clay dark:text-gold" />
                     </div>
-                    <h2 className="text-xl font-bold text-coffee">الأداء حسب نوع السؤال</h2>
+                    <h2 className="text-xl font-bold text-coffee dark:text-cream">الأداء حسب نوع السؤال</h2>
                   </div>
                   <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={stats.byQuestionType}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#EFE5D5" />
-                      <XAxis dataKey="type" stroke="#5A614E" fontSize={12} tickMargin={10} />
-                      <YAxis stroke="#5A614E" domain={[0, 100]} fontSize={12} />
+                      <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+                      <XAxis dataKey="type" stroke={axisColor} fontSize={12} tickMargin={10} />
+                      <YAxis stroke={axisColor} domain={[0, 100]} fontSize={12} />
                       <Tooltip 
-                        contentStyle={{ backgroundColor: '#FFF', borderRadius: '12px', border: '1px solid #EFE5D5' }}
-                        itemStyle={{ color: '#855D38', fontWeight: 'bold' }}
+                        contentStyle={{ backgroundColor: tooltipBg, borderRadius: '12px', border: `1px solid ${tooltipBorder}` }}
+                        itemStyle={{ color: tooltipText, fontWeight: 'bold' }}
+                        cursor={{fill: theme === 'dark' ? '#2C241E' : '#f3f4f6'}}
                       />
                       <Bar dataKey="accuracy" fill="#855D38" radius={[8, 8, 0, 0]} name="الدقة %" />
                     </BarChart>
@@ -306,21 +331,22 @@ function DashboardPage() {
             {/* Language Performance */}
             {stats.byLanguage && stats.byLanguage.length > 0 && (
               <motion.div variants={itemVariants}>
-                <Card className="p-6 h-full">
-                  <div className="flex items-center gap-3 mb-6 border-b border-sand pb-4">
-                    <div className="p-2 bg-sand/30 rounded-lg">
-                      <Globe className="w-5 h-5 text-clay" />
+                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                  <div className="flex items-center gap-3 mb-6 border-b border-sand dark:border-coffee-dark pb-4">
+                    <div className="p-2 bg-sand/30 dark:bg-coffee-dark rounded-lg">
+                      <Globe className="w-5 h-5 text-clay dark:text-gold" />
                     </div>
-                    <h2 className="text-xl font-bold text-coffee">الأداء حسب اللغة</h2>
+                    <h2 className="text-xl font-bold text-coffee dark:text-cream">الأداء حسب اللغة</h2>
                   </div>
                   <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={stats.byLanguage}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#EFE5D5" />
-                      <XAxis dataKey="language" stroke="#5A614E" fontSize={12} tickMargin={10} />
-                      <YAxis stroke="#5A614E" domain={[0, 100]} fontSize={12} />
+                      <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+                      <XAxis dataKey="language" stroke={axisColor} fontSize={12} tickMargin={10} />
+                      <YAxis stroke={axisColor} domain={[0, 100]} fontSize={12} />
                       <Tooltip 
-                        contentStyle={{ backgroundColor: '#FFF', borderRadius: '12px', border: '1px solid #EFE5D5' }}
-                        itemStyle={{ color: '#1D2F1F', fontWeight: 'bold' }}
+                        contentStyle={{ backgroundColor: tooltipBg, borderRadius: '12px', border: `1px solid ${tooltipBorder}` }}
+                        itemStyle={{ color: tooltipText, fontWeight: 'bold' }}
+                        cursor={{fill: theme === 'dark' ? '#2C241E' : '#f3f4f6'}}
                       />
                       <Bar dataKey="accuracy" fill="#1D2F1F" radius={[8, 8, 0, 0]} name="الدقة %" />
                     </BarChart>
@@ -334,18 +360,18 @@ function DashboardPage() {
             {/* Strengths & Weaknesses */}
             {(stats.strengths.length > 0 || stats.weaknesses.length > 0) && (
               <motion.div variants={itemVariants} className="lg:col-span-1">
-                <Card className="p-6 h-full">
-                  <h2 className="text-xl font-bold text-coffee mb-6 border-b border-sand pb-4">تحليل الأداء</h2>
+                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                  <h2 className="text-xl font-bold text-coffee dark:text-cream mb-6 border-b border-sand dark:border-coffee-dark pb-4">تحليل الأداء</h2>
                   
                   <div className="space-y-6">
                     {stats.strengths.length > 0 && (
                       <div>
-                        <h3 className="text-sm font-bold text-saudi-green mb-3 flex items-center gap-2">
+                        <h3 className="text-sm font-bold text-saudi-green dark:text-green-400 mb-3 flex items-center gap-2">
                           <CheckCircle2 className="w-4 h-4" /> نقاط القوة
                         </h3>
                         <div className="flex flex-wrap gap-2">
                           {stats.strengths.map((s, i) => (
-                            <span key={i} className="px-3 py-1 bg-green-50 text-green-700 text-sm rounded-lg font-medium border border-green-100">
+                            <span key={i} className="px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-sm rounded-lg font-medium border border-green-100 dark:border-green-800">
                               {s}
                             </span>
                           ))}
@@ -355,12 +381,12 @@ function DashboardPage() {
 
                     {stats.weaknesses.length > 0 && (
                       <div>
-                        <h3 className="text-sm font-bold text-amber-600 mb-3 flex items-center gap-2">
+                        <h3 className="text-sm font-bold text-amber-600 dark:text-amber-400 mb-3 flex items-center gap-2">
                           <AlertTriangle className="w-4 h-4" /> يحتاج لتحسين
                         </h3>
                         <div className="flex flex-wrap gap-2">
                           {stats.weaknesses.map((w, i) => (
-                            <span key={i} className="px-3 py-1 bg-amber-50 text-amber-700 text-sm rounded-lg font-medium border border-amber-100">
+                            <span key={i} className="px-3 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 text-sm rounded-lg font-medium border border-amber-100 dark:border-amber-800">
                               {w}
                             </span>
                           ))}
@@ -375,30 +401,30 @@ function DashboardPage() {
             {/* Recent Activity List */}
             {stats.recentSubmissions.length > 0 && (
               <motion.div variants={itemVariants} className="lg:col-span-2">
-                <Card className="p-6 h-full">
-                  <h2 className="text-xl font-bold text-coffee mb-6 border-b border-sand pb-4">النشاط الأخير</h2>
+                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                  <h2 className="text-xl font-bold text-coffee dark:text-cream mb-6 border-b border-sand dark:border-coffee-dark pb-4">النشاط الأخير</h2>
                   <div className="space-y-3">
                     {stats.recentSubmissions.slice(0, 5).map((sub) => (
                       <div 
                         key={sub.id} 
-                        className="flex items-center justify-between p-4 rounded-xl bg-sand/20 hover:bg-sand/40 transition-colors border border-sand/50"
+                        className="flex items-center justify-between p-4 rounded-xl bg-sand/20 dark:bg-coffee-dark hover:bg-sand/40 dark:hover:bg-coffee-dark/70 transition-colors border border-sand/50 dark:border-coffee-dark"
                       >
                         <div className="flex items-center gap-4">
-                          <div className={`p-3 rounded-xl ${sub.percentage >= 80 ? 'bg-green-100 text-green-700' : sub.percentage >= 50 ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
+                          <div className={`p-3 rounded-xl ${sub.percentage >= 80 ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400' : sub.percentage >= 50 ? 'bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400'}`}>
                             <Trophy className="w-5 h-5" />
                           </div>
                           <div>
-                            <p className="font-bold text-coffee text-lg">
-                              {sub.score} <span className="text-olive/60 text-sm">/ {sub.totalQuestions}</span>
+                            <p className="font-bold text-coffee dark:text-sand text-lg">
+                              {sub.score} <span className="text-olive/60 dark:text-sand/40 text-sm">/ {sub.totalQuestions}</span>
                             </p>
-                            <div className="flex items-center gap-1 text-xs text-olive mt-1">
+                            <div className="flex items-center gap-1 text-xs text-olive dark:text-sand/60 mt-1">
                               <Calendar className="w-3 h-3" />
-                              {new Date(sub.submittedAt).toLocaleDateString('ar-SA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                              {formatToRiyadhTime(sub.submittedAt)}
                             </div>
                           </div>
                         </div>
                         <div className="text-left">
-                          <span className={`text-lg font-bold ${sub.percentage >= 80 ? 'text-green-600' : sub.percentage >= 50 ? 'text-amber-600' : 'text-red-600'}`}>
+                          <span className={`text-lg font-bold ${sub.percentage >= 80 ? 'text-green-600 dark:text-green-400' : sub.percentage >= 50 ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>
                             {sub.percentage.toFixed(0)}%
                           </span>
                         </div>

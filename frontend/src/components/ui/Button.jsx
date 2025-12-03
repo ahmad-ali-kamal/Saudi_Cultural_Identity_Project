@@ -10,8 +10,8 @@ const Button = forwardRef(({ className, variant = 'primary', size = 'md', isLoad
   const variants = {
     primary: 'bg-clay text-white hover:bg-saudi-green hover:shadow-lg shadow-md border-transparent',
     secondary: 'bg-saudi-green text-white hover:bg-clay hover:shadow-lg shadow-md border-transparent',
-    outline: 'bg-transparent border-2 border-clay text-clay hover:bg-clay hover:text-white',
-    ghost: 'bg-transparent text-coffee hover:bg-sand/30',
+    outline: 'bg-transparent border-2 border-clay text-clay hover:bg-clay hover:text-white dark:border-gold dark:text-gold dark:hover:bg-gold dark:hover:text-coffee-dark',
+    ghost: 'bg-transparent text-coffee dark:text-sand hover:bg-sand/30 dark:hover:bg-coffee-light',
     danger: 'bg-red-50 text-red-600 border-2 border-red-100 hover:bg-red-600 hover:text-white',
   };
 

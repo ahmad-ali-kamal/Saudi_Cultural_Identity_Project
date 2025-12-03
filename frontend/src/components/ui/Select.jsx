@@ -11,7 +11,7 @@ const Select = forwardRef(({ className, label, error, options = [], ...props }, 
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-coffee font-semibold mb-2 text-sm md:text-base">
+        <label className="block text-coffee dark:text-sand font-semibold mb-2 text-sm md:text-base transition-colors duration-300">
           {label}
         </label>
       )}
@@ -19,19 +19,19 @@ const Select = forwardRef(({ className, label, error, options = [], ...props }, 
         <select
           ref={ref}
           className={cn(
-            'w-full px-4 py-3 pr-10 border-2 border-sand rounded-xl appearance-none focus:border-clay focus:ring-2 focus:ring-clay/20 focus:outline-none transition-all duration-300 bg-white text-coffee cursor-pointer',
+            'w-full px-4 py-3 pr-10 border-2 border-sand dark:border-coffee-dark rounded-xl appearance-none focus:border-clay dark:focus:border-gold focus:ring-2 focus:ring-clay/20 dark:focus:ring-gold/20 focus:outline-none transition-all duration-300 bg-white dark:bg-coffee-light text-coffee dark:text-cream cursor-pointer',
             error && 'border-red-400 focus:border-red-500 focus:ring-red-200',
             className
           )}
           {...props}
         >
           {options.map((opt) => (
-            <option key={opt.value} value={opt.value}>
+            <option key={opt.value} value={opt.value} className="bg-white dark:bg-coffee-light">
               {opt.label}
             </option>
           ))}
         </select>
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-olive">
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-olive dark:text-sand/60 transition-colors duration-300">
           <ChevronDown className="w-5 h-5" />
         </div>
       </div>

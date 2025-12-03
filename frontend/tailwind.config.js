@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,jsx}",
@@ -15,6 +16,10 @@ export default {
         olive: '#5A614E',      // Muted Text / Secondary Text
         gold: '#D4AF37',       // Premium Accents
         'saudi-green': '#1D2F1F', // Deep Accents
+        
+        // Dark Mode Heritage Palette
+        'coffee-dark': '#231B15',    // Main Background (Dark Mode)
+        'coffee-light': '#2C241E',   // Cards/Surfaces (Dark Mode)
 
         // Retaining legacy names but mapping them to new palette where appropriate to prevent immediate breakage
         // Ideally these should be replaced in the code

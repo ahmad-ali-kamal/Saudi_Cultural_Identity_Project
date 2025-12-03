@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { authService } from '../services/auth';
+import { Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 function Navbar() {
   // ============ STATE ============
+  const { theme, toggleTheme } = useTheme();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -46,35 +49,43 @@ function Navbar() {
 
   // ============ RENDER ============
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-sand shadow-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-cream/95 dark:bg-coffee-dark/95 backdrop-blur-sm border-b border-sand dark:border-coffee-light shadow-sm transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6 py-4">
         <div className="flex items-center justify-between">
 
           {/* Logo/Brand */}
-          <Link to="/" className="text-clay text-xl md:text-2xl lg:text-3xl font-extrabold hover:text-saudi-green transition-colors duration-300 flex-shrink-0 tracking-tight">
+          <Link to="/" className="text-clay dark:text-cream text-xl md:text-2xl lg:text-3xl font-extrabold hover:text-saudi-green dark:hover:text-gold transition-colors duration-300 flex-shrink-0 tracking-tight">
             هوية المملكة الثقافية
           </Link>
 
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-8">
-            <Link to="/learn" className="text-coffee text-lg font-medium hover:text-clay transition-all duration-300 hover:-translate-y-0.5">
+            <Link to="/learn" className="text-coffee dark:text-sand text-lg font-medium hover:text-clay dark:hover:text-gold transition-all duration-300 hover:-translate-y-0.5">
               تعلم
             </Link>
-            <Link to="/quiz" className="text-coffee text-lg font-medium hover:text-clay transition-all duration-300 hover:-translate-y-0.5">
+            <Link to="/quiz" className="text-coffee dark:text-sand text-lg font-medium hover:text-clay dark:hover:text-gold transition-all duration-300 hover:-translate-y-0.5">
               اختبر نفسك
             </Link>
-            <Link to="/about" className="text-coffee text-lg font-medium hover:text-clay transition-all duration-300 hover:-translate-y-0.5">
+            <Link to="/about" className="text-coffee dark:text-sand text-lg font-medium hover:text-clay dark:hover:text-gold transition-all duration-300 hover:-translate-y-0.5">
               فريق التطوير
             </Link>
           </div>
 
           {/* Desktop Auth Section */}
-          <div className="hidden lg:flex items-center">
+          <div className="hidden lg:flex items-center gap-4">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full hover:bg-sand/50 text-coffee dark:text-cream transition-colors duration-300"
+              aria-label="تبديل المظهر"
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+
             {loading ? (
               <div className="text-olive text-sm">جاري التحميل...</div>
             ) : isAuthenticated ? (
               <div className="flex items-center gap-4">
-                <span className="text-coffee text-sm font-medium">
+                <span className="text-coffee dark:text-cream text-sm font-medium">
                   مرحباً، {user?.name || user?.email?.split('@')[0] || 'مستخدم'}
                 </span>
                 <Link
@@ -100,63 +111,74 @@ function Navbar() {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden text-coffee p-2 hover:bg-sand/50 rounded-lg transition-colors duration-300"
-            aria-label="قائمة"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          {/* Mobile Controls */}
+          <div className="lg:hidden flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full hover:bg-sand/50 text-coffee dark:text-cream transition-colors duration-300"
+              aria-label="تبديل المظهر"
             >
-              {mobileMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" /> // Close icon (X)
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />  // Hamburger icon (three lines)
-              )}
-            </svg>
-          </button>
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+            
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-coffee p-2 hover:bg-sand/50 rounded-lg transition-colors duration-300"
+              aria-label="قائمة"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {mobileMenuOpen ? (
+                  <path d="M6 18L18 6M6 6l12 12" /> // Close icon (X)
+                ) : (
+                  <path d="M4 6h16M4 12h16M4 18h16" />  // Hamburger icon (three lines)
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 border-t border-sand">
+          <div className="lg:hidden mt-4 pb-4 border-t border-sand dark:border-coffee-light">
             <div className="flex flex-col gap-2 mt-4">
               <Link
                 to="/learn"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-coffee text-base font-semibold hover:bg-sand/30 px-4 py-3 rounded-lg transition-colors duration-300"
+                className="text-coffee dark:text-sand text-base font-semibold hover:bg-sand/30 dark:hover:bg-coffee-light px-4 py-3 rounded-lg transition-colors duration-300"
               >
                 تعلم
               </Link>
               <Link
                 to="/quiz"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-coffee text-base font-semibold hover:bg-sand/30 px-4 py-3 rounded-lg transition-colors duration-300"
+                className="text-coffee dark:text-sand text-base font-semibold hover:bg-sand/30 dark:hover:bg-coffee-light px-4 py-3 rounded-lg transition-colors duration-300"
               >
                 اختبر نفسك
               </Link>
               <Link
                 to="/about"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-coffee text-base font-semibold hover:bg-sand/30 px-4 py-3 rounded-lg transition-colors duration-300"
+                className="text-coffee dark:text-sand text-base font-semibold hover:bg-sand/30 dark:hover:bg-coffee-light px-4 py-3 rounded-lg transition-colors duration-300"
               >
                 فريق التطوير
               </Link>
 
               {/* Mobile Auth Section */}
-              <div className="border-t border-sand pt-4 mt-2 px-2">
+              <div className="border-t border-sand dark:border-coffee-light pt-4 mt-2 px-2">
                 {loading ? (
-                  <div className="text-olive text-sm">جاري التحميل...</div>
+                  <div className="text-olive dark:text-olive/50 text-sm">جاري التحميل...</div>
                 ) : isAuthenticated ? (
                   <div className="flex flex-col gap-3">
-                    <span className="text-coffee text-sm font-medium px-2">
+                    <span className="text-coffee dark:text-cream text-sm font-medium px-2">
                       مرحباً، {user?.name || user?.email?.split('@')[0] || 'مستخدم'}
                     </span>
                     <Link

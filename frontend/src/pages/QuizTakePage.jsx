@@ -125,10 +125,10 @@ function QuizTakePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-cream font-arabic flex items-center justify-center">
+      <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic flex items-center justify-center transition-colors duration-300">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-clay border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-coffee font-bold text-lg">جاري تحضير الاختبار...</p>
+          <div className="w-16 h-16 border-4 border-clay dark:border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-coffee dark:text-sand font-bold text-lg">جاري تحضير الاختبار...</p>
         </div>
       </div>
     );
@@ -136,15 +136,15 @@ function QuizTakePage() {
 
   if (error || questions.length === 0) {
     return (
-      <div className="min-h-screen bg-cream font-arabic">
+      <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic transition-colors duration-300">
         <Navbar />
         <div className="container mx-auto px-4 py-32 text-center">
-          <Card className="max-w-lg mx-auto p-10">
+          <Card className="max-w-lg mx-auto p-10 dark:bg-coffee-light dark:border-coffee-dark">
             <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-coffee mb-2">
+            <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-2">
               {error ? 'حدث خطأ' : 'لا توجد أسئلة متاحة'}
             </h2>
-            <p className="text-olive mb-6">
+            <p className="text-olive dark:text-sand/70 mb-6">
               {error || 'لم نجد أسئلة تطابق اختيارك. جرب تغيير الفئة أو المنطقة.'}
             </p>
             <div className="flex gap-4 justify-center">
@@ -158,16 +158,16 @@ function QuizTakePage() {
   }
 
   return (
-    <div className="min-h-screen bg-cream font-arabic overflow-hidden flex flex-col">
+    <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic overflow-hidden flex flex-col transition-colors duration-300">
       <Navbar />
 
       {/* Progress Bar (Fixed Top) */}
-      <div className="fixed top-[72px] left-0 right-0 z-40 bg-white border-b border-sand">
+      <div className="fixed top-[72px] left-0 right-0 z-40 bg-white dark:bg-coffee-light border-b border-sand dark:border-coffee-dark transition-colors duration-300">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <span className="text-sm font-bold text-coffee">
-             سؤال <span className="text-clay text-lg">{currentQuestionIndex + 1}</span> من {questions.length}
+          <span className="text-sm font-bold text-coffee dark:text-cream">
+             سؤال <span className="text-clay dark:text-gold text-lg">{currentQuestionIndex + 1}</span> من {questions.length}
           </span>
-          <div className="flex-1 mx-6 h-2 bg-sand rounded-full overflow-hidden">
+          <div className="flex-1 mx-6 h-2 bg-sand dark:bg-coffee-dark rounded-full overflow-hidden transition-colors duration-300">
             <motion.div 
               className="h-full bg-saudi-green"
               initial={{ width: 0 }}
@@ -175,7 +175,7 @@ function QuizTakePage() {
               transition={{ duration: 0.5 }}
             />
           </div>
-          <span className="text-sm font-bold text-olive">{Math.round(progress)}%</span>
+          <span className="text-sm font-bold text-olive dark:text-sand">{Math.round(progress)}%</span>
         </div>
       </div>
 
@@ -192,7 +192,7 @@ function QuizTakePage() {
             transition={{ duration: 0.3 }}
             className="w-full"
           >
-            <Card className="p-6 md:p-10 shadow-xl border-sand min-h-[400px] flex flex-col">
+            <Card className="p-6 md:p-10 shadow-xl border-sand dark:border-coffee-dark min-h-[400px] flex flex-col transition-colors duration-300">
               <QuestionRenderer
                 question={currentQuestion}
                 selectedAnswer={currentAnswer}
@@ -204,13 +204,13 @@ function QuizTakePage() {
       </div>
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-sand p-4 z-40">
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-coffee-light border-t border-sand dark:border-coffee-dark p-4 z-40 transition-colors duration-300">
         <div className="container mx-auto max-w-4xl flex justify-between items-center gap-4">
           <Button
             variant="ghost"
             onClick={handlePrevious}
             disabled={isFirstQuestion}
-            className="text-olive hover:text-coffee"
+            className="text-olive dark:text-sand hover:text-coffee dark:hover:text-cream"
           >
             <ArrowRight className="w-5 h-5 ml-2 rtl:rotate-180" /> السابق
           </Button>

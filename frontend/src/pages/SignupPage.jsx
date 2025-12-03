@@ -112,12 +112,12 @@ function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-cream font-arabic relative overflow-hidden">
+    <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic relative overflow-hidden transition-colors duration-300">
       <Navbar />
 
       {/* Decorative Background Elements */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-sand/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-saudi-green/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 -z-10" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-sand/30 dark:bg-coffee-light/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10 transition-colors duration-300" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-saudi-green/5 dark:bg-saudi-green/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 -z-10 transition-colors duration-300" />
 
       <div className="container mx-auto px-4 py-24 md:py-32 min-h-[calc(100vh-80px)] flex items-center justify-center">
         <motion.div
@@ -126,13 +126,13 @@ function SignupPage() {
           transition={{ duration: 0.6 }}
           className="w-full max-w-md"
         >
-          <Card className="p-8 md:p-10 bg-white/80 backdrop-blur-sm border-sand/50">
+          <Card className="p-8 md:p-10 bg-white/80 dark:bg-coffee-light/80 backdrop-blur-sm border-sand/50 dark:border-coffee-dark transition-colors duration-300">
             {/* Header */}
             <div className="text-center mb-8">
-              <h1 className="text-3xl md:text-4xl font-bold text-coffee mb-3">
+              <h1 className="text-3xl md:text-4xl font-bold text-coffee dark:text-cream mb-3 transition-colors duration-300">
                 {needsConfirmation ? 'تأكيد الحساب' : 'إنشاء حساب جديد'}
               </h1>
-              <p className="text-olive text-lg">
+              <p className="text-olive dark:text-sand/60 text-lg transition-colors duration-300">
                 {needsConfirmation 
                   ? 'أدخل رمز التحقق المرسل إلى بريدك الإلكتروني' 
                   : 'انضم إلينا لحفظ نتائجك ومتابعة تقدمك'}
@@ -144,7 +144,7 @@ function SignupPage() {
               <motion.div 
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
-                className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 text-red-700"
+                className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-center gap-3 text-red-700 dark:text-red-400 transition-colors duration-300"
               >
                 <AlertCircle className="w-5 h-5 flex-shrink-0" />
                 <p className="text-sm font-medium">{serverError}</p>
@@ -155,7 +155,7 @@ function SignupPage() {
               <motion.div 
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
-                className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3 text-green-700"
+                className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-center gap-3 text-green-700 dark:text-green-400 transition-colors duration-300"
               >
                 <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
                 <p className="text-sm font-medium">{successMessage}</p>
@@ -192,7 +192,7 @@ function SignupPage() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="text-olive/60 hover:text-clay transition-colors flex items-center justify-center"
+                      className="text-olive/60 dark:text-sand/60 hover:text-clay dark:hover:text-gold transition-colors flex items-center justify-center"
                     >
                       {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
@@ -210,7 +210,7 @@ function SignupPage() {
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="text-olive/60 hover:text-clay transition-colors flex items-center justify-center"
+                      className="text-olive/60 dark:text-sand/60 hover:text-clay dark:hover:text-gold transition-colors flex items-center justify-center"
                     >
                       {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
@@ -264,20 +264,20 @@ function SignupPage() {
             {/* Footer Links */}
             {!needsConfirmation && (
               <div className="mt-8 text-center space-y-4">
-                <p className="text-coffee">
+                <p className="text-coffee dark:text-sand transition-colors duration-300">
                   لديك حساب بالفعل؟{' '}
                   <Link
                     to="/login"
-                    className="text-clay hover:text-saudi-green font-bold transition-colors"
+                    className="text-clay dark:text-gold hover:text-saudi-green dark:hover:text-cream font-bold transition-colors duration-300"
                   >
                     سجل دخول
                   </Link>
                 </p>
                 
-                <div className="pt-4 border-t border-sand/50">
+                <div className="pt-4 border-t border-sand/50 dark:border-coffee-dark transition-colors duration-300">
                   <Link
                     to="/"
-                    className="inline-flex items-center gap-2 text-olive hover:text-clay text-sm font-medium transition-colors"
+                    className="inline-flex items-center gap-2 text-olive dark:text-sand/60 hover:text-clay dark:hover:text-gold text-sm font-medium transition-colors duration-300"
                   >
                     <ArrowRight className="w-4 h-4" />
                     العودة للصفحة الرئيسية

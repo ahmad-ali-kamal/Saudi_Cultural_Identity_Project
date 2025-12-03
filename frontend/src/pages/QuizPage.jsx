@@ -49,7 +49,7 @@ function QuizPage() {
   const isValid = config.size >= 5 && config.size <= 30;
 
   return (
-    <div className="min-h-screen bg-cream font-arabic">
+    <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic transition-colors duration-300">
       <Navbar />
 
       <div className="container mx-auto px-4 py-32">
@@ -64,26 +64,26 @@ function QuizPage() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.1 }}
-              className="inline-flex items-center justify-center p-4 bg-white rounded-full shadow-md mb-6"
+              className="inline-flex items-center justify-center p-4 bg-white dark:bg-coffee-light rounded-full shadow-md mb-6 transition-colors duration-300"
             >
-              <Settings className="w-10 h-10 text-clay" />
+              <Settings className="w-10 h-10 text-clay dark:text-gold" />
             </motion.div>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-coffee mb-4">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-coffee dark:text-cream mb-4 transition-colors duration-300">
               إعدادات الاختبار
             </h1>
-            <p className="text-xl text-olive max-w-2xl mx-auto">
+            <p className="text-xl text-olive dark:text-sand/60 max-w-2xl mx-auto transition-colors duration-300">
               قم بتخصيص تجربتك. اختر المنطقة، نوع الأسئلة، وعددها لتبدأ التحدي.
             </p>
           </div>
 
           {/* Configuration Card */}
-          <Card className="p-8 md:p-10 border-sand shadow-2xl bg-white/80 backdrop-blur-sm">
+          <Card className="p-8 md:p-10 border-sand dark:border-coffee-dark shadow-2xl bg-white/80 dark:bg-coffee-light/80 backdrop-blur-sm transition-colors duration-300">
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
               {/* Language Selection */}
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-coffee font-bold">
-                  <Languages className="w-5 h-5 text-clay" />
+                <div className="flex items-center gap-2 text-coffee dark:text-sand font-bold transition-colors duration-300">
+                  <Languages className="w-5 h-5 text-clay dark:text-gold" />
                   <label>اللغة</label>
                 </div>
                 <Select
@@ -95,8 +95,8 @@ function QuizPage() {
 
               {/* Region Selection */}
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-coffee font-bold">
-                  <MapPin className="w-5 h-5 text-clay" />
+                <div className="flex items-center gap-2 text-coffee dark:text-sand font-bold transition-colors duration-300">
+                  <MapPin className="w-5 h-5 text-clay dark:text-gold" />
                   <label>المنطقة</label>
                 </div>
                 <Select
@@ -109,8 +109,8 @@ function QuizPage() {
 
             {/* Question Type */}
             <div className="mb-10 space-y-4">
-              <div className="flex items-center gap-2 text-coffee font-bold">
-                <ListFilter className="w-5 h-5 text-clay" />
+              <div className="flex items-center gap-2 text-coffee dark:text-sand font-bold transition-colors duration-300">
+                <ListFilter className="w-5 h-5 text-clay dark:text-gold" />
                 <label>نوع الأسئلة</label>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -120,8 +120,8 @@ function QuizPage() {
                     onClick={() => setConfig({ ...config, type: type.value })}
                     className={`px-4 py-3 rounded-xl text-sm font-bold transition-all duration-200 border-2 ${
                       config.type === type.value
-                        ? 'bg-clay text-white border-clay shadow-md scale-105'
-                        : 'bg-white text-olive border-sand hover:border-clay/50 hover:bg-sand/20'
+                        ? 'bg-clay text-white border-clay shadow-md scale-105 dark:bg-gold dark:text-coffee-dark dark:border-gold'
+                        : 'bg-white text-olive border-sand hover:border-clay/50 hover:bg-sand/20 dark:bg-coffee-light dark:text-sand/60 dark:border-coffee-dark dark:hover:border-gold/50 dark:hover:bg-coffee-dark/50'
                     }`}
                   >
                     {type.label}
@@ -132,12 +132,12 @@ function QuizPage() {
 
             {/* Number of Questions Slider */}
             <div className="mb-12 space-y-6">
-              <div className="flex justify-between items-center text-coffee font-bold">
+              <div className="flex justify-between items-center text-coffee dark:text-sand font-bold transition-colors duration-300">
                 <div className="flex items-center gap-2">
-                  <ListFilter className="w-5 h-5 text-clay" />
+                  <ListFilter className="w-5 h-5 text-clay dark:text-gold" />
                   <label>عدد الأسئلة</label>
                 </div>
-                <span className="px-4 py-1 bg-sand/50 rounded-lg text-clay text-xl">
+                <span className="px-4 py-1 bg-sand/50 dark:bg-coffee-dark rounded-lg text-clay dark:text-gold text-xl transition-colors duration-300">
                   {config.size}
                 </span>
               </div>
@@ -150,9 +150,9 @@ function QuizPage() {
                   step="1"
                   value={config.size}
                   onChange={(e) => setConfig({ ...config, size: parseInt(e.target.value) })}
-                  className="w-full h-3 bg-sand rounded-lg appearance-none cursor-pointer accent-clay hover:accent-saudi-green transition-all"
+                  className="w-full h-3 bg-sand dark:bg-coffee-dark rounded-lg appearance-none cursor-pointer accent-clay dark:accent-gold hover:accent-saudi-green dark:hover:accent-cream transition-all"
                 />
-                <div className="flex justify-between text-sm text-olive mt-3 font-medium">
+                <div className="flex justify-between text-sm text-olive dark:text-sand/50 mt-3 font-medium transition-colors duration-300">
                   <span>5 أسئلة</span>
                   <span>30 سؤال</span>
                 </div>
@@ -160,7 +160,7 @@ function QuizPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col md:flex-row gap-4 border-t border-sand/50 pt-8">
+            <div className="flex flex-col md:flex-row gap-4 border-t border-sand/50 dark:border-coffee-dark pt-8 transition-colors duration-300">
               <Button 
                 onClick={() => navigate('/')} 
                 variant="ghost" 

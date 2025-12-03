@@ -175,9 +175,9 @@ function LearnPage() {
     const textAlign = isEnglish ? 'text-left' : 'text-right';
 
     return (
-      <Card className="h-full flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+      <Card className="h-full flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 dark:bg-coffee-light dark:border-coffee-dark">
         {imageSrc && (
-          <div className="relative h-48 w-full overflow-hidden bg-sand/20 border-b border-sand/50">
+          <div className="relative h-48 w-full overflow-hidden bg-sand/20 dark:bg-coffee-dark border-b border-sand/50 dark:border-coffee-dark transition-colors duration-300">
             <img
               src={imageSrc}
               alt="Visual"
@@ -191,18 +191,18 @@ function LearnPage() {
           {/* Meta Tags */}
           <div className="flex flex-wrap gap-2 mb-4">
             {info.term && (
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-clay/10 text-clay border border-clay/20">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-clay/10 dark:bg-gold/10 text-clay dark:text-gold border border-clay/20 dark:border-gold/20 transition-colors duration-300">
                 مصطلح
               </span>
             )}
             {info.region && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-sand text-olive">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-sand dark:bg-coffee-dark text-olive dark:text-sand transition-colors duration-300">
                 <MapPin className="w-3 h-3" />
                 {info.region}
               </span>
             )}
             {info.category && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-sand text-olive">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-sand dark:bg-coffee-dark text-olive dark:text-sand transition-colors duration-300">
                 <Tag className="w-3 h-3" />
                 {info.category}
               </span>
@@ -213,11 +213,11 @@ function LearnPage() {
           <div className="flex-grow">
             {info.term && (
               <div className="mb-3">
-                <h3 className={`text-2xl font-bold text-coffee mb-1 ${textAlign}`} dir={textDir}>
+                <h3 className={`text-2xl font-bold text-coffee dark:text-cream mb-1 transition-colors duration-300 ${textAlign}`} dir={textDir}>
                   {info.term}
                 </h3>
                 {info.termMeaning && (
-                  <p className={`text-olive text-sm ${textAlign}`} dir={textDir}>
+                  <p className={`text-olive dark:text-sand/80 text-sm transition-colors duration-300 ${textAlign}`} dir={textDir}>
                     {info.termMeaning}
                   </p>
                 )}
@@ -225,20 +225,20 @@ function LearnPage() {
             )}
 
             {info.questionText && (
-              <h3 className={`text-xl font-bold text-coffee mb-3 ${textAlign}`} dir={textDir}>
+              <h3 className={`text-xl font-bold text-coffee dark:text-cream mb-3 transition-colors duration-300 ${textAlign}`} dir={textDir}>
                 {info.questionText}
               </h3>
             )}
 
             {info.answer && (
-              <div className={`text-olive/80 leading-relaxed ${textAlign}`} dir={textDir}>
+              <div className={`text-olive/80 dark:text-sand/70 leading-relaxed transition-colors duration-300 ${textAlign}`} dir={textDir}>
                 <p className={!isExpanded && hasLongAnswer ? 'line-clamp-4' : ''}>
                   {info.answer}
                 </p>
                 {hasLongAnswer && (
                   <button
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="text-clay hover:text-saudi-green text-sm font-bold mt-2 transition-colors"
+                    className="text-clay dark:text-gold hover:text-saudi-green dark:hover:text-cream text-sm font-bold mt-2 transition-colors duration-300"
                   >
                     {isExpanded ? (isEnglish ? 'Show Less' : 'عرض أقل') : (isEnglish ? 'Read More' : 'اقرأ المزيد')}
                   </button>
@@ -268,17 +268,17 @@ function LearnPage() {
   };
 
   return (
-    <div className="min-h-screen bg-cream font-arabic">
+    <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic transition-colors duration-300">
       <Navbar />
 
       {/* Header Section with Pattern */}
-      <div className="relative bg-white border-b border-sand pt-28 pb-12 overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('/images/Sadu_decoration.jpg')] bg-repeat-x bg-contain"></div>
+      <div className="relative bg-white dark:bg-coffee-light border-b border-sand dark:border-coffee-dark pt-28 pb-12 overflow-hidden transition-colors duration-300">
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none bg-[url('/images/Sadu_decoration.jpg')] bg-repeat-x bg-contain mix-blend-multiply dark:mix-blend-normal"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-extrabold text-coffee mb-4"
+            className="text-4xl md:text-5xl font-extrabold text-coffee dark:text-cream mb-4 transition-colors duration-300"
           >
             تعلم عن الثقافة السعودية
           </motion.h1>
@@ -286,7 +286,7 @@ function LearnPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-olive max-w-2xl mx-auto"
+            className="text-lg text-olive dark:text-sand/70 max-w-2xl mx-auto transition-colors duration-300"
           >
             اكتشف التراث الغني والعادات والتقاليد السعودية من خلال مكتبتنا المتنامية
           </motion.p>
@@ -296,9 +296,9 @@ function LearnPage() {
       <div className="container mx-auto px-4 py-12">
         
         {/* Filters & Search */}
-        <div className="mb-10 bg-white rounded-2xl p-6 shadow-sm border border-sand">
-          <div className="flex items-center gap-2 mb-6 text-coffee font-bold text-lg border-b border-sand pb-4">
-            <Filter className="w-5 h-5 text-clay" />
+        <div className="mb-10 bg-white dark:bg-coffee-light rounded-2xl p-6 shadow-sm border border-sand dark:border-coffee-dark transition-colors duration-300">
+          <div className="flex items-center gap-2 mb-6 text-coffee dark:text-cream font-bold text-lg border-b border-sand dark:border-coffee-dark pb-4">
+            <Filter className="w-5 h-5 text-clay dark:text-gold" />
             تصفية المحتوى
           </div>
           
@@ -326,9 +326,9 @@ function LearnPage() {
             />
           </div>
           
-          <div className="mt-4 flex justify-between items-center text-sm text-olive">
+          <div className="mt-4 flex justify-between items-center text-sm text-olive dark:text-sand/60">
              <span>عرض {infoItems.length} من أصل {totalElements} نتيجة</span>
-             {loading && <span className="flex items-center gap-2 text-clay"><RefreshCw className="w-4 h-4 animate-spin"/> جاري التحديث...</span>}
+             {loading && <span className="flex items-center gap-2 text-clay dark:text-gold"><RefreshCw className="w-4 h-4 animate-spin"/> جاري التحديث...</span>}
           </div>
         </div>
 
@@ -337,23 +337,23 @@ function LearnPage() {
           // Loading Skeleton Grid - Always show when loading to prevent flash
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: pageSize }).map((_, n) => (
-              <div key={n} className="h-80 bg-white rounded-[2rem] border border-sand animate-pulse flex flex-col p-6">
-                <div className="w-full h-48 bg-sand/30 rounded-xl mb-4"></div>
-                <div className="w-24 h-6 bg-sand/50 rounded-full mb-4"></div>
-                <div className="w-3/4 h-8 bg-sand/50 rounded-xl mb-4"></div>
+              <div key={n} className="h-80 bg-white dark:bg-coffee-light rounded-[2rem] border border-sand dark:border-coffee-dark animate-pulse flex flex-col p-6 transition-colors duration-300">
+                <div className="w-full h-48 bg-sand/30 dark:bg-coffee-dark/50 rounded-xl mb-4"></div>
+                <div className="w-24 h-6 bg-sand/50 dark:bg-coffee-dark/50 rounded-full mb-4"></div>
+                <div className="w-3/4 h-8 bg-sand/50 dark:bg-coffee-dark/50 rounded-xl mb-4"></div>
                 <div className="space-y-2 flex-grow">
-                  <div className="w-full h-4 bg-sand/30 rounded"></div>
-                  <div className="w-2/3 h-4 bg-sand/30 rounded"></div>
+                  <div className="w-full h-4 bg-sand/30 dark:bg-coffee-dark/50 rounded"></div>
+                  <div className="w-2/3 h-4 bg-sand/30 dark:bg-coffee-dark/50 rounded"></div>
                 </div>
               </div>
             ))}
           </div>
         ) : error ? (
           // Error State
-          <div className="text-center py-20 bg-white rounded-[2rem] border border-sand">
+          <div className="text-center py-20 bg-white dark:bg-coffee-light rounded-[2rem] border border-sand dark:border-coffee-dark transition-colors duration-300">
             <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-coffee mb-2">حدث خطأ في تحميل البيانات</h2>
-            <p className="text-olive mb-6">{error}</p>
+            <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-2">حدث خطأ في تحميل البيانات</h2>
+            <p className="text-olive dark:text-sand/60 mb-6">{error}</p>
             <Button onClick={handleRetry} variant="outline">
               <RefreshCw className="w-4 h-4 ml-2" />
               حاول مرة أخرى
@@ -361,12 +361,12 @@ function LearnPage() {
           </div>
         ) : infoItems.length === 0 ? (
           // Empty State
-          <div className="text-center py-20 bg-white rounded-[2rem] border border-sand">
-            <div className="w-20 h-20 bg-sand/30 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Search className="w-10 h-10 text-olive" />
+          <div className="text-center py-20 bg-white dark:bg-coffee-light rounded-[2rem] border border-sand dark:border-coffee-dark transition-colors duration-300">
+            <div className="w-20 h-20 bg-sand/30 dark:bg-coffee-dark rounded-full flex items-center justify-center mx-auto mb-6">
+              <Search className="w-10 h-10 text-olive dark:text-sand" />
             </div>
-            <h2 className="text-2xl font-bold text-coffee mb-2">لا توجد نتائج</h2>
-            <p className="text-olive max-w-md mx-auto">
+            <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-2">لا توجد نتائج</h2>
+            <p className="text-olive dark:text-sand/60 max-w-md mx-auto">
               لم نجد أي معلومات تطابق بحثك. جرب تغيير كلمات البحث أو الفلاتر.
             </p>
           </div>
@@ -389,26 +389,26 @@ function LearnPage() {
         {/* Pagination */}
         {!loading && totalPages > 1 && (
           <div className="mt-12 flex justify-center">
-            <div className="bg-white p-2 rounded-2xl border border-sand shadow-sm flex items-center gap-2">
+            <div className="bg-white dark:bg-coffee-light p-2 rounded-2xl border border-sand dark:border-coffee-dark shadow-sm flex items-center gap-2 transition-colors duration-300">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 0}
-                className="p-2 rounded-xl hover:bg-sand/50 text-coffee disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="p-2 rounded-xl hover:bg-sand/50 dark:hover:bg-coffee-dark text-coffee dark:text-sand disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronRight className="w-6 h-6" /> {/* RTL Flip */}
               </button>
 
               {getPageNumbers().map((pageNum, idx) => (
                 pageNum === '...' ? (
-                  <span key={`ellipsis-${idx}`} className="px-3 text-olive font-bold">...</span>
+                  <span key={`ellipsis-${idx}`} className="px-3 text-olive dark:text-sand/60 font-bold">...</span>
                 ) : (
                   <button
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
                     className={`w-10 h-10 rounded-xl font-bold flex items-center justify-center transition-all ${
                       currentPage === pageNum
-                        ? 'bg-clay text-white shadow-md'
-                        : 'text-coffee hover:bg-sand/50'
+                        ? 'bg-clay dark:bg-gold text-white dark:text-coffee-dark shadow-md'
+                        : 'text-coffee dark:text-sand hover:bg-sand/50 dark:hover:bg-coffee-dark'
                     }`}
                   >
                     {pageNum + 1}
@@ -419,7 +419,7 @@ function LearnPage() {
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage >= totalPages - 1}
-                className="p-2 rounded-xl hover:bg-sand/50 text-coffee disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="p-2 rounded-xl hover:bg-sand/50 dark:hover:bg-coffee-dark text-coffee dark:text-sand disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronLeft className="w-6 h-6" /> {/* RTL Flip */}
               </button>
