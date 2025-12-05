@@ -80,7 +80,7 @@ function DashboardPage() {
 
   // Stat Card Component
   const StatItem = ({ label, value, icon: Icon, color }) => (
-    <Card className="p-6 flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300 dark:bg-coffee-light dark:border-coffee-dark">
+    <Card className="p-6 flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300 dark:bg-clay/55 dark:border-coffee-dark">
       <div className={`p-4 rounded-2xl ${color}`}>
         <Icon className="w-8 h-8 text-white" />
       </div>
@@ -100,10 +100,10 @@ function DashboardPage() {
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-32 bg-white dark:bg-coffee-light rounded-3xl animate-pulse border border-sand dark:border-coffee-dark transition-colors duration-300"></div>
+                <div key={i} className="h-32 bg-white dark:bg-clay/55 rounded-3xl animate-pulse border border-sand dark:border-coffee-dark transition-colors duration-300"></div>
               ))}
             </div>
-            <div className="h-96 bg-white dark:bg-coffee-light rounded-3xl animate-pulse border border-sand dark:border-coffee-dark transition-colors duration-300"></div>
+            <div className="h-96 bg-white dark:bg-clay/55 rounded-3xl animate-pulse border border-sand dark:border-coffee-dark transition-colors duration-300"></div>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@ function DashboardPage() {
       <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic transition-colors duration-300">
         <Navbar />
         <div className="container mx-auto px-6 py-32 text-center">
-          <Card className="max-w-lg mx-auto p-10 dark:bg-coffee-light dark:border-coffee-dark">
+          <Card className="max-w-lg mx-auto p-10 dark:bg-clay/55 dark:border-coffee-dark">
             <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-2">حدث خطأ</h2>
             <p className="text-olive dark:text-sand/60 mb-6">{error}</p>
@@ -133,7 +133,7 @@ function DashboardPage() {
       <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic transition-colors duration-300">
         <Navbar />
         <div className="container mx-auto px-6 py-32 text-center">
-          <Card className="max-w-2xl mx-auto p-12 dark:bg-coffee-light dark:border-coffee-dark">
+          <Card className="max-w-2xl mx-auto p-12 dark:bg-clay/55 dark:border-coffee-dark">
             <div className="w-24 h-24 bg-sand/30 dark:bg-coffee-dark rounded-full flex items-center justify-center mx-auto mb-6 transition-colors duration-300">
               <BarChart2 className="w-12 h-12 text-clay dark:text-gold" />
             </div>
@@ -203,7 +203,7 @@ function DashboardPage() {
               label="المعدل العام" 
               value={`${stats.overall.averageScore.toFixed(1)}%`} 
               icon={Trophy} 
-              color="bg-[#D4AF37] dark:bg-coffee-light border dark:border-gold/20 text-white dark:text-gold" 
+              color="bg-[#D4AF37] dark:bg-clay/55 border dark:border-gold/20 text-white dark:text-gold" 
             />
             <StatItem 
               label="إجابات صحيحة" 
@@ -225,7 +225,7 @@ function DashboardPage() {
             {/* Score Trend */}
             {scoreTrendData.length > 0 && (
               <motion.div variants={itemVariants}>
-                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                <Card className="p-6 h-full dark:bg-clay/55 dark:border-coffee-dark transition-colors duration-300">
                   <div className="flex items-center gap-3 mb-6 border-b border-sand dark:border-coffee-dark pb-4">
                     <div className="p-2 bg-sand/30 dark:bg-coffee-dark rounded-lg">
                       <TrendingUp className="w-5 h-5 text-clay dark:text-gold" />
@@ -259,7 +259,7 @@ function DashboardPage() {
             {/* Region Performance */}
             {stats.byRegion.length > 0 && (
               <motion.div variants={itemVariants}>
-                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                <Card className="p-6 h-full dark:bg-clay/55 dark:border-coffee-dark transition-colors duration-300">
                   <div className="flex items-center gap-3 mb-6 border-b border-sand dark:border-coffee-dark pb-4">
                     <div className="p-2 bg-sand/30 dark:bg-coffee-dark rounded-lg">
                       <BarChart2 className="w-5 h-5 text-clay dark:text-gold" />
@@ -304,7 +304,7 @@ function DashboardPage() {
             {/* Question Type Performance */}
             {stats.byQuestionType && stats.byQuestionType.length > 0 && (
               <motion.div variants={itemVariants}>
-                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                <Card className="p-6 h-full dark:bg-clay/55 dark:border-coffee-dark transition-colors duration-300">
                   <div className="flex items-center gap-3 mb-6 border-b border-sand dark:border-coffee-dark pb-4">
                     <div className="p-2 bg-sand/30 dark:bg-coffee-dark rounded-lg">
                       <CheckSquare className="w-5 h-5 text-clay dark:text-gold" />
@@ -331,7 +331,7 @@ function DashboardPage() {
             {/* Language Performance */}
             {stats.byLanguage && stats.byLanguage.length > 0 && (
               <motion.div variants={itemVariants}>
-                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                <Card className="p-6 h-full dark:bg-clay/55 dark:border-coffee-dark transition-colors duration-300">
                   <div className="flex items-center gap-3 mb-6 border-b border-sand dark:border-coffee-dark pb-4">
                     <div className="p-2 bg-sand/30 dark:bg-coffee-dark rounded-lg">
                       <Globe className="w-5 h-5 text-clay dark:text-gold" />
@@ -360,7 +360,7 @@ function DashboardPage() {
             {/* Strengths & Weaknesses */}
             {(stats.strengths.length > 0 || stats.weaknesses.length > 0) && (
               <motion.div variants={itemVariants} className="lg:col-span-1">
-                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                <Card className="p-6 h-full dark:bg-clay/55 dark:border-coffee-dark transition-colors duration-300">
                   <h2 className="text-xl font-bold text-coffee dark:text-cream mb-6 border-b border-sand dark:border-coffee-dark pb-4">تحليل الأداء</h2>
                   
                   <div className="space-y-6">
@@ -401,7 +401,7 @@ function DashboardPage() {
             {/* Recent Activity List */}
             {stats.recentSubmissions.length > 0 && (
               <motion.div variants={itemVariants} className="lg:col-span-2">
-                <Card className="p-6 h-full dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+                <Card className="p-6 h-full dark:bg-clay/55 dark:border-coffee-dark transition-colors duration-300">
                   <h2 className="text-xl font-bold text-coffee dark:text-cream mb-6 border-b border-sand dark:border-coffee-dark pb-4">النشاط الأخير</h2>
                   <div className="space-y-3">
                     {stats.recentSubmissions.slice(0, 5).map((sub) => (

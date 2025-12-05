@@ -126,7 +126,7 @@ function LandingPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="group relative bg-white dark:bg-coffee-light rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-sand dark:border-coffee-dark"
+              className="group relative bg-white dark:bg-clay/55 rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-sand dark:border-coffee-dark"
             >
               <div className="relative h-80 overflow-hidden">
                 <img
@@ -162,7 +162,7 @@ function LandingPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="group relative bg-white dark:bg-coffee-light rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-sand dark:border-coffee-dark"
+              className="group relative bg-white dark:bg-clay/55 rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-sand dark:border-coffee-dark"
             >
               <div className="relative h-80 overflow-hidden">
                 <img

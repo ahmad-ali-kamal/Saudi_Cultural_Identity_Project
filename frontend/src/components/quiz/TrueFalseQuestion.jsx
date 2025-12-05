@@ -48,7 +48,7 @@ function TrueFalseQuestion({ question, selectedAnswer, onAnswerSelect, showImage
                   : 'bg-white dark:bg-coffee-dark border-sand dark:border-coffee-light text-coffee dark:text-sand hover:border-clay/50 dark:hover:border-gold/50 hover:bg-sand/10 dark:hover:bg-coffee-light'
               }`}
             >
-              <div className={`p-4 rounded-full ${isSelected ? 'bg-white/20 dark:bg-coffee-dark/20' : 'bg-sand/30 dark:bg-coffee-light'}`}>
+              <div className={`p-4 rounded-full ${isSelected ? 'bg-white/20 dark:bg-coffee-dark/20' : 'bg-sand/30 dark:bg-clay/55'}`}>
                 <Icon className={`w-12 h-12 ${isSelected ? 'text-white dark:text-coffee-dark' : option.color === 'green' ? 'text-saudi-green dark:text-green-400' : 'text-red-500 dark:text-red-400'}`} />
               </div>
               <span className="text-3xl font-bold">

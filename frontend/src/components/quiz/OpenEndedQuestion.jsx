@@ -53,7 +53,7 @@ function OpenEndedQuestion({ question, selectedAnswer, onAnswerSelect, showImage
           )}
         </div>
 
-        <div className="bg-sand/20 dark:bg-coffee-light border-r-4 border-clay dark:border-gold p-4 rounded-lg mt-6 transition-colors duration-300">
+        <div className="bg-sand/20 dark:bg-clay/55 border-r-4 border-clay dark:border-gold p-4 rounded-lg mt-6 transition-colors duration-300">
           <p className="text-coffee dark:text-sand text-sm">
             💡 اكتب إجابتك بشكل واضح. سيتم مقارنتها بالإجابة الصحيحة تلقائياً.
           </p>

@@ -116,7 +116,7 @@ function SignupPage() {
       <Navbar />
 
       {/* Decorative Background Elements */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-sand/30 dark:bg-coffee-light/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10 transition-colors duration-300" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-sand/30 dark:bg-clay/55/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10 transition-colors duration-300" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-saudi-green/5 dark:bg-saudi-green/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 -z-10 transition-colors duration-300" />
 
       <div className="container mx-auto px-4 py-24 md:py-32 min-h-[calc(100vh-80px)] flex items-center justify-center">
@@ -126,7 +126,7 @@ function SignupPage() {
           transition={{ duration: 0.6 }}
           className="w-full max-w-md"
         >
-          <Card className="p-8 md:p-10 bg-white/80 dark:bg-coffee-light/80 backdrop-blur-sm border-sand/50 dark:border-coffee-dark transition-colors duration-300">
+          <Card className="p-8 md:p-10 bg-white/80 dark:bg-clay/55/80 backdrop-blur-sm border-sand/50 dark:border-coffee-dark transition-colors duration-300">
             {/* Header */}
             <div className="text-center mb-8">
               <h1 className="text-3xl md:text-4xl font-bold text-coffee dark:text-cream mb-3 transition-colors duration-300">

@@ -171,7 +171,7 @@ function LearnPage() {
     const textAlign = isEnglish ? 'text-left' : 'text-right';
 
     return (
-      <Card className="h-full flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 dark:bg-coffee-light dark:border-coffee-dark">
+      <Card className="h-full flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 dark:bg-clay/55 dark:border-coffee-dark">
         {imageSrc && (
           <div className="relative h-48 w-full overflow-hidden bg-sand/20 dark:bg-coffee-dark border-b border-sand/50 dark:border-coffee-dark transition-colors duration-300">
             <img
@@ -268,7 +268,7 @@ function LearnPage() {
       <Navbar />
 
       {/* Header Section with Pattern */}
-      <div className="relative bg-white dark:bg-coffee-light border-b border-sand dark:border-coffee-dark pt-28 pb-12 overflow-hidden transition-colors duration-300">
+      <div className="relative bg-white dark:bg-clay/55 border-b border-sand dark:border-coffee-dark pt-28 pb-12 overflow-hidden transition-colors duration-300">
         <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none bg-[url('/images/Sadu_decoration.jpg')] bg-repeat-x bg-contain mix-blend-multiply dark:mix-blend-normal"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.h1 
@@ -292,7 +292,7 @@ function LearnPage() {
       <div className="container mx-auto px-4 py-12">
         
         {/* Filters & Search */}
-        <div className="mb-10 bg-white dark:bg-coffee-light rounded-2xl p-6 shadow-sm border border-sand dark:border-coffee-dark transition-colors duration-300">
+        <div className="mb-10 bg-white dark:bg-clay/55 rounded-2xl p-6 shadow-sm border border-sand dark:border-coffee-dark transition-colors duration-300">
           <div className="flex items-center gap-2 mb-6 text-coffee dark:text-cream font-bold text-lg border-b border-sand dark:border-coffee-dark pb-4">
             <Filter className="w-5 h-5 text-clay dark:text-gold" />
             تصفية المحتوى
@@ -333,7 +333,7 @@ function LearnPage() {
           // Loading Skeleton Grid - Always show when loading to prevent flash
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: pageSize }).map((_, n) => (
-              <div key={n} className="h-80 bg-white dark:bg-coffee-light rounded-[2rem] border border-sand dark:border-coffee-dark animate-pulse flex flex-col p-6 transition-colors duration-300">
+              <div key={n} className="h-80 bg-white dark:bg-clay/55 rounded-[2rem] border border-sand dark:border-coffee-dark animate-pulse flex flex-col p-6 transition-colors duration-300">
                 <div className="w-full h-48 bg-sand/30 dark:bg-coffee-dark/50 rounded-xl mb-4"></div>
                 <div className="w-24 h-6 bg-sand/50 dark:bg-coffee-dark/50 rounded-full mb-4"></div>
                 <div className="w-3/4 h-8 bg-sand/50 dark:bg-coffee-dark/50 rounded-xl mb-4"></div>
@@ -346,7 +346,7 @@ function LearnPage() {
           </div>
         ) : error ? (
           // Error State
-          <div className="text-center py-20 bg-white dark:bg-coffee-light rounded-[2rem] border border-sand dark:border-coffee-dark transition-colors duration-300">
+          <div className="text-center py-20 bg-white dark:bg-clay/55 rounded-[2rem] border border-sand dark:border-coffee-dark transition-colors duration-300">
             <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-2">حدث خطأ في تحميل البيانات</h2>
             <p className="text-olive dark:text-sand/60 mb-6">{error}</p>
@@ -357,7 +357,7 @@ function LearnPage() {
           </div>
         ) : infoItems.length === 0 ? (
           // Empty State
-          <div className="text-center py-20 bg-white dark:bg-coffee-light rounded-[2rem] border border-sand dark:border-coffee-dark transition-colors duration-300">
+          <div className="text-center py-20 bg-white dark:bg-clay/55 rounded-[2rem] border border-sand dark:border-coffee-dark transition-colors duration-300">
             <div className="w-20 h-20 bg-sand/30 dark:bg-coffee-dark rounded-full flex items-center justify-center mx-auto mb-6">
               <Search className="w-10 h-10 text-olive dark:text-sand" />
             </div>
@@ -385,7 +385,7 @@ function LearnPage() {
         {/* Pagination */}
         {!loading && totalPages > 1 && (
           <div className="mt-12 flex justify-center">
-            <div className="bg-white dark:bg-coffee-light p-2 rounded-2xl border border-sand dark:border-coffee-dark shadow-sm flex items-center gap-2 transition-colors duration-300">
+            <div className="bg-white dark:bg-clay/55 p-2 rounded-2xl border border-sand dark:border-coffee-dark shadow-sm flex items-center gap-2 transition-colors duration-300">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 0}

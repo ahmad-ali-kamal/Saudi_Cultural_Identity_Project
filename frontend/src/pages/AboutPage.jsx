@@ -20,7 +20,7 @@ function AboutPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <div className="bg-white dark:bg-coffee-light border-b border-sand dark:border-coffee-dark pt-32 pb-16 transition-colors duration-300">
+      <div className="bg-white dark:bg-clay/55 border-b border-sand dark:border-coffee-dark pt-32 pb-16 transition-colors duration-300">
         <div className="container mx-auto px-6 text-center">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -45,7 +45,7 @@ function AboutPage() {
         
         {/* Vision & Mission Grid */}
         <div className="grid md:grid-cols-2 gap-8">
-          <Card className="p-8 dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+          <Card className="p-8 dark:bg-clay/55 dark:border-coffee-dark transition-colors duration-300">
             <div className="bg-sand/30 dark:bg-coffee-dark w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300">
               <Target className="w-6 h-6 text-clay dark:text-gold" />
             </div>
@@ -57,7 +57,7 @@ function AboutPage() {
             </p>
           </Card>
 
-          <Card className="p-8 dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+          <Card className="p-8 dark:bg-clay/55 dark:border-coffee-dark transition-colors duration-300">
             <div className="bg-sand/30 dark:bg-coffee-dark w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300">
               <Eye className="w-6 h-6 text-clay dark:text-gold" />
             </div>
@@ -70,7 +70,7 @@ function AboutPage() {
         </div>
 
         {/* Features Section */}
-        <Card className="p-8 md:p-10 dark:bg-coffee-light dark:border-coffee-dark transition-colors duration-300">
+        <Card className="p-8 md:p-10 dark:bg-clay/55 dark:border-coffee-dark transition-colors duration-300">
           <div className="flex items-center gap-3 mb-8">
             <div className="bg-sand/30 dark:bg-coffee-dark w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300">
               <Lightbulb className="w-6 h-6 text-clay dark:text-gold" />
@@ -85,7 +85,7 @@ function AboutPage() {
               { title: 'تجربة جذابة وحديثة', desc: 'واجهة تفاعلية وسهلة الاستخدام توفر تجربة ممتعة للجميع.' },
               { title: 'تحدى نفسك', desc: 'اختبر نفسك وتنافس مع الآخرين للحصول على اعلى قدر من الاجابات الصحيحة.' }
             ].map((item, i) => (
-              <div key={i} className="flex gap-4 p-4 rounded-xl bg-sand/10 dark:bg-coffee-dark hover:bg-sand/20 dark:hover:bg-coffee-dark/70 transition-colors duration-300">
+              <div key={i} className="flex gap-4 p-4 rounded-xl bg-sand/10 dark:bg-clay/30 hover:bg-sand/20 dark:hover:bg-coffee-dark/70 transition-colors duration-300">
                 <div className="w-2 h-2 mt-2.5 rounded-full bg-clay dark:bg-gold flex-shrink-0 transition-colors duration-300"></div>
                 <div>
                   <h3 className="font-bold text-coffee dark:text-cream mb-1 transition-colors duration-300">{item.title}</h3>
@@ -101,8 +101,8 @@ function AboutPage() {
           <h2 className="text-3xl font-bold text-coffee dark:text-cream mb-8 transition-colors duration-300">فريق المشروع</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {teamMembers.map((member, index) => (
-              <Card key={index} className="p-6 hover:-translate-y-2 transition-transform duration-300 dark:bg-coffee-light dark:border-coffee-dark">
-                <div className="w-20 h-20 bg-sand dark:bg-coffee-dark rounded-full mx-auto mb-4 overflow-hidden border-2 border-white dark:border-coffee-light shadow-md transition-colors duration-300">
+              <Card key={index} className="p-6 hover:-translate-y-2 transition-transform duration-300 dark:bg-clay/55 dark:border-coffee-dark">
+                <div className="w-20 h-20 bg-sand dark:bg-coffee-dark rounded-full mx-auto mb-4 overflow-hidden border-2 border-white dark:border-clay/80 shadow-md transition-colors duration-300">
                    {/* Placeholder avatar or keep linkedin icon */}
                    <div className="w-full h-full flex items-center justify-center bg-coffee dark:bg-coffee-dark text-white dark:text-gold text-2xl font-bold transition-colors duration-300">
                       {member.name.charAt(0)}
@@ -124,9 +124,9 @@ function AboutPage() {
         </div>
 
         {/* Mentor Section */}
-        <Card className="p-8 text-center bg-gradient-to-b from-white to-sand/20 dark:from-coffee-light dark:to-coffee-dark border-sand dark:border-coffee-dark transition-colors duration-300">
+        <Card className="p-8 text-center bg-gradient-to-b bg-white/80  to-sand/20 dark:bg-clay/55 border-sand dark:border-coffee-dark transition-colors duration-300">
           <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-4 transition-colors duration-300">شكر خاص</h2>
-          <div className="w-24 h-24 bg-coffee dark:bg-coffee-light text-white dark:text-gold rounded-full mx-auto mb-4 flex items-center justify-center text-3xl font-bold border-4 border-white dark:border-coffee-dark shadow-lg transition-colors duration-300">
+          <div className="w-24 h-24 bg-coffee dark:bg-coffee-dark text-white dark:text-gold rounded-full mx-auto mb-4 flex items-center justify-center text-3xl font-bold border-4 border-white dark:border-clay/80 shadow-lg transition-colors duration-300">
             د
           </div>
           <h3 className="text-xl font-bold text-coffee dark:text-cream mb-2 transition-colors duration-300">الدكتور حسن الهذلي</h3>

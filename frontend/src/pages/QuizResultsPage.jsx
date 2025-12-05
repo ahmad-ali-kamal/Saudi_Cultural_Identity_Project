@@ -135,7 +135,7 @@ function QuizResultsPage() {
           className="max-w-4xl mx-auto space-y-8"
         >
           {/* Score Card */}
-          <Card className="p-8 md:p-12 text-center relative overflow-hidden dark:bg-coffee-light dark:border-coffee-dark">
+          <Card className="p-8 md:p-12 text-center relative overflow-hidden dark:bg-clay/55 dark:border-coffee-dark">
              {/* Background Decoration */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-sand/30 dark:bg-sand/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10"></div>
 
@@ -231,7 +231,7 @@ function QuizResultsPage() {
           </Card>
 
           {/* Review Answers */}
-          <Card className="p-8 md:p-12 dark:bg-coffee-light dark:border-coffee-dark">
+          <Card className="p-8 md:p-12 dark:bg-clay/55 dark:border-coffee-dark">
             <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-8 text-center border-b border-sand dark:border-coffee-dark pb-4 transition-colors duration-300">
               مراجعة الإجابات
             </h2>

@@ -25,7 +25,7 @@ const Input = forwardRef(({ className, error, label, startIcon, endIcon, ...prop
         <input
           ref={ref}
           className={cn(
-            'w-full px-4 py-3 border-2 border-sand dark:border-coffee-light rounded-xl focus:border-clay dark:focus:border-gold focus:ring-2 focus:ring-clay/20 dark:focus:ring-gold/20 focus:outline-none transition-all duration-300 bg-white dark:bg-coffee-light placeholder:text-olive/50 dark:placeholder:text-sand/50 text-coffee dark:text-cream',
+            'w-full px-4 py-3 border-2 border-sand dark:border-coffee-light rounded-xl focus:border-clay dark:focus:border-gold focus:ring-2 focus:ring-clay/20 dark:focus:ring-gold/20 focus:outline-none transition-all duration-300 bg-white dark:bg-clay/55 placeholder:text-olive/50 dark:placeholder:text-sand/50 text-coffee dark:text-cream',
             startIcon && 'pr-12', // Add padding for start icon
             endIcon && 'pl-12',   // Add padding for end icon
             error && 'border-red-400 focus:border-red-500 focus:ring-red-200',

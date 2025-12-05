@@ -139,7 +139,7 @@ function QuizTakePage() {
       <div className="min-h-screen bg-cream dark:bg-coffee-dark font-arabic transition-colors duration-300">
         <Navbar />
         <div className="container mx-auto px-4 py-32 text-center">
-          <Card className="max-w-lg mx-auto p-10 dark:bg-coffee-light dark:border-coffee-dark">
+          <Card className="max-w-lg mx-auto p-10 dark:bg-clay/55 dark:border-coffee-dark">
             <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-2">
               {error ? 'حدث خطأ' : 'لا توجد أسئلة متاحة'}
@@ -162,7 +162,7 @@ function QuizTakePage() {
       <Navbar />
 
       {/* Progress Bar (Fixed Top) */}
-      <div className="fixed top-[72px] left-0 right-0 z-40 bg-white dark:bg-coffee-light border-b border-sand dark:border-coffee-dark transition-colors duration-300">
+      <div className="fixed top-[72px] left-0 right-0 z-40 bg-white dark:bg-clay/35 border-b border-sand dark:border-coffee-dark transition-colors duration-300">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <span className="text-sm font-bold text-coffee dark:text-cream">
              سؤال <span className="text-clay dark:text-gold text-lg">{currentQuestionIndex + 1}</span> من {questions.length}
@@ -204,7 +204,7 @@ function QuizTakePage() {
       </div>
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-coffee-light border-t border-sand dark:border-coffee-dark p-4 z-40 transition-colors duration-300">
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-clay/55 border-t border-sand dark:border-coffee-dark p-4 z-40 transition-colors duration-300">
         <div className="container mx-auto max-w-4xl flex justify-between items-center gap-4">
           <Button
             variant="ghost"

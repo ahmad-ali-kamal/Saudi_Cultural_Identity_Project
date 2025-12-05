@@ -49,7 +49,7 @@ function Navbar() {
 
   // ============ RENDER ============
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-cream/95 dark:bg-coffee-dark/95 backdrop-blur-sm border-b border-sand dark:border-coffee-light shadow-sm transition-colors duration-300">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-sand/55 dark:bg-clay/55 backdrop-blur-sm border-b border-sand dark:border-coffee-light shadow-sm transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6 py-4">
         <div className="flex items-center justify-between">
 
