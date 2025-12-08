@@ -190,12 +190,12 @@ function QuizResultsPage() {
                   جاري حفظ النتيجة...
                 </div>
               ) : submitted ? (
-                <div className="flex items-center justify-center gap-2 text-saudi-green dark:text-green-400 font-bold mb-6 bg-green-50 dark:bg-green-900/20 py-2 px-4 rounded-lg inline-flex">
+                <div className="inline-flex items-center justify-center gap-2 text-saudi-green dark:text-green-400 font-bold mb-6 bg-green-50 dark:bg-green-900/20 py-2 px-4 rounded-lg ">
                   <CheckCircle className="w-5 h-5" />
                   تم حفظ النتيجة بنجاح
                 </div>
               ) : submissionError ? (
-                <div className="flex items-center justify-center gap-2 text-red-600 dark:text-red-400 mb-6 bg-red-50 dark:bg-red-900/20 py-2 px-4 rounded-lg inline-flex">
+                <div className="inline-flex items-center justify-center gap-2 text-red-600 dark:text-red-400 mb-6 bg-red-50 dark:bg-red-900/20 py-2 px-4 rounded-lg ">
                   <AlertTriangle className="w-5 h-5" />
                   {submissionError}
                 </div>
@@ -251,7 +251,7 @@ function QuizResultsPage() {
                 >
                   {/* Question Header */}
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm font-bold text-olive dark:text-sand/80 bg-white dark:bg-coffee-dark px-3 py-1 rounded-full border border-sand dark:border-coffee-dark transition-colors duration-300">
+                    <span className="text-sm font-bold text-olive dark:text-sand/80 bg-white dark:bg-clay/30 px-3 py-1 rounded-full border border-sand dark:border-coffee-dark transition-colors duration-300">
                       السؤال {index + 1}
                     </span>
                     {result.isCorrect ? (
@@ -274,8 +274,8 @@ function QuizResultsPage() {
 
                   {/* Answers Comparison */}
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-white dark:bg-coffee-dark p-4 rounded-xl border border-sand/50 dark:border-coffee-light transition-colors duration-300">
-                      <span className="text-xs font-bold text-olive dark:text-sand/60 uppercase tracking-wider mb-1 block">إجابتك</span>
+                    <div className="bg-white dark:bg-clay/30 p-4 rounded-xl border border-sand/50 dark:border-coffee-light transition-colors duration-300">
+                      <span className="text-xs font-bold text-olive dark:text-sand/80 uppercase tracking-wider mb-1 block">إجابتك</span>
                       <p className={`font-bold text-lg ${result.isCorrect ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
                          {Array.isArray(result.userAnswer)
                           ? result.userAnswer.join(', ')
@@ -284,8 +284,8 @@ function QuizResultsPage() {
                     </div>
 
                     {!result.isCorrect && (
-                      <div className="bg-white dark:bg-coffee-dark p-4 rounded-xl border border-sand/50 dark:border-coffee-light transition-colors duration-300">
-                        <span className="text-xs font-bold text-olive dark:text-sand/60 uppercase tracking-wider mb-1 block">الإجابة الصحيحة</span>
+                      <div className="bg-white dark:bg-clay/30 p-4 rounded-xl border border-sand/50 dark:border-coffee-light transition-colors duration-300">
+                        <span className="text-xs font-bold text-olive dark:text-sand/80 uppercase tracking-wider mb-1 block">الإجابة الصحيحة</span>
                         <p className="font-bold text-lg text-green-700 dark:text-green-400">
                           {Array.isArray(result.correctAnswer)
                             ? result.correctAnswer.join(', ')
