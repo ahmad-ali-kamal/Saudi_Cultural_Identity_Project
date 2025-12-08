@@ -60,13 +60,13 @@ function Navbar() {
 
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-8">
-            <Link to="/learn" className="text-coffee dark:text-sand text-lg font-medium hover:text-clay dark:hover:text-gold transition-all duration-300 hover:-translate-y-0.5">
+            <Link to="/learn" className="text-coffee dark:text-sand text-lg font-bold hover:text-clay dark:hover:text-gold transition-all duration-300 hover:-translate-y-0.5">
               تعلم
             </Link>
-            <Link to="/quiz" className="text-coffee dark:text-sand text-lg font-medium hover:text-clay dark:hover:text-gold transition-all duration-300 hover:-translate-y-0.5">
+            <Link to="/quiz" className="text-coffee dark:text-sand text-lg font-bold hover:text-clay dark:hover:text-gold transition-all duration-300 hover:-translate-y-0.5">
               اختبر نفسك
             </Link>
-            <Link to="/about" className="text-coffee dark:text-sand text-lg font-medium hover:text-clay dark:hover:text-gold transition-all duration-300 hover:-translate-y-0.5">
+            <Link to="/about" className="text-coffee dark:text-sand text-lg font-bold hover:text-clay dark:hover:text-gold transition-all duration-300 hover:-translate-y-0.5">
               فريق التطوير
             </Link>
           </div>
@@ -90,7 +90,7 @@ function Navbar() {
                 </span>
                 <Link
                   to="/dashboard"
-                  className="px-5 py-2 text-sm font-bold border-2 text-clay border-clay rounded-xl hover:bg-clay hover:text-white transition-all duration-300"
+                  className="px-5 py-2 text-sm font-bold border-2 border-clay dark:border-coffee text-coffee dark:text-sand hover:text-clay rounded-xl hover:bg-sand dark:hover:bg-coffee-light/60 transition-all duration-300"
                 >
                   الملف الشخصي
                 </Link>
@@ -124,7 +124,7 @@ function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-coffee p-2 hover:bg-sand/50 rounded-lg transition-colors duration-300"
+              className="text-coffee dark:text-cream p-2 hover:bg-sand/50 rounded-lg transition-colors duration-300"
               aria-label="قائمة"
             >
               <svg
@@ -153,21 +153,21 @@ function Navbar() {
               <Link
                 to="/learn"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-coffee dark:text-sand text-base font-semibold hover:bg-sand/30 dark:hover:bg-coffee-light px-4 py-3 rounded-lg transition-colors duration-300"
+                className="text-coffee dark:text-sand text-base font-semibold hover:bg-sand dark:hover:bg-coffee-light px-4 py-3 rounded-lg transition-colors duration-300"
               >
                 تعلم
               </Link>
               <Link
                 to="/quiz"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-coffee dark:text-sand text-base font-semibold hover:bg-sand/30 dark:hover:bg-coffee-light px-4 py-3 rounded-lg transition-colors duration-300"
+                className="text-coffee dark:text-sand text-base font-semibold hover:bg-sand dark:hover:bg-coffee-light px-4 py-3 rounded-lg transition-colors duration-300"
               >
                 اختبر نفسك
               </Link>
               <Link
                 to="/about"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-coffee dark:text-sand text-base font-semibold hover:bg-sand/30 dark:hover:bg-coffee-light px-4 py-3 rounded-lg transition-colors duration-300"
+                className="text-coffee dark:text-sand text-base font-semibold hover:bg-sand dark:hover:bg-coffee-light px-4 py-3 rounded-lg transition-colors duration-300"
               >
                 فريق التطوير
               </Link>
@@ -184,7 +184,7 @@ function Navbar() {
                     <Link
                       to="/dashboard"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="px-4 py-3 text-center text-sm font-bold text-clay border-2 border-clay rounded-xl hover:bg-clay hover:text-white transition-all duration-300"
+                      className="px-4 py-3 text-center text-sm font-bold border-2 border-clay dark:border-coffee-light text-coffee dark:text-sand hover:text-clay rounded-xl hover:bg-sand dark:hover:bg-coffee-light/60 transition-all duration-300"
                     >
                       الملف الشخصي
                     </Link>

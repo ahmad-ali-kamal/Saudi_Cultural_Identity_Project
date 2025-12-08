@@ -227,7 +227,7 @@ function LearnPage() {
             )}
 
             {info.answer && (
-              <div className={`text-olive/80 dark:text-sand/70 leading-relaxed transition-colors duration-300 ${textAlign}`} dir={textDir}>
+              <div className={`text-clay dark:text-gold font-bold leading-relaxed transition-colors duration-300 ${textAlign}`} dir={textDir}>
                 <p className={!isExpanded && hasLongAnswer ? 'line-clamp-4' : ''}>
                   {info.answer}
                 </p>
