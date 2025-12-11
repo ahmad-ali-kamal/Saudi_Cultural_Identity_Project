@@ -44,52 +44,59 @@ class QuestionServiceTest {
   }
 
   @Test
-  @DisplayName("Should return paginated info questions when no filters applied")
-  void shouldReturnPaginatedInfoQuestionsWhenNoFilters() {
+  @DisplayName("Should return paginated info questions when only language provided")
+  void shouldReturnPaginatedInfoQuestionsWithLanguageFilter() {
     Page<Question> samplePage = new PageImpl<>(List.of(sampleQuestion), PageRequest.of(0, 20), 1);
-    when(questionRepository.findAll(any(Pageable.class))).thenReturn(samplePage);
+    when(questionRepository.findByContentLanguage(eq("Arabic"), any(Pageable.class))).thenReturn(samplePage);
 
-    Page<InfoQuestionDTO> response = questionService.getInfo(null, null, 0, 20);
+    Page<InfoQuestionDTO> response = questionService.getInfo("Arabic", null, null, null, 0, 20);
+
     assertThat(response.getTotalElements()).isEqualTo(1);
-
-    verify(questionRepository, times(1)).findAll(any(Pageable.class));
+    assertThat(response.getContent()).hasSize(1);
+    verify(questionRepository, times(1)).findByContentLanguage(eq("Arabic"), any(Pageable.class));
   }
 
   @Test
-  @DisplayName("Should filter by category when category provided")
-  void shouldFilterByCategoryWhenCategoryProvided() {
+  @DisplayName("Should filter by language and category when both provided")
+  void shouldFilterByLanguageAndCategory() {
     Page<Question> samplePage = new PageImpl<>(List.of(sampleQuestion), PageRequest.of(0, 20), 1);
-    when(questionRepository.findByCategory(eq("food"), any(Pageable.class))).thenReturn(samplePage);
-    Page<InfoQuestionDTO> response = questionService.getInfo("food", null, 0, 20);
+    when(questionRepository.findByContentLanguageAndCategory(eq("English"), eq("culture"), any(Pageable.class)))
+        .thenReturn(samplePage);
+
+    Page<InfoQuestionDTO> response = questionService.getInfo("English", "culture", null, null, 0, 20);
+
     assertThat(response.getTotalElements()).isEqualTo(1);
-    verify(questionRepository, times(1)).findByCategory(eq("food"), any(Pageable.class));
-    verify(questionRepository, never()).findAll(any(Pageable.class));
+    verify(questionRepository, times(1)).findByContentLanguageAndCategory(eq("English"), eq("culture"), any(Pageable.class));
   }
 
   @Test
-  @DisplayName("Should filter by category and region when both provided")
-  void shouldFilterByCategoryAndRegionWhenBothProvided() {
+  @DisplayName("Should filter by language, category and region when all provided")
+  void shouldFilterByLanguageCategoryAndRegion() {
     Page<Question> samplePage = new PageImpl<>(List.of(sampleQuestion), PageRequest.of(0, 20), 1);
-    when(questionRepository.findByCategoryAndRegion(eq("food"), eq("west"),
-        any(Pageable.class))).thenReturn(samplePage);
-    Page<InfoQuestionDTO> response = questionService.getInfo("food", "west", 0, 20);
+    when(questionRepository.findByContentLanguageAndCategoryAndRegion(
+        eq("English"), eq("culture"), eq("general"), any(Pageable.class))).thenReturn(samplePage);
+
+    Page<InfoQuestionDTO> response = questionService.getInfo("English", "culture", "general", null, 0, 20);
+
     assertThat(response.getTotalElements()).isEqualTo(1);
-    verify(questionRepository, times(1)).findByCategoryAndRegion(eq("food"), eq("west"),
-        any(Pageable.class));
-    verify(questionRepository, never()).findAll(any(Pageable.class));
+    verify(questionRepository, times(1)).findByContentLanguageAndCategoryAndRegion(
+        eq("English"), eq("culture"), eq("general"), any(Pageable.class));
   }
 
   @Test
   @DisplayName("Should convert Question to InfoQuestionDTO correctly")
   void shouldConvertQuestionToInfoQuestionDTO() {
     Page<Question> samplePage = new PageImpl<>(List.of(sampleQuestion), PageRequest.of(0, 20), 1);
-    when(questionRepository.findAll(any(Pageable.class))).thenReturn(samplePage);
-    Page<InfoQuestionDTO> response = questionService.getInfo(null, null, 0, 20);
+    when(questionRepository.findByContentLanguage(eq("English"), any(Pageable.class))).thenReturn(samplePage);
+
+    Page<InfoQuestionDTO> response = questionService.getInfo("English", null, null, null, 0, 20);
+
     assertThat(response.getTotalElements()).isEqualTo(1);
-    assertThat(response.getContent().getFirst().getQuestionText()).isEqualTo("What is the traditional dance in Saudi Arabia?");
-    assertThat(response.getContent().getFirst().getAnswer()).isEqualTo("Al-Ardah");
-    assertThat(response.getContent().getFirst().getCategory()).isEqualTo("culture");
-    assertThat(response.getContent().getFirst().getLanguage()).isEqualTo("english");
+    InfoQuestionDTO dto = response.getContent().getFirst();
+    assertThat(dto.getQuestionText()).isEqualTo("What is the traditional dance in Saudi Arabia?");
+    assertThat(dto.getAnswer()).isEqualTo("Al-Ardah");
+    assertThat(dto.getCategory()).isEqualTo("culture");
+    assertThat(dto.getLanguage()).isEqualTo("English");
   }
 
   // Helper method to create a sample question
@@ -99,8 +106,8 @@ class QuestionServiceTest {
     question.setQuestionText("What is the traditional dance in Saudi Arabia?");
     question.setAnswer("Al-Ardah");
     question.setCategory("culture");
-    question.setType("open-ended");
-    question.setLanguage("english");
+    question.setType("open_ended");
+    question.setContentLanguage("English");
     question.setRegion("general");
     question.setOptions(new String[]{"Al-Ardah", "Dabke", "Tanoura"});
     return question;
