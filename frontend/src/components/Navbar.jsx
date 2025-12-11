@@ -59,7 +59,7 @@ function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-36">
             <Link to="/learn" className="text-coffee dark:text-sand text-lg font-bold hover:text-clay dark:hover:text-gold transition-all duration-300 hover:-translate-y-0.5">
               تعلم
             </Link>

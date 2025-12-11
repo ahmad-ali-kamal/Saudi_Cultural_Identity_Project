@@ -212,7 +212,7 @@ function QuizTakePage() {
             disabled={isFirstQuestion}
             className="text-olive dark:text-sand hover:text-coffee dark:hover:text-cream"
           >
-            <ArrowRight className="w-5 h-5 ml-2 rtl:rotate-180" /> السابق
+            <ArrowLeft className="w-5 h-5 ml-2 rtl:rotate-180" /> السابق
           </Button>
 
           {isLastQuestion ? (
@@ -234,7 +234,7 @@ function QuizTakePage() {
               className="px-8"
             >
               التالي
-              <ArrowLeft className="w-5 h-5 mr-2 rtl:rotate-180" />
+              <ArrowRight className="w-5 h-5 mr-2 rtl:rotate-180" />
             </Button>
           )}
         </div>

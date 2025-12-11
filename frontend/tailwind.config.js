@@ -9,14 +9,14 @@ export default {
     extend: {
       colors: {
         // Modern Heritage Palette
-        cream: '#F0EBE0',      // Main Background (Deeper, warmer off-white)
+        cream: '#dfdbce',      // Main Background (Deeper, warmer off-white)
         sand: '#E6DCCA',       // Secondary Background / Cards (Slightly deeper beige)
-        clay: '#855D38',       // Primary Brand Color / Buttons
+        clay: '#6f5642',       // Primary Brand Color / Buttons
         coffee: '#3E2B1D',     // Primary Text
         olive: '#5A614E',      // Muted Text / Secondary Text
         gold: '#D4AF37',       // Premium Accents
         'saudi-green': '#1D2F1F', // Deep Accents
-        
+        'button-hover': '#cc9048',
         // Dark Mode Heritage Palette
         'coffee-dark': '#231B15',    // Main Background (Dark Mode)
         'coffee-light': '#2C241E',   // Cards/Surfaces (Dark Mode)

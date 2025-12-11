@@ -149,7 +149,7 @@ function LandingPage() {
                 </p>
                 <Link
                   to="/quiz"
-                  className="inline-flex items-center justify-center w-full py-4 bg-clay text-white text-xl font-bold rounded-xl hover:bg-saudi-green transition-colors duration-300"
+                  className="inline-flex items-center justify-center w-full py-4 bg-clay text-white text-xl font-bold rounded-xl hover:bg-button-hover transition-colors duration-300"
                 >
                   تحدى نفسك
                 </Link>
@@ -172,7 +172,7 @@ function LandingPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-6 right-6 text-white">
-                  <div className="p-3 bg-saudi-green rounded-xl inline-block mb-3 shadow-lg">
+                  <div className="p-3 bg-clay rounded-xl inline-block mb-3 shadow-lg">
                     <BookOpen className="w-8 h-8" />
                   </div>
                   <h2 className="text-4xl font-bold">ودك تتعلم؟</h2>
@@ -185,7 +185,7 @@ function LandingPage() {
                 </p>
                 <Link
                   to="/learn"
-                  className="inline-flex items-center justify-center w-full py-4 bg-saudi-green text-white text-xl font-bold rounded-xl hover:bg-clay transition-colors duration-300"
+                  className="inline-flex items-center justify-center w-full py-4 bg-clay text-white text-xl font-bold rounded-xl hover:bg-button-hover transition-colors duration-300"
                 >
                   ابدأ التعلم
                 </Link>

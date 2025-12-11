@@ -101,7 +101,7 @@ function AboutPage() {
           <h2 className="text-3xl font-bold text-coffee dark:text-cream mb-8 transition-colors duration-300">فريق المشروع</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {teamMembers.map((member, index) => (
-              <Card key={index} className="p-6 hover:-translate-y-2 transition-transform duration-300 dark:bg-clay/55 dark:border-coffee-dark">
+              <Card key={index} className="p-6 hover:-translate-y-2 transition-transform duration-300 dark:bg-clay/55 dark:border-coffee-dark flex flex-col items-center h-full">
                 <div className="w-20 h-20 bg-sand dark:bg-coffee-dark rounded-full mx-auto mb-4 overflow-hidden border-2 border-white dark:border-clay/80 shadow-md transition-colors duration-300">
                    {/* Placeholder avatar or keep linkedin icon */}
                    <div className="w-full h-full flex items-center justify-center bg-coffee dark:bg-coffee-dark text-white dark:text-gold text-2xl font-bold transition-colors duration-300">
@@ -109,12 +109,12 @@ function AboutPage() {
                    </div>
                 </div>
                 <h3 className="font-bold text-coffee dark:text-cream text-sm mb-1 transition-colors duration-300">{member.name}</h3>
-                <p className="text-olive dark:text-sand/60 text-xs mb-4 h-8 transition-colors duration-300">{member.role}</p>
+                <p className="text-olive dark:text-sand/60 text-xs mb-4 transition-colors duration-300">{member.role}</p>
                 <a
                   href={member.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-8 h-8 bg-[#0077b5] text-white rounded-full hover:scale-110 transition-transform"
+                  className="inline-flex items-center justify-center w-8 h-8 bg-[#0077b5] text-white rounded-full hover:scale-110 transition-transform mt-auto"
                 >
                   <Linkedin className="w-4 h-4" />
                 </a>
@@ -125,7 +125,7 @@ function AboutPage() {
 
         {/* Mentor Section */}
         <Card className="p-8 text-center bg-gradient-to-b bg-white/80  to-sand/20 dark:bg-clay/55 border-sand dark:border-coffee-dark transition-colors duration-300">
-          <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-4 transition-colors duration-300">شكر خاص</h2>
+          <h2 className="text-2xl font-bold text-coffee dark:text-cream mb-4 transition-colors duration-300">تحت اشراف</h2>
           <div className="w-24 h-24 bg-coffee dark:bg-coffee-dark text-white dark:text-gold rounded-full mx-auto mb-4 flex items-center justify-center text-3xl font-bold border-4 border-white dark:border-clay/80 shadow-lg transition-colors duration-300">
             د
           </div>
