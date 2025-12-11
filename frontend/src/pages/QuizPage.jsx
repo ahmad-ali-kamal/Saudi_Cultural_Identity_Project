@@ -64,7 +64,7 @@ function QuizPage() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.1 }}
-              className="inline-flex items-center justify-center p-4 bg-white dark:bg-coffee-light rounded-full shadow-md mb-6 transition-colors duration-300"
+              className="inline-flex items-center justify-center p-4 bg-white dark:bg-clay/55 rounded-full shadow-md mb-6 transition-colors duration-300"
             >
               <Settings className="w-10 h-10 text-clay dark:text-gold" />
             </motion.div>
@@ -77,7 +77,7 @@ function QuizPage() {
           </div>
 
           {/* Configuration Card */}
-          <Card className="p-8 md:p-10 border-sand dark:border-coffee-dark shadow-2xl bg-white/80 dark:bg-coffee-light/80 backdrop-blur-sm transition-colors duration-300">
+          <Card className="p-8 md:p-10 border-sand dark:border-coffee-dark shadow-2xl bg-white/80 dark:bg-clay/55 backdrop-blur-sm transition-colors duration-300">
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
               {/* Language Selection */}
@@ -121,7 +121,7 @@ function QuizPage() {
                     className={`px-4 py-3 rounded-xl text-sm font-bold transition-all duration-200 border-2 ${
                       config.type === type.value
                         ? 'bg-clay text-white border-clay shadow-md scale-105 dark:bg-gold dark:text-coffee-dark dark:border-gold'
-                        : 'bg-white text-olive border-sand hover:border-clay/50 hover:bg-sand/20 dark:bg-coffee-light dark:text-sand/60 dark:border-coffee-dark dark:hover:border-gold/50 dark:hover:bg-coffee-dark/50'
+                        : 'bg-white text-olive border-sand hover:border-clay/50 hover:bg-sand/20 dark:bg-clay/55 dark:text-sand/60 dark:border-coffee-dark dark:hover:border-gold/50 dark:hover:bg-coffee-dark/50'
                     }`}
                   >
                     {type.label}
