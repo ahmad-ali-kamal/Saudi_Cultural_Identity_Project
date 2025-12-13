@@ -1,0 +1,164 @@
+# Default configuration
+spring:
+  application:
+    name: saudiculture
+
+# Server Configuration
+server:
+  url: ${SERVER_URL:http://localhost:8080}
+
+# CORS Configuration
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:5173}
+
+# CSV Loading Configuration
+csv:
+  loading:
+    enabled: false
+    retries: 5
+    retry-delay-ms: 2000
+    log-errors: true
+    log-warnings: true
+
+# Spring Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+      show-components: when-authorized
+  health:
+    mongo:
+      enabled: true
+  info:
+    env:
+      enabled: true
+  metrics:
+    enable:
+      jvm: true
+      system: true
+      http: true
+
+# Application Info
+info:
+  app:
+    name: Saudi Cultural Identity API
+    description: API for exploring Saudi Arabia's rich cultural heritage
+    version: 1.0.0
+
+# Logging Configuration
+logging:
+  level:
+    com.saudiculture: INFO
+    org.springframework.web: INFO
+    org.springframework.data.mongodb: INFO
+
+aws:
+  cognito:
+    user-pool-id: ${AWS_COGNITO_USER_POOL_ID}
+    region: ${AWS_COGNITO_REGION}
+    client-id: ${AWS_COGNITO_CLIENT_ID}
+    client-secret: ${AWS_COGNITO_CLIENT_SECRET}
+---
+# Development Profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://cognito-idp.${AWS_COGNITO_REGION}.amazonaws.com/${AWS_COGNITO_USER_POOL_ID}/.well-known/jwks.json
+          issuer-uri: https://cognito-idp.${AWS_COGNITO_REGION}.amazonaws.com/${AWS_COGNITO_USER_POOL_ID}
+
+  data:
+    mongodb:
+      # If MONGO_URI is set (e.g., for MongoDB Atlas), use it. Otherwise, construct from individual variables
+      uri: ${MONGO_URI:mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD:admin123}@${MONGO_HOST:localhost}:${MONGO_PORT:27017}/${MONGO_DATABASE:saudiculture}?authSource=admin}
+      auto-index-creation: true
+
+logging:
+  level:
+    com.saudiculture: DEBUG
+    org.springframework.web: DEBUG
+
+csv:
+  loading:
+    log-warnings: true
+
+
+---
+# Test Profile
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  data:
+    mongodb:
+      # Test database - connect to local Docker MongoDB
+      uri: mongodb://admin:admin123@localhost:27017/saudiculture_test?authSource=admin
+      auto-index-creation: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://cognito-idp.${AWS_COGNITO_REGION}.amazonaws.com/${AWS_COGNITO_USER_POOL_ID}/.well-known/jwks.json
+          issuer-uri: https://cognito-idp.${AWS_COGNITO_REGION}.amazonaws.com/${AWS_COGNITO_USER_POOL_ID}
+
+csv:
+  loading:
+    enabled: false
+
+logging:
+  level:
+    com.saudiculture: WARN
+
+---
+# Production Profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://cognito-idp.${AWS_COGNITO_REGION}.amazonaws.com/${AWS_COGNITO_USER_POOL_ID}/.well-known/jwks.json
+          issuer-uri: https://cognito-idp.${AWS_COGNITO_REGION}.amazonaws.com/${AWS_COGNITO_USER_POOL_ID}
+
+  data:
+    mongodb:
+      # If MONGO_URI is set (e.g., for MongoDB Atlas or DocumentDB), use it. Otherwise, construct from individual variables
+      uri: ${MONGO_URI:mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}?authSource=admin}
+      auto-index-creation: false
+
+server:
+  url: ${SERVER_URL}
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS}
+
+management:
+  endpoint:
+    health:
+      show-details: never
+      show-components: never
+
+csv:
+  loading:
+    log-errors: false
+    log-warnings: false
+
+logging:
+  level:
+    com.saudiculture: INFO
+    org.springframework.web: WARN
+    org.springframework.data.mongodb: WARN

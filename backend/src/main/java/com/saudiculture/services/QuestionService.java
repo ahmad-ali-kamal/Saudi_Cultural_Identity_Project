@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.logstash.logback.argument.StructuredArguments.keyValue;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -29,35 +31,67 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final MongoTemplate mongoTemplate;
 
-    public Page<InfoQuestionDTO> getInfo(String category, String region, int page, int size) {
-        log.info("Fetching info questions - category: {}, region: {}, page: {}, size: {}", category, region, page, size);
+    public Page<InfoQuestionDTO> getInfo(String language, String category, String region, String searchTerm, int page, int size) {
+        log.info("Fetching info questions",
+                keyValue("language", language),
+                keyValue("category", category),
+                keyValue("region", region),
+                keyValue("searchTerm", searchTerm),
+                keyValue("page", page),
+                keyValue("size", size));
         Pageable pageable = PageRequest.of(page, size);
         Page<Question> questionsPage;
 
-        if (category != null && region != null) {
-            questionsPage = questionRepository.findByCategoryAndRegion(category, region, pageable);
-        } else if (category != null) {
-            questionsPage = questionRepository.findByCategory(category, pageable);
-        } else if (region != null) {
-            questionsPage = questionRepository.findByRegion(region, pageable);
+        // Determine which query method to use based on parameters
+        // Language is always present (defaults to Arabic)
+        if (searchTerm != null && !searchTerm.trim().isEmpty()) {
+            // Search is active - use text search queries with language filter
+            if (category != null && region != null) {
+                questionsPage = questionRepository.searchQuestionsByLanguageCategoryAndRegion(searchTerm, language, category, region, pageable);
+            } else if (category != null) {
+                questionsPage = questionRepository.searchQuestionsByLanguageAndCategory(searchTerm, language, category, pageable);
+            } else if (region != null) {
+                questionsPage = questionRepository.searchQuestionsByLanguageAndRegion(searchTerm, language, region, pageable);
+            } else {
+                questionsPage = questionRepository.searchQuestionsByLanguage(searchTerm, language, pageable);
+            }
         } else {
-            questionsPage = questionRepository.findAll(pageable);
+            // No search - use filter queries with language
+            if (category != null && region != null) {
+                questionsPage = questionRepository.findByContentLanguageAndCategoryAndRegion(language, category, region, pageable);
+            } else if (category != null) {
+                questionsPage = questionRepository.findByContentLanguageAndCategory(language, category, pageable);
+            } else if (region != null) {
+                questionsPage = questionRepository.findByContentLanguageAndRegion(language, region, pageable);
+            } else {
+                questionsPage = questionRepository.findByContentLanguage(language, pageable);
+            }
         }
 
         List<InfoQuestionDTO> dtoList = questionsPage.getContent().stream()
                 .map(this::convertToInfoDTO)
                 .toList();
 
-        log.info("Retrieved {} info questions", dtoList.size());
+        log.info("Retrieved info questions",
+                keyValue("count", dtoList.size()),
+                keyValue("totalElements", questionsPage.getTotalElements()));
         return new PageImpl<>(dtoList, pageable, questionsPage.getTotalElements());
     }
 
-    public List<QuizQuestionDTO> getQuizzes(String category, String region, String type, int size) {
-        log.info("Fetching quiz questions - category: {}, region: {}, type: {}, size: {}", category, region, type, size);
+    public List<QuizQuestionDTO> getQuizzes(String category, String language, String region, String type, int size) {
+        log.info("Fetching quiz questions",
+                keyValue("language", language),
+                keyValue("category", category),
+                keyValue("region", region),
+                keyValue("type", type),
+                keyValue("size", size));
 
         List<Criteria> criteriaList = new ArrayList<>();
         if (category != null) {
             criteriaList.add(Criteria.where("category").is(category));
+        }
+        if (language != null) {
+          criteriaList.add(Criteria.where("content_language").is(language));
         }
         if (region != null) {
             criteriaList.add(Criteria.where("region").is(region));
@@ -82,7 +116,8 @@ public class QuestionService {
         AggregationResults<Question> results = mongoTemplate.aggregate(aggregation, "questions", Question.class);
         List<Question> randomQuestions = results.getMappedResults();
 
-        log.info("Retrieved {} random quiz questions", randomQuestions.size());
+        log.info("Retrieved random quiz questions",
+                keyValue("count", randomQuestions.size()));
 
         return randomQuestions.stream()
             .map(this::convertToQuizDTO)
@@ -94,19 +129,25 @@ public class QuestionService {
         dto.setQuestionText(question.getQuestionText());
         dto.setAnswer(question.getAnswer());
         dto.setCategory(question.getCategory());
-        dto.setLanguage(question.getLanguage());
+        dto.setLanguage(question.getContentLanguage());
         dto.setRegion(question.getRegion());
+        dto.setImageUrl(question.getImageUrl());
+
         return dto;
     }
 
     private QuizQuestionDTO convertToQuizDTO(Question question) {
         QuizQuestionDTO dto = new QuizQuestionDTO();
+        dto.setId(question.getId());
         dto.setQuestionText(question.getQuestionText());
         dto.setOptions(question.getOptions());
         dto.setAnswer(question.getAnswer());
-        dto.setLanguage(question.getLanguage());
+        dto.setLanguage(question.getContentLanguage());
         dto.setRegion(question.getRegion());
         dto.setType(question.getType());
+        dto.setCategory(question.getCategory());
+        dto.setImageUrl(question.getImageUrl());
+
         return dto;
     }
 }
