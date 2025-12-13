@@ -114,9 +114,9 @@ function AboutPage() {
                   href={member.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-8 h-8 bg-[#0077b5] text-white rounded-full hover:scale-110 transition-transform mt-auto"
+                  className="inline-flex items-center justify-center w-10 h-8   rounded-full hover:scale-110 transition-transform mt-auto"
                 >
-                  <Linkedin className="w-4 h-4" />
+                  <img src="/images/linkedin_icon.png" alt="LinkedIn image"/>
                 </a>
               </Card>
             ))}
@@ -137,7 +137,7 @@ function AboutPage() {
           <div className="mt-4">
              <a
                 href="https://www.linkedin.com/in/hassan-alhuzali-a33888267/"
-                className="inline-flex items-center gap-2 text-clay dark:text-gold font-bold hover:underline transition-colors duration-300"
+                className="inline-flex items-center gap-2 text-clay dark:text-gold font-bold hover:scale-110 transition-transform mt-auto duration-300"
               >
                 <Linkedin className="w-5 h-5" />
                 LinkedIn
