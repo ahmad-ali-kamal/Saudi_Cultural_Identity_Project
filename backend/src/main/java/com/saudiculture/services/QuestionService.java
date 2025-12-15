@@ -131,6 +131,7 @@ public class QuestionService {
         dto.setCategory(question.getCategory());
         dto.setLanguage(question.getContentLanguage());
         dto.setRegion(question.getRegion());
+        dto.setSource(question.getSource());
         dto.setImageUrl(question.getImageUrl());
 
         return dto;

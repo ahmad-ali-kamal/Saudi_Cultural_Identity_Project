@@ -1,5 +1,6 @@
 package com.saudiculture.models;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -43,6 +44,9 @@ public class Question {
 
   @NotBlank(message = "Region cannot be blank")
   private String region;
+
+  @Nullable
+  private String source;
 
   @Field("image_data")
   private byte[] imageData;
