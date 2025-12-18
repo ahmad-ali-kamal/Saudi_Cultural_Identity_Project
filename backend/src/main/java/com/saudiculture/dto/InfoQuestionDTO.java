@@ -9,6 +9,7 @@ public class InfoQuestionDTO {
     private String category;
     private String language;
     private String region;
+    private String source;
 
     private String imageUrl;
 }
