@@ -125,9 +125,9 @@ public class Question {
    * - "EAST" / "east": Eastern Region (المنطقة الشرقية) - Dammam, Dhahran, Al-Ahsa
    * - "NORTH" / "north": Northern Region (المنطقة الشمالية) - Tabuk, Al-Jouf, Hail
    * - "SOUTH" / "south": Southern Region (المنطقة الجنوبية) - Asir, Jizan, Najran
-   * - "CENTERAL" / "central": Central Region (المنطقة الوسطى) - Riyadh, Qassim
+   * - "CENTRAL" / "central": Central Region (المنطقة الوسطى) - Riyadh, Qassim
    * <p>
-   * Note: Frontend currently uses lowercase, but backend accepts both formats.
+   * Note: Frontend uses lowercase, backend accepts both formats.
    */
   @NotBlank(message = "Region cannot be blank")
   private String region;

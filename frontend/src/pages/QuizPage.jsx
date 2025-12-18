@@ -31,7 +31,7 @@ function QuizPage() {
     { value: 'east', label: 'الشرقية' },
     { value: 'north', label: 'الشمالية' },
     { value: 'south', label: 'الجنوبية' },
-    { value: 'centeral', label: 'الوسطى' },
+    { value: 'central', label: 'الوسطى' },
   ];
 
   const questionTypes = [

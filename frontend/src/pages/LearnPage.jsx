@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, RefreshCw, AlertCircle, ChevronLeft, ChevronRight, MapPin, Globe, Tag } from 'lucide-react';
+import { Search, Filter, RefreshCw, AlertCircle, ChevronLeft, ChevronRight, MapPin, Globe, Tag, BookOpen } from 'lucide-react';
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -43,7 +43,7 @@ function LearnPage() {
     { value: 'east', label: 'الشرقية' },
     { value: 'north', label: 'الشمالية' },
     { value: 'south', label: 'الجنوبية' },
-    { value: 'centeral', label: 'الوسطى' },
+    { value: 'central', label: 'الوسطى' },
   ];
 
   useEffect(() => {
@@ -201,6 +201,12 @@ function LearnPage() {
               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-sand dark:bg-coffee-dark text-olive dark:text-sand transition-colors duration-300">
                 <Tag className="w-3 h-3" />
                 {info.category}
+              </span>
+            )}
+            {info.source && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-gold/10 dark:bg-gold/20 text-clay dark:text-gold border border-gold/30 transition-colors duration-300">
+                <BookOpen className="w-3 h-3" />
+                {info.source}
               </span>
             )}
           </div>
