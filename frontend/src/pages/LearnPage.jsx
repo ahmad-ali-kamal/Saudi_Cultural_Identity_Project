@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, RefreshCw, AlertCircle, ChevronLeft, ChevronRight, MapPin, Globe, Tag, BookOpen } from 'lucide-react';
+import { Search, Filter, RefreshCw, AlertCircle, ChevronLeft, ChevronRight, MapPin, Globe, Tag, BookOpen, CheckCircle } from 'lucide-react';
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -170,6 +170,18 @@ function LearnPage() {
     const textDir = isEnglish ? 'ltr' : 'rtl';
     const textAlign = isEnglish ? 'text-left' : 'text-right';
 
+    // Translate true/false to Arabic if needed
+    const getDisplayAnswer = (answer) => {
+      if (!isEnglish && answer) {
+        const trimmedAnswer = answer.trim().toLowerCase();
+        if (trimmedAnswer === 'true') return 'صحيح';
+        if (trimmedAnswer === 'false') return 'خطأ';
+      }
+      return answer;
+    };
+
+    const displayAnswer = getDisplayAnswer(info.answer);
+
     return (
       <Card className="h-full flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 dark:bg-clay/55 dark:border-coffee-dark">
         {imageSrc && (
@@ -212,39 +224,49 @@ function LearnPage() {
           </div>
 
           {/* Content */}
-          <div className="flex-grow">
-            {info.term && (
-              <div className="mb-3">
-                <h3 className={`text-2xl font-bold text-coffee dark:text-cream mb-1 transition-colors duration-300 ${textAlign}`} dir={textDir}>
-                  {info.term}
-                </h3>
-                {info.termMeaning && (
-                  <p className={`text-olive dark:text-sand/80 text-sm transition-colors duration-300 ${textAlign}`} dir={textDir}>
-                    {info.termMeaning}
-                  </p>
-                )}
-              </div>
-            )}
+          <div className="flex-grow flex flex-col">
+            <div>
+              {info.term && (
+                <div className="mb-3">
+                  <h3 className={`text-2xl font-bold text-coffee dark:text-cream mb-1 transition-colors duration-300 ${textAlign}`} dir={textDir}>
+                    {info.term}
+                  </h3>
+                  {info.termMeaning && (
+                    <p className={`text-olive dark:text-sand/80 text-sm transition-colors duration-300 ${textAlign}`} dir={textDir}>
+                      {info.termMeaning}
+                    </p>
+                  )}
+                </div>
+              )}
 
-            {info.questionText && (
-              <h3 className={`text-xl font-bold text-coffee dark:text-cream mb-3 transition-colors duration-300 ${textAlign}`} dir={textDir}>
-                {info.questionText}
-              </h3>
-            )}
+              {info.questionText && (
+                <h3 className={`text-xl font-bold text-coffee dark:text-cream mb-3 transition-colors duration-300 ${textAlign}`} dir={textDir}>
+                  {info.questionText}
+                </h3>
+              )}
+            </div>
 
             {info.answer && (
-              <div className={`text-clay dark:text-gold font-bold leading-relaxed transition-colors duration-300 ${textAlign}`} dir={textDir}>
-                <p className={!isExpanded && hasLongAnswer ? 'line-clamp-4' : ''}>
-                  {info.answer}
-                </p>
-                {hasLongAnswer && (
-                  <button
-                    onClick={() => setIsExpanded(!isExpanded)}
-                    className="text-clay dark:text-gold hover:text-saudi-green dark:hover:text-cream text-sm font-bold mt-2 transition-colors duration-300"
-                  >
-                    {isExpanded ? (isEnglish ? 'Show Less' : 'عرض أقل') : (isEnglish ? 'Read More' : 'اقرأ المزيد')}
-                  </button>
-                )}
+              <div className="mt-auto pt-4 bg-sand/30 dark:bg-coffee-dark/40 rounded-2xl p-5 border border-gold/20 dark:border-gold/10 transition-all duration-300 hover:shadow-md">
+                <div className={`flex items-center gap-2 mb-3 ${textAlign}`} dir={textDir}>
+                  <CheckCircle className="w-5 h-5 text-clay dark:text-gold flex-shrink-0" />
+                  <span className="text-sm font-bold text-clay dark:text-gold transition-colors duration-300">
+                    {isEnglish ? 'Answer:' : 'الإجابة:'}
+                  </span>
+                </div>
+                <div className={`text-coffee dark:text-cream font-bold text-base leading-relaxed transition-colors duration-300 ${textAlign}`} dir={textDir}>
+                  <p className={!isExpanded && hasLongAnswer ? 'line-clamp-4' : ''}>
+                    {displayAnswer}
+                  </p>
+                  {hasLongAnswer && (
+                    <button
+                      onClick={() => setIsExpanded(!isExpanded)}
+                      className="text-clay dark:text-gold hover:text-saudi-green dark:hover:text-cream text-sm font-bold mt-3 underline decoration-dotted transition-colors duration-300"
+                    >
+                      {isExpanded ? (isEnglish ? 'Show Less' : 'عرض أقل') : (isEnglish ? 'Read More' : 'اقرأ المزيد')}
+                    </button>
+                  )}
+                </div>
               </div>
             )}
           </div>
