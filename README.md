@@ -385,6 +385,38 @@ Special thanks to the teams behind:
 
 This project aims to document and celebrate the rich cultural heritage of Saudi Arabia. Content is curated to be educational, respectful, and accurate.
 
+### Dataset Attribution
+
+This project uses high-quality research datasets focusing on Saudi cultural competence, dialects, and multimodal learning:
+
+#### 1. PEARL: Multimodal Culturally-Aware Arabic Instruction Dataset
+
+- **Source**: [UBC-NLP/PEARL on Hugging Face](https://huggingface.co/datasets/UBC-NLP/PEARL) | [arXiv:2505.21979](https://arxiv.org/abs/2505.21979)
+- **Content**: Visual question-answering dataset with multilingual questions about Saudi culture, covering architecture, food, geography, and traditions
+- **Usage**: Interactive quiz questions with images
+
+**Citation**: Alwajih, F., Magdy, S. M., Mekki, A. E., Nacar, O., Nafea, Y., Abdelfadil, S. T., ... & Abdul-Mageed, M. (2025). Pearl: A Multimodal Culturally-Aware Arabic Instruction Dataset. *arXiv preprint arXiv:2505.21979*.
+
+#### 2. Saudiculture: Cultural Competence Benchmark
+
+- **Source**: [Springer Link](https://link.springer.com/article/10.1007/s44443-025-00137-9)
+- **Content**: Benchmark for evaluating cultural competence within Saudi Arabia, including specialized questions about culture, traditions, and customs
+- **Usage**: Cultural competence questions and knowledge about Saudi traditions
+
+**Citation**: Ayash, L., Alhuzali, H., Alasmari, A., & Aloufi, S. (2025). Saudiculture: A benchmark for evaluating large language models' cultural competence within saudi arabia. *Journal of King Saud University Computer and Information Sciences, 37*(6), 123.
+
+#### 3. Absher: Saudi Dialects Understanding Benchmark
+
+- **Source**: [arXiv:2507.10216](https://arxiv.org/abs/2507.10216)
+- **Content**: Benchmark for evaluating understanding of Saudi dialects, covering different dialects across regions of the Kingdom
+- **Usage**: Questions related to Saudi dialects and regional linguistic diversity
+
+**Citation**: Al-Monef, R., Alhuzali, H., Alturayeif, N., & Alasmari, A. (2025). Absher: A benchmark for evaluating large language models understanding of saudi dialects. *arXiv preprint arXiv:2507.10216*.
+
+---
+
+We are deeply grateful to these research teams for making their high-quality datasets publicly available for educational and research purposes. Their work contributes significantly to preserving and promoting Saudi cultural heritage and linguistic diversity.
+
 ### Contributors
 
 Thank you to all contributors who have helped build and improve this application, making Saudi cultural education accessible to everyone.

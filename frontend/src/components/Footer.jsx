@@ -16,6 +16,16 @@ function Footer() {
             <p className="text-sand/60 dark:text-sand/60">نحيي تراثنا .. لنصنع مستقبلنا</p>
           </div>
 
+          {/* Quick Links */}
+          <div className="flex gap-6 text-center">
+            <a
+              href="/attribution"
+              className="text-sand/80 dark:text-sand/70 hover:text-white dark:hover:text-cream transition-colors duration-300 font-semibold"
+            >
+              مصادر البيانات
+            </a>
+          </div>
+
         </div>
 
         {/* Divider */}

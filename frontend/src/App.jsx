@@ -10,6 +10,7 @@ import SignupPage from './pages/SignupPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import DashboardPage from './pages/DashboardPage';
 import AboutPage from './pages/AboutPage';
+import AttributionPage from './pages/AttributionPage';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -31,6 +32,7 @@ useEffect(() => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/attribution" element={<AttributionPage />} />
         <Route path="/quiz" element={<QuizPage />} />
         <Route path="/quiz/take" element={<QuizTakePage />} />
         <Route path="/quiz/results" element={<QuizResultsPage />} />
